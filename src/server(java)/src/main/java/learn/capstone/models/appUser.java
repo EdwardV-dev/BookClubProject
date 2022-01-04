@@ -1,4 +1,4 @@
 package learn.capstone.models;
 
-public class appUser {
+public class AppUser {
 }
