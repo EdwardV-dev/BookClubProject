@@ -8,22 +8,22 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema userbooks
+-- Schema userbookstest
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `userbooks` ;
+DROP SCHEMA IF EXISTS `userbookstest` ;
 
 -- -----------------------------------------------------
--- Schema userbooks
+-- Schema userbookstest
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `userbooks` DEFAULT CHARACTER SET utf8 ;
-USE `userbooks` ;
+CREATE SCHEMA IF NOT EXISTS `userbookstest` DEFAULT CHARACTER SET utf8 ;
+USE `userbookstest` ;
 
 -- -----------------------------------------------------
--- Table `userbooks`.`app_role`
+-- Table `userbookstest`.`app_role`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `userbooks`.`app_role` ;
+DROP TABLE IF EXISTS `userbookstest`.`app_role` ;
 
-CREATE TABLE IF NOT EXISTS `userbooks`.`app_role` (
+CREATE TABLE IF NOT EXISTS `userbookstest`.`app_role` (
   `idRole` INT NOT NULL,
   `role_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idRole`))
@@ -31,11 +31,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `userbooks`.`app_user`
+-- Table `userbookstest`.`app_user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `userbooks`.`app_user` ;
+DROP TABLE IF EXISTS `userbookstest`.`app_user` ;
 
-CREATE TABLE IF NOT EXISTS `userbooks`.`app_user` (
+CREATE TABLE IF NOT EXISTS `userbookstest`.`app_user` (
   `app_user_id` INT NOT NULL,
   `username` VARCHAR(45) NOT NULL,
   `password_hash` VARCHAR(45) NOT NULL,
@@ -46,18 +46,18 @@ CREATE TABLE IF NOT EXISTS `userbooks`.`app_user` (
   INDEX `fk_app_user_app_role1_idx` (`idRole` ASC) VISIBLE,
   CONSTRAINT `fk_app_user_app_role1`
     FOREIGN KEY (`idRole`)
-    REFERENCES `userbooks`.`app_role` (`idRole`)
+    REFERENCES `userbookstest`.`app_role` (`idRole`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `userbooks`.`authors`
+-- Table `userbookstest`.`authors`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `userbooks`.`authors` ;
+DROP TABLE IF EXISTS `userbookstest`.`authors` ;
 
-CREATE TABLE IF NOT EXISTS `userbooks`.`authors` (
+CREATE TABLE IF NOT EXISTS `userbookstest`.`authors` (
   `idAuthor` INT NOT NULL,
   `author_first_name` VARCHAR(45) NOT NULL,
   `author_last_name` VARCHAR(45) NOT NULL,
@@ -66,11 +66,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `userbooks`.`books`
+-- Table `userbookstest`.`books`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `userbooks`.`books` ;
+DROP TABLE IF EXISTS `userbookstest`.`books` ;
 
-CREATE TABLE IF NOT EXISTS `userbooks`.`books` (
+CREATE TABLE IF NOT EXISTS `userbookstest`.`books` (
   `idBooks` INT NOT NULL,
   `approval_status` TINYINT(1) NOT NULL,
   `book_title` VARCHAR(45) NOT NULL,
@@ -81,18 +81,18 @@ CREATE TABLE IF NOT EXISTS `userbooks`.`books` (
   INDEX `fk_books_authors1_idx` (`idAuthor` ASC) VISIBLE,
   CONSTRAINT `fk_books_authors1`
     FOREIGN KEY (`idAuthor`)
-    REFERENCES `userbooks`.`authors` (`idAuthor`)
+    REFERENCES `userbookstest`.`authors` (`idAuthor`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `userbooks`.`app_user_has_books`
+-- Table `userbookstest`.`app_user_has_books`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `userbooks`.`app_user_has_books` ;
+DROP TABLE IF EXISTS `userbookstest`.`app_user_has_books` ;
 
-CREATE TABLE IF NOT EXISTS `userbooks`.`app_user_has_books` (
+CREATE TABLE IF NOT EXISTS `userbookstest`.`app_user_has_books` (
   `app_user_id` INT NOT NULL,
   `idBooks` INT NOT NULL,
   `completion_status` VARCHAR(45) NOT NULL,
@@ -101,12 +101,12 @@ CREATE TABLE IF NOT EXISTS `userbooks`.`app_user_has_books` (
   INDEX `fk_app_user_has_books_app_user1_idx` (`app_user_id` ASC) VISIBLE,
   CONSTRAINT `fk_app_user_has_books_app_user1`
     FOREIGN KEY (`app_user_id`)
-    REFERENCES `userbooks`.`app_user` (`app_user_id`)
+    REFERENCES `userbookstest`.`app_user` (`app_user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_app_user_has_books_books1`
     FOREIGN KEY (`idBooks`)
-    REFERENCES `userbooks`.`books` (`idBooks`)
+    REFERENCES `userbookstest`.`books` (`idBooks`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
