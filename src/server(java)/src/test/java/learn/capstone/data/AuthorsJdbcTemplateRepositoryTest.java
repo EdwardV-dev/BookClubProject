@@ -29,7 +29,7 @@ class AuthorsJdbcTemplateRepositoryTest {
         List<Books> books = repository.findAllBooksFromAuthorFirstOrLastName("Rowling");
         assertNotNull(books);
 
-        //should find one book
+        //should find one book, the Harry Potter one
         assertTrue(books.size() == 1);
         assertTrue(books.get(0).getYearPublished() == 1996);
 
