@@ -7,12 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="bookClubCapstone" />
+        <module name="server(java)" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="bookClubCapstone" options="-parameters" />
+      <module name="server(java)" options="-parameters" />
     </option>
   </component>
 </project>

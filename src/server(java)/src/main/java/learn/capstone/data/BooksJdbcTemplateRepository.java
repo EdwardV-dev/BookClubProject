@@ -17,6 +17,24 @@ public class BooksJdbcTemplateRepository implements BooksRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
+    public boolean update(Books books) {
+
+        final String sql = "update books set "
+                + "approval_status = ?, "
+                + "book_title = ?, "
+                + "genre = ?, "
+                + "publication_year = ? "
+                + "where idBooks = ?;";
+
+        return jdbcTemplate.update(sql,
+                books.isApprovalStatus(),
+                books.getBookTitle(),
+                books.getGenre(),
+                books.getYearPublished(),
+                books.getIdBooks()) > 0;
+    }
+
     @Override
     public List<Books> findAll() {
         final String sql = "select * from books limit 1000;";
@@ -28,6 +46,5 @@ public class BooksJdbcTemplateRepository implements BooksRepository {
     public void setKnownGoodState(){
         jdbcTemplate.update("call set_known_good_state();");
     }
-
 
 }
