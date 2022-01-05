@@ -24,7 +24,7 @@ USE `userbooks` ;
 DROP TABLE IF EXISTS `userbooks`.`app_role` ;
 
 CREATE TABLE IF NOT EXISTS `userbooks`.`app_role` (
-  `idRole` INT NOT NULL,
+  `idRole` INT NOT NULL AUTO_INCREMENT,
   `role_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idRole`))
 ENGINE = InnoDB;
@@ -36,7 +36,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `userbooks`.`app_user` ;
 
 CREATE TABLE IF NOT EXISTS `userbooks`.`app_user` (
-  `app_user_id` INT NOT NULL,
+  `app_user_id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `password_hash` VARCHAR(45) NOT NULL,
   `disabled` TINYINT(1) NOT NULL,
@@ -58,7 +58,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `userbooks`.`authors` ;
 
 CREATE TABLE IF NOT EXISTS `userbooks`.`authors` (
-  `idAuthor` INT NOT NULL,
+  `idAuthor` INT NOT NULL AUTO_INCREMENT,
   `author_first_name` VARCHAR(45) NOT NULL,
   `author_last_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idAuthor`))
@@ -71,11 +71,11 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `userbooks`.`books` ;
 
 CREATE TABLE IF NOT EXISTS `userbooks`.`books` (
-  `idBooks` INT NOT NULL,
+  `idBooks` INT NOT NULL AUTO_INCREMENT,
   `approval_status` TINYINT(1) NOT NULL,
   `book_title` VARCHAR(45) NOT NULL,
   `genre` VARCHAR(45) NOT NULL,
-  `publication_year` DATE NULL,
+  `publication_year` INT NULL,
   `idAuthor` INT NOT NULL,
   PRIMARY KEY (`idBooks`),
   INDEX `fk_books_authors1_idx` (`idAuthor` ASC) VISIBLE,
