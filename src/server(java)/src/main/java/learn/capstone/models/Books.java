@@ -10,7 +10,7 @@ private boolean approvalStatus;
 private String bookTitle;
 private String genre;
 private int idAuthor;
-private LocalDate yearPublished;
+private int yearPublished;
 
 //private List<BookUser> users = new ArrayList<>();
 
@@ -54,11 +54,11 @@ private LocalDate yearPublished;
         this.idAuthor = idAuthor;
     }
 
-    public LocalDate getYearPublished() {
+    public int getYearPublished() {
         return yearPublished;
     }
 
-    public void setYearPublished(LocalDate yearPublished) {
+    public void setYearPublished(int yearPublished) {
         this.yearPublished = yearPublished;
     }
 }
