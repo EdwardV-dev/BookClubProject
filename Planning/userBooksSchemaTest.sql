@@ -128,6 +128,14 @@ SET FOREIGN_KEY_CHECKS = 0;
 SET FOREIGN_KEY_CHECKS = 1;
 
     -- 3. Add test data.
+    
+    insert into authors
+        (`author_first_name`, `author_last_name`)
+    values
+        ("Christopher", "Robin"),
+        ("JK", "Rowling"),
+        ("Henry", "Smith");
+        
     insert into books
         (`approval_status`, `book_title`, `genre`, `publication_year`, `idAuthor`)
     values
@@ -135,12 +143,7 @@ SET FOREIGN_KEY_CHECKS = 1;
         (false, "Harry Potter: The First Book", "Fiction", 1996, 2),
         (true, "Fossils and more!", "Nonfiction", 2003, 3);
         
-	insert into authors
-        (`idAuthor`, `author_first_name`, `author_last_name`)
-    values
-        ("Christopher", "Robin"),
-        ("JK", "Rowling"),
-        ("Henry", "Smith");
+	
      
 end // -- ensures that 
 -- 4. Change the statement terminator back to the original.
