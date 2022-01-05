@@ -20,8 +20,19 @@ class BooksJdbcTemplateRepositoryTest {
     KnownGoodState knownGoodState;
 
     @BeforeEach
-    void setup() {
-        knownGoodState.set();
+    void setup() { knownGoodState.set(); }
+
+    @Test
+    void shouldUpdate() {
+        Books book = new Books();
+        book.setIdBooks(2);
+        book.setBookTitle("Test");
+        book.setApprovalStatus(true);
+        //book.setYearPublished(1996);
+        book.setGenre("fiction");
+
+        assertTrue(repository.update(book));
+
     }
 
     @Test
