@@ -118,9 +118,14 @@ ENGINE = InnoDB;
 delimiter //
 create procedure set_known_good_state()
 begin
+
+SET FOREIGN_KEY_CHECKS = 0;
+
     -- 2. Throws out all records without executing deletes.
     -- Resets the auto_increment value.
     truncate table books;
+    
+SET FOREIGN_KEY_CHECKS = 1;
 
     -- 3. Add test data.
     insert into books
@@ -129,6 +134,8 @@ begin
         (1, true, "Winnie the Pooh", "Fiction", 1932, 1),
         (2, false, "Harry Potter: The First Book", "Fiction", 1996, 2),
         (3, true, "Fossils and more!", "Nonfiction", 2003, 3);
+        
+        insert into autho
 end // -- ensures that 
 -- 4. Change the statement terminator back to the original.
 delimiter ;
