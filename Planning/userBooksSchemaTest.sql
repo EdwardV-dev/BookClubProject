@@ -24,7 +24,7 @@ USE `userbookstest` ;
 DROP TABLE IF EXISTS `userbookstest`.`app_role` ;
 
 CREATE TABLE IF NOT EXISTS `userbookstest`.`app_role` (
-  `idRole` INT NOT NULL,
+  `idRole` INT NOT NULL AUTO_INCREMENT,
   `role_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idRole`))
 ENGINE = InnoDB;
@@ -36,7 +36,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `userbookstest`.`app_user` ;
 
 CREATE TABLE IF NOT EXISTS `userbookstest`.`app_user` (
-  `app_user_id` INT NOT NULL,
+  `app_user_id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `password_hash` VARCHAR(45) NOT NULL,
   `disabled` TINYINT(1) NOT NULL,
@@ -58,7 +58,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `userbookstest`.`authors` ;
 
 CREATE TABLE IF NOT EXISTS `userbookstest`.`authors` (
-  `idAuthor` INT NOT NULL,
+  `idAuthor` INT NOT NULL AUTO_INCREMENT,
   `author_first_name` VARCHAR(45) NOT NULL,
   `author_last_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idAuthor`))
@@ -71,11 +71,11 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `userbookstest`.`books` ;
 
 CREATE TABLE IF NOT EXISTS `userbookstest`.`books` (
-  `idBooks` INT NOT NULL,
+  `idBooks` INT NOT NULL AUTO_INCREMENT,
   `approval_status` TINYINT(1) NOT NULL,
   `book_title` VARCHAR(45) NOT NULL,
   `genre` VARCHAR(45) NOT NULL,
-  `publication_year` DATE NULL,
+  `publication_year` INT NULL,
   `idAuthor` INT NOT NULL,
   PRIMARY KEY (`idBooks`),
   INDEX `fk_books_authors1_idx` (`idAuthor` ASC) VISIBLE,
@@ -111,24 +111,54 @@ CREATE TABLE IF NOT EXISTS `userbookstest`.`app_user_has_books` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- 1. MySQL's default statement terminator is `;`.
+-- Since we include `;` inside our procedure, we temporarily change
+-- the statement terminator to `//`.
+-- That way, the SQL inside is treated as text.
 delimiter //
 create procedure set_known_good_state()
 begin
+
+SET FOREIGN_KEY_CHECKS = 0;
+
     -- 2. Throws out all records without executing deletes.
     -- Resets the auto_increment value.
     truncate table books;
+    
+SET FOREIGN_KEY_CHECKS = 1;
 
     -- 3. Add test data.
     insert into books
-        (`name`, `type`)
+        (`approval_status`, `book_title`, `genre`, `publication_year`, `idAuthor`)
     values
-        ('Meep','Mouse'),
-        ('Slithpers','Snake'),
-        ('Noodles','Dog');
+        (true, "Winnie the Pooh", "Fiction", 1932, 1),
+        (false, "Harry Potter: The First Book", "Fiction", 1996, 2),
+        (true, "Fossils and more!", "Nonfiction", 2003, 3);
+        
+	insert into authors
+        (`idAuthor`, `author_first_name`, `author_last_name`)
+    values
+        ("Christopher", "Robin"),
+        ("JK", "Rowling"),
+        ("Henry", "Smith");
+     
 end // -- ensures that 
 -- 4. Change the statement terminator back to the original.
 delimiter ;
 
+    insert into books
+        (`approval_status`, `book_title`, `genre`, `publication_year`, `idAuthor`)
+    values
+        (true, "Winnie the Pooh", "Fiction", 1932, 1),
+        (false, "Harry Potter: The First Book", "Fiction", 1996, 2),
+        (true, "Fossils and more!", "Nonfiction", 2003, 3);
+        
+	insert into authors
+        (`author_first_name`, `author_last_name`)
+    values
+        ( "Christopher", "Robin"),
+        ("JK", "Rowling"),
+        ("Henry", "Smith");
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
