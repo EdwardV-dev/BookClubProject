@@ -2,6 +2,7 @@ package learn.capstone.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Books {
 
@@ -12,7 +13,7 @@ private String genre;
 private int idAuthor;
 private int yearPublished;
 
-//private List<BookUser> users = new ArrayList<>();
+private List<BooksAppUser> users = new ArrayList<>();
 
     public int getIdBooks() {
         return idBooks;
