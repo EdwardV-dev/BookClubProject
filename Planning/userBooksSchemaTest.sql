@@ -129,23 +129,36 @@ SET FOREIGN_KEY_CHECKS = 1;
 
     -- 3. Add test data.
     insert into books
-        (`idBooks`, `approval_status`, `book_title`, `genre`, `publication_year`, `idAuthor`)
+        (`approval_status`, `book_title`, `genre`, `publication_year`, `idAuthor`)
     values
-        (1, true, "Winnie the Pooh", "Fiction", 1932, 1),
-        (2, false, "Harry Potter: The First Book", "Fiction", 1996, 2),
-        (3, true, "Fossils and more!", "Nonfiction", 2003, 3);
+        (true, "Winnie the Pooh", "Fiction", 1932, 1),
+        (false, "Harry Potter: The First Book", "Fiction", 1996, 2),
+        (true, "Fossils and more!", "Nonfiction", 2003, 3);
         
-        insert into autho
+	insert into authors
+        (`idAuthor`, `author_first_name`, `author_last_name`)
+    values
+        ("Christopher", "Robin"),
+        ("JK", "Rowling"),
+        ("Henry", "Smith");
+     
 end // -- ensures that 
 -- 4. Change the statement terminator back to the original.
 delimiter ;
 
     insert into books
-        (`idBooks`, `approval_status`, `book_title`, `genre`, `publication_year`, `idAuthor`)
+        (`approval_status`, `book_title`, `genre`, `publication_year`, `idAuthor`)
     values
-        (1, true, "Winnie the Pooh", "Fiction", 1932, 1),
-        (2, false, "Harry Potter: The First Book", "Fiction", 1996, 2),
-        (3, true, "Fossils and more!", "Nonfiction", 2003, 3);
+        (true, "Winnie the Pooh", "Fiction", 1932, 1),
+        (false, "Harry Potter: The First Book", "Fiction", 1996, 2),
+        (true, "Fossils and more!", "Nonfiction", 2003, 3);
+        
+	insert into authors
+        (`author_first_name`, `author_last_name`)
+    values
+        ( "Christopher", "Robin"),
+        ("JK", "Rowling"),
+        ("Henry", "Smith");
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
