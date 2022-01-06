@@ -13,7 +13,10 @@ function AddBook() {
     return (
         <form onSubmit={handleSubmit}>
         <div>
-            <input type="text" id="author" name="author" value="Current Author" />
+            <input type="text" id="authorFirstName" name="authorFirstName" value="Author First Name" />
+        </div>
+        <div>
+            <input type="text" id="authorLastName" name="authorLastName" value="Author Last Name" />
         </div>
         <div>
             <input type="text" id="title" name="title" value="Current Title" />
