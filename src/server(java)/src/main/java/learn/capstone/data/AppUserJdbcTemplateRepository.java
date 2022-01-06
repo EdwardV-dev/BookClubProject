@@ -3,6 +3,7 @@ package learn.capstone.data;
 
 import learn.capstone.data.mappers.AppUserMapper;
 import learn.capstone.models.AppUser;
+import learn.capstone.models.Books;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.security.core.GrantedAuthority;
@@ -36,6 +37,9 @@ import java.util.List;
                 .findFirst().orElse(null);
     }
 
+
+
+
     @Transactional
     public AppUser create(AppUser user) {
 
@@ -61,19 +65,7 @@ import java.util.List;
         return user;
     }
 
-    @Transactional
-    public void update(AppUser user) {
 
-        final String sql = "update app_user set "
-                + "username = ?, "
-                + "disabled = ? "
-                + "where app_user_id = ?";
-
-        jdbcTemplate.update(sql,
-                user.getUsername(), !user.isEnabled(), user.getAppUserId());
-
-        updateRoles(user);
-    }
 
     private void updateRoles(AppUser user) {
 
