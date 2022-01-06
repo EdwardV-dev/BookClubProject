@@ -36,9 +36,9 @@ public class BooksJdbcTemplateRepository implements BooksRepository {
     }
 
     @Override
-    public List<Books> findAll() {
-        final String sql = "select * from books limit 1000;";
-        return jdbcTemplate.query(sql, new BookMapper());
+    public List<Books> findAllForAdmin() {
+        final String sql = "select * from books b Inner join authors au on b.idAuthor = au.idAuthor;";
+        return jdbcTemplate.query(sql, new BookMapper()); //returns a list of books
     }
 
 

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BooksRepository {
 
-    List<Books> findAll();
+    List<Books> findAllForAdmin();
 
 //    Books add (Books books);
 //
