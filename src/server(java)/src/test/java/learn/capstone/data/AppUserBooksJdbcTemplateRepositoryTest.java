@@ -33,4 +33,11 @@ class AppUserBooksJdbcTemplateRepositoryTest {
 
         assertTrue(repository.update(userBook));
     }
+
+    @Test
+    void shouldDeleteBookFromUserBookList() {
+        assertTrue(repository.delete(1, 1));
+        assertFalse(repository.delete(1, 1000));
+
+    }
 }

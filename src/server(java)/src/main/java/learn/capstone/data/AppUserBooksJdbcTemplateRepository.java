@@ -24,4 +24,11 @@ public class AppUserBooksJdbcTemplateRepository {
                 appUserBooks.getBook().getIdBooks(),
                 appUserBooks.getAppUserId()) > 0;
     }
+
+    public boolean delete(int userId, int bookId) {
+        final String sql = "delete from app_user_has_books "
+                + "where app_user_id = ? and idBooks = ?;";
+
+        return jdbcTemplate.update(sql, userId, bookId) > 0;
+    }
 }
