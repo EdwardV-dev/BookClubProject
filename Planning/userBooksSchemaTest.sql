@@ -90,6 +90,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `userbookstest`.`app_user_has_books`
 -- -----------------------------------------------------
+
 DROP TABLE IF EXISTS `userbookstest`.`app_user_has_books` ;
 
 CREATE TABLE IF NOT EXISTS `userbookstest`.`app_user_has_books` (
@@ -175,7 +176,11 @@ delimiter ;
     ("USER"), -- id 1
     ("ADMIN"); -- id 2
     
-        
+insert into app_user_has_books (`app_user_id`, `idBooks`, `completion_status`)
+values
+(1, 1, "Reading"),
+(1, 2, "WantToRead"),
+(1, 3, "DoneReading");     
      -- testing here
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
