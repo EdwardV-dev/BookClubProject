@@ -4,6 +4,7 @@ import Home from './components/Home';
 import NavBar from './components/NavBar';
 import MyBooks from './components/MyBooks';
 import Login from './components/Login';
+import Register from './components/Register';
 
 class App extends React.Component {
   render() {
@@ -19,6 +20,10 @@ class App extends React.Component {
 
           <Route path="/login">
             <Login />
+          </Route>
+
+          <Route path="/register">
+            <Register />
           </Route>
 
           <Route exact path="/">
