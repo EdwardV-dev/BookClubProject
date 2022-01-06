@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `userbookstest`.`app_user` (
   `username` VARCHAR(45) NOT NULL,
   `password_hash` VARCHAR(2048) NOT NULL,
   `disabled` TINYINT(1) NOT NULL default(0),
-  `idRole` INT NOT NULL,
+  `idRole` INT NOT NULL default 1,
   PRIMARY KEY (`app_user_id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
   INDEX `fk_app_user_app_role1_idx` (`idRole` ASC) VISIBLE,
