@@ -6,6 +6,10 @@ import MyBooks from './components/MyBooks';
 import Login from './components/Login';
 import Register from './components/Register';
 import Admin from './components/Admin';
+import Recommend from './components/Recommend';
+import EditUserBooks from './components/EditUserBooks';
+import EditAdminBooks from './components/EditAdminBooks';
+import AddBook from './components/AddBook';
 
 class App extends React.Component {
   render() {
@@ -27,8 +31,24 @@ class App extends React.Component {
             <Register />
           </Route>
 
+          <Route path="/add">
+            <AddBook />
+          </Route>
+
           <Route path="/admin">
             <Admin />
+          </Route>
+
+          <Route path="/recommend">
+            <Recommend />
+          </Route>
+
+          <Route path="/booksUser">
+            <EditUserBooks />
+          </Route>
+
+          <Route path="/booksAdmin">
+            <EditAdminBooks />
           </Route>
 
           <Route exact path="/">
