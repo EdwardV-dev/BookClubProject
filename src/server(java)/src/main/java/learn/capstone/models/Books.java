@@ -10,10 +10,18 @@ private int idBooks;
 private boolean approvalStatus;
 private String bookTitle;
 private String genre;
-private int idAuthor;
+private Authors author;
 private int yearPublished;
 
 private List<BooksAppUser> users = new ArrayList<>();
+
+    public Authors getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Authors author) {
+        this.author = author;
+    }
 
     public int getIdBooks() {
         return idBooks;
@@ -45,14 +53,6 @@ private List<BooksAppUser> users = new ArrayList<>();
 
     public void setGenre(String genre) {
         this.genre = genre;
-    }
-
-    public int getIdAuthor() {
-        return idAuthor;
-    }
-
-    public void setIdAuthor(int idAuthor) {
-        this.idAuthor = idAuthor;
     }
 
     public int getYearPublished() {
