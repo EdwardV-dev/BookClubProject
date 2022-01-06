@@ -40,7 +40,7 @@ public class AppUser extends User {
         this.appUserId = appUserId;
     }
 
-
+ //If you are an admin, you get the following authorities....Example: Admin_Has_Delete can be returned
     public static List<GrantedAuthority> convertRolesToAuthorities(List<String> roles) {
         List<GrantedAuthority> authorities = new ArrayList<>(roles.size());
         for (String role : roles) {
@@ -51,6 +51,7 @@ public class AppUser extends User {
         return authorities;
     }
 
+    //For example, Has_Write can be associated with the admin role
     public static List<String> convertAuthoritiesToRoles(Collection<GrantedAuthority> authorities) {
         return authorities.stream()
                 .map(a -> a.getAuthority().substring(AUTHORITY_PREFIX.length()))

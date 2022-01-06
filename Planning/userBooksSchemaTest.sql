@@ -38,8 +38,8 @@ DROP TABLE IF EXISTS `userbookstest`.`app_user` ;
 CREATE TABLE IF NOT EXISTS `userbookstest`.`app_user` (
   `app_user_id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
-  `password_hash` VARCHAR(45) NOT NULL,
-  `disabled` TINYINT(1) NOT NULL,
+  `password_hash` VARCHAR(2048) NOT NULL,
+  `disabled` TINYINT(1) NOT NULL default(0),
   `idRole` INT NOT NULL,
   PRIMARY KEY (`app_user_id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
@@ -162,6 +162,19 @@ delimiter ;
         ( "Christopher", "Robin"),
         ("JK", "Rowling"),
         ("Henry", "Smith");
+        
+    insert into app_user
+    (`username`, `password_hash`, `disabled`, `idRole`)
+    values
+    ("EdwardV", "$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa", false, 1),
+    ("AmyR", "$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa", false, 2);
+        
+	insert into app_role
+    (`role_name`)
+    values
+    ("USER"), -- id 1
+    ("ADMIN"); -- id 2
+    
         
      -- testing here
 SET SQL_MODE=@OLD_SQL_MODE;
