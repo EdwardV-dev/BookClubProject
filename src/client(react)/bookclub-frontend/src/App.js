@@ -1,28 +1,35 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from './components/Home';
 import NavBar from './components/NavBar';
 import MyBooks from './components/MyBooks';
+import Login from './components/Login';
 
 class App extends React.Component {
   render() {
+    return (
+      <Router>
 
-    const path = window.location.pathname;
+        <NavBar />
 
-    switch (path) {
-      case "/myBooks":
-        return <MyBooks />;
-      default:
-        return (
-          <>
-          <h1>Book Club</h1>
-          <NavBar />
-          <Home />
-          </>
-        );  
-    }
+        <Switch>
+          <Route path="/books">
+            <MyBooks />
+          </Route>
 
-  
+          <Route path="/login">
+            <Login />
+          </Route>
+
+          <Route exact path="/">
+            <Home />
+          </Route>
+
+        </Switch>
+      </Router>
+    );
   }
+
 }
 
 export default App;
