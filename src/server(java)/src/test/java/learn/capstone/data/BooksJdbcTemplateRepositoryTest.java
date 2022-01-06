@@ -37,13 +37,14 @@ class BooksJdbcTemplateRepositoryTest {
 
     @Test
     void shouldFindAll() {
-        List<Books> books = repository.findAll();
+        List<Books> books = repository.findAllForAdmin();
         assertNotNull(books);
 
         // can't predict order
         // if delete is first, we're down to 2
         // if add is first, we may go as high as 4
         assertTrue(books.size() >= 1 && books.size() <= 4);
+
 
         System.out.println(books.size());
 
