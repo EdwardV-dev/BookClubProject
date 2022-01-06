@@ -45,8 +45,9 @@ class BooksJdbcTemplateRepositoryTest {
         // if add is first, we may go as high as 4
         assertTrue(books.size() >= 1 && books.size() <= 4);
 
-
+        assertNotNull(books.get(0).getAuthor().getAuthorFirstName());
         System.out.println(books.size());
+        System.out.println(books.get(0).getAuthor().getAuthorFirstName());
 
     }
 
