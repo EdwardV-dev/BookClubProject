@@ -15,11 +15,11 @@ import java.util.Collection;
 import java.util.List;
 
 @Repository
-    public class AppUserRepository {
+    public class AppUserJdbcTemplateRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public AppUserRepository(JdbcTemplate jdbcTemplate) {
+    public AppUserJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

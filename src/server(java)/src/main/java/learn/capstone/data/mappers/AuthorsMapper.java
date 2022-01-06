@@ -17,7 +17,7 @@ public class AuthorsMapper implements RowMapper<Authors> {
         author.setIdAuthor(resultSet.getInt("idAuthor"));
         author.setAuthorFirstName(resultSet.getString("author_first_name"));
         author.setAuthorLastName(resultSet.getString("author_last_name"));
-        
+
         return author;
     }
 }
