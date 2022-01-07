@@ -7,7 +7,8 @@ import java.util.List;
 
 public class Books {
 
-    //private int currentYear = LocalDate.now().getYear();
+    private int currentYear = LocalDate.now().getYear();
+    private int actualYear = currentYear;
 
     @PositiveOrZero
     private int idBooks;

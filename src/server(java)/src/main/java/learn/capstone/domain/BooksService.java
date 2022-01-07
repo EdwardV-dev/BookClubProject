@@ -19,7 +19,7 @@ public class BooksService {
         this.repository = repository;
     }
 
-    public Result<Books> update(Books books) {
+    public Result<Books> updateAdmin(Books books) {
         Result<Books> result = validate(books);
 
         if(!result.isSuccess()) {
@@ -33,17 +33,19 @@ public class BooksService {
         return result;
     }
 
-    private Result validate(Books books) {
-        Result result = new Result();
+    private Result<Books> validate(Books books) {
+        Result<Books> result = new Result();
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<Books>> violations = validator.validate(books);
 
-        for (ConstraintViolation<Books> violation : violations) {
-            result.addMessage(ResultType.INVALID, violation.getMessage());
+        if(!violations.isEmpty()) {
+            for (ConstraintViolation<Books> violation : violations) {
+                result.addMessage(ResultType.INVALID, violation.getMessage());
+            }
+            return result;
         }
-
         return result;
     }
 }
