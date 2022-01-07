@@ -46,7 +46,7 @@ public class Books {
         this.idBooks = idBooks;
     }
 
-    public boolean isApprovalStatus() {
+    public boolean getApprovalStatus() {
         return approvalStatus;
     }
 
