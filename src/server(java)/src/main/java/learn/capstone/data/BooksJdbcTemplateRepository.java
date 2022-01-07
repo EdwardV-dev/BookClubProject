@@ -28,18 +28,23 @@ public class BooksJdbcTemplateRepository implements BooksRepository {
     @Override
     public boolean update(Books books) {
 
-        final String sql = "update books set "
-                + "approval_status = ?, "
-                + "book_title = ?, "
-                + "genre = ?, "
-                + "publication_year = ? "
-                + "where idBooks = ?;";
+        final String sql = "update books, authors "
+                + "set books.approval_status = ?, "
+                + "books.book_title = ?, "
+                + "books.genre = ?, "
+                + "books.publication_year = ?, "
+                + "authors.author_first_name = ?, "
+                + "authors.author_last_name = ? "
+                + "where books.idBooks = ? "
+                + "and books.idAuthor = authors.idAuthor;";
 
         return jdbcTemplate.update(sql,
                 books.getApprovalStatus(),
                 books.getBookTitle(),
                 books.getGenre(),
                 books.getYearPublished(),
+                books.getAuthor().getAuthorFirstName(),
+                books.getAuthor().getAuthorLastName(),
                 books.getIdBooks()) > 0;
     }
 

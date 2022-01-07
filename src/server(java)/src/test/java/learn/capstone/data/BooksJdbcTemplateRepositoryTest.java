@@ -27,15 +27,11 @@ class BooksJdbcTemplateRepositoryTest {
 
     @Test
     void shouldUpdate() {
-        Books book = new Books();
-        book.setIdBooks(2);
-        book.setBookTitle("Test");
-        book.setApprovalStatus(true);
-        book.setYearPublished(1996);
-        book.setGenre("fiction");
+        Books book = makeBook();
+        book.setIdBooks(1);
 
         assertTrue(repository.update(book));
-
+        assertEquals("Erica", book.getAuthor().getAuthorFirstName());
     }
 
     @Test

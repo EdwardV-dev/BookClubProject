@@ -36,6 +36,7 @@ class BooksServiceTest {
         when(repository.addToAuthorTableFirstThenBooks(book)).thenReturn(book);
         Result<Books> actual = service.add(book);
         assertEquals(ResultType.SUCCESS, actual.getType());
+
     }
 
     @Test
@@ -54,7 +55,7 @@ class BooksServiceTest {
         Books book = makeBook();
         book.setYearPublished(2030);
 
-//        when(repository.update(book)).thenReturn(true);
+
         Result<Books> actual = service.updateAdmin(book);
         assertEquals(ResultType.INVALID, actual.getType());
     }
