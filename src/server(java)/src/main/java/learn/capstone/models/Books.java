@@ -5,12 +5,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Books {
 
     private int currentYear = LocalDate.now().getYear();
     private int actualYear = currentYear;
 
-    @PositiveOrZero
+    @PositiveOrZero(message = "id must be set for an update operation")
     private int idBooks;
 
     @NotNull

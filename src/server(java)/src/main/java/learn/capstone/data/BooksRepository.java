@@ -8,11 +8,13 @@ public interface BooksRepository {
 
     List<Books> findAllForAdmin();
 
-//    Books add (Books books);
-//
+    Books addToAuthorTableFirstThenBooks(Books book);
+
     boolean update(Books books);
-//
-//    boolean deleteById(int idBooks);
+
+    public List<Books> findAllBooksFromAuthorFirstAndLastName(String input1, String input2);
+
+  Books addToBooksTable(Books book, int idAuthorForeignKey);
 
     void setKnownGoodState();
 }

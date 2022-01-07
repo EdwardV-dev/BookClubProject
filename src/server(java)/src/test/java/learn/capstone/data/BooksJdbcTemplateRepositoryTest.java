@@ -39,6 +39,14 @@ class BooksJdbcTemplateRepositoryTest {
     }
 
     @Test
+    void shouldNotUpdateNull() {
+
+
+        assertFalse(repository.update(null));
+
+    }
+
+    @Test
     void shouldFindAll() {
         List<Books> books = repository.findAllForAdmin();
         assertNotNull(books);

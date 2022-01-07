@@ -37,9 +37,6 @@ import java.util.List;
                 .findFirst().orElse(null);
     }
 
-
-
-
     @Transactional
     public AppUser create(AppUser user) {
 

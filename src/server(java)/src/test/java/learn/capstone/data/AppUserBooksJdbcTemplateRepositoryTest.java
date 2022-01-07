@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AppUserBooksJdbcTemplateRepositoryTest {
 
     @Autowired
-    AppUserBooksJdbcTemplateRepository repository;
+    AppUserBooksRepositoryJdbcTemplateRepository repository;
 
     @Autowired
     KnownGoodState knownGoodState;
