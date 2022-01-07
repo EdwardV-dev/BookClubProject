@@ -23,13 +23,16 @@ public class AppUserBooksJdbcTemplateRepository {
 
 
     public List<Books> findAllUserBooks(int appUserId) {
-        final String sql = "Select b.book_title, b.genre, b.idBooks, b.approval_status, b.publication_year, b.idAuthor, ab.completion_status\n" +
+        final String sql = "Select b.book_title, b.genre, b.idBooks, b.approval_status, b.publication_year, b.idAuthor, ab.completion_status, " +
+                "au.author_first_name, au.author_last_name\n" +
                 "from books b\n" +
                 "inner join app_user_has_books ab on ab.idBooks = b.idBooks\n" +
-                "where au.app_user_id = ?;";
+                "inner join authors au on b.idAuthor = au.idAuthor\n" +
+                "where ab.app_user_id = ?;";
 
-        return jdbcTemplate.query(sql, new BookMapper()); //returns a list of books
+        return jdbcTemplate.query(sql, new BookMapper(), appUserId); //returns a list of books
     }
+
 
         public boolean update (AppUserBooks appUserBooks){
             final String sql = "update app_user_has_books set "
@@ -49,4 +52,16 @@ public class AppUserBooksJdbcTemplateRepository {
             return jdbcTemplate.update(sql, userId, bookId) > 0;
 
         }
+
+
+    public boolean add(AppUserBooks appUserBooks) {
+
+        final String sql = "insert into app_user_has_books (app_user_id, completion_status, idBooks) values "
+                + "(?,?,?);";
+
+        return jdbcTemplate.update(sql,
+                appUserBooks.getAppUserId(),
+                appUserBooks.getCompletionStatus(),
+                appUserBooks.getBook().getIdBooks()) > 0; //true if greater than zero rows affected
+    }
     }
