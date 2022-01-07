@@ -10,5 +10,5 @@ public class AppUserBooksService {
     public AppUserBooksService(AppUserBooksRepository repository) {
         this.repository = repository;
     }
-    
+
 }

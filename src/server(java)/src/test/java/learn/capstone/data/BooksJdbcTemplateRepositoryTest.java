@@ -34,13 +34,6 @@ class BooksJdbcTemplateRepositoryTest {
         assertEquals("Erica", book.getAuthor().getAuthorFirstName());
     }
 
-    @Test
-    void shouldNotUpdateNull() {
-
-
-        assertFalse(repository.update(null));
-
-    }
 
     @Test
     void shouldFindAll() {
