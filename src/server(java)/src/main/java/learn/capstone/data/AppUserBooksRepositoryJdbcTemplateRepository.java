@@ -12,16 +12,17 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AppUserBooksJdbcTemplateRepository {
+public class AppUserBooksRepositoryJdbcTemplateRepository implements AppUserBooksRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
 
-    public AppUserBooksJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
+    public AppUserBooksRepositoryJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
 
+    @Override
     public List<Books> findAllUserBooks(int appUserId) {
         final String sql = "Select b.book_title, b.genre, b.idBooks, b.approval_status, b.publication_year, b.idAuthor, ab.completion_status, " +
                 "au.author_first_name, au.author_last_name\n" +
@@ -34,7 +35,8 @@ public class AppUserBooksJdbcTemplateRepository {
     }
 
 
-        public boolean update (AppUserBooks appUserBooks){
+        @Override
+        public boolean update(AppUserBooks appUserBooks){
             final String sql = "update app_user_has_books set "
                     + "completion_status = ? "
                     + "where idBooks = ? and app_user_id = ?;";
@@ -45,7 +47,8 @@ public class AppUserBooksJdbcTemplateRepository {
                     appUserBooks.getAppUserId()) > 0;
         }
 
-        public boolean delete ( int userId, int bookId){
+        @Override
+        public boolean delete(int userId, int bookId){
             final String sql = "delete from app_user_has_books "
                     + "where app_user_id = ? and idBooks = ?;";
 
@@ -54,6 +57,7 @@ public class AppUserBooksJdbcTemplateRepository {
         }
 
 
+    @Override
     public boolean add(AppUserBooks appUserBooks) {
 
         final String sql = "insert into app_user_has_books (app_user_id, completion_status, idBooks) values "

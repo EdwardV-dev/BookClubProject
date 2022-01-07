@@ -30,20 +30,31 @@ class BooksServiceTest {
     }
 
     @Test
-    void shouldNotUpdateMissing() {
+    void shouldAdd() {
         Books book = makeBook();
 
-        when(repository.update(book)).thenReturn(false);
-        Result<Books> actual = service.updateAdmin(book);
-        assertEquals(ResultType.NOT_FOUND, actual.getType());
+        when(repository.addToAuthorTableFirstThenBooks(book)).thenReturn(book);
+        Result<Books> actual = service.add(book);
+        assertEquals(ResultType.SUCCESS, actual.getType());
     }
+
+    @Test
+    void shouldNotAddInvalidBookWithNoAuthor() {
+        Books book = makeInvalidBookWithNoAuthor();
+
+
+        Result<Books> actual = service.add(book);
+        assertEquals(ResultType.INVALID, actual.getType());
+        assertTrue(actual.getMessages().contains("Book author is required."));
+    }
+
 
     @Test
     void shouldNotUpdateInvalid() {
         Books book = makeBook();
         book.setYearPublished(2030);
 
-        when(repository.update(book)).thenReturn(true);
+//        when(repository.update(book)).thenReturn(true);
         Result<Books> actual = service.updateAdmin(book);
         assertEquals(ResultType.INVALID, actual.getType());
     }
@@ -59,6 +70,19 @@ class BooksServiceTest {
         book.setYearPublished(1999);
         book.setGenre("fiction");
         book.setAuthor(author);
+        return book;
+    }
+
+    Books makeInvalidBookWithNoAuthor() {
+
+
+        Books book = new Books();
+        book.setIdBooks(2);
+        book.setBookTitle("Test");
+        book.setApprovalStatus(true);
+        book.setYearPublished(1999);
+        book.setGenre("fiction");
+
         return book;
     }
 }
