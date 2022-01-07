@@ -13,6 +13,8 @@ private String genre;
 private Authors author;
 private int yearPublished;
 
+
+
 private List<BooksAppUser> users = new ArrayList<>();
 
     public Authors getAuthor() {
@@ -31,7 +33,7 @@ private List<BooksAppUser> users = new ArrayList<>();
         this.idBooks = idBooks;
     }
 
-    public boolean isApprovalStatus() {
+    public boolean getApprovalStatus() {
         return approvalStatus;
     }
 
