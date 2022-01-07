@@ -33,7 +33,7 @@ class BooksServiceTest {
     void shouldNotUpdateMissing() {
         Books book = makeBook();
 
-        when(repository.update(book)).thenReturn(false);
+        //when(repository.update(book)).thenReturn(false);
         Result<Books> actual = service.updateAdmin(book);
         assertEquals(ResultType.NOT_FOUND, actual.getType());
     }
