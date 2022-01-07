@@ -28,7 +28,7 @@ class BooksJdbcTemplateRepositoryTest {
         book.setIdBooks(2);
         book.setBookTitle("Test");
         book.setApprovalStatus(true);
-        //book.setYearPublished(1996);
+        book.setYearPublished(1996);
         book.setGenre("fiction");
 
         assertTrue(repository.update(book));

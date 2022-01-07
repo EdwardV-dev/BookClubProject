@@ -10,7 +10,7 @@ public interface BooksRepository {
 
 //    Books add (Books books);
 //
-//    boolean update(Books books);
+    boolean update(Books books);
 //
 //    boolean deleteById(int idBooks);
 
