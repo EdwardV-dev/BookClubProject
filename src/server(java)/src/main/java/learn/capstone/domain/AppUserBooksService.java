@@ -18,7 +18,7 @@ public class AppUserBooksService {
     public AppUserBooksService(AppUserBooksRepository repository) {
         this.repository = repository;
     }
-
+    
     public Result<AppUserBooks> update(AppUserBooks appUserBooks) {
 
         Result<AppUserBooks> result = validate(appUserBooks);

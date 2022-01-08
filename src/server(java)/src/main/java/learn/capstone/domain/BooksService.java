@@ -39,12 +39,13 @@ public class BooksService {
         return repository.findBookFromAuthorFirstAndLastNameAndBookTitle(input1, input2, input3);
     }
 
+    //used to fetch all books from the books table
     public List<Books> findAllForAdmin(){
         return repository.findAllForAdmin();
     }
 
     public Result<Books> add(Books book){
-        book.setIdBooks(0); //Ensures that annotation test will pass. Book id is not used for insertion
+        book.setIdBooks(0); //Ensures that annotation test will pass. Book id is not used for insertion in the repo layer sql
 
         Result<Books> result = validate(book);
 

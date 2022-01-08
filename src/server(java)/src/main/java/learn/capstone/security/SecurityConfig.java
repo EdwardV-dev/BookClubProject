@@ -39,9 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/create_account").permitAll()
                 // Allow refresh token for authenticated users
                 .antMatchers("/refresh_token").authenticated()
-                //Getting a sighting does not require authentication
+                //Getting all books for user and admin
                 .antMatchers(HttpMethod.GET,
                         "/books", "/books/*").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/booksAdmin").hasAnyRole("ADMIN")
                 .antMatchers(HttpMethod.POST,
                         "/books").hasAnyRole("USER", "ADMIN")
                 //Purpose: Update completion status for a user
