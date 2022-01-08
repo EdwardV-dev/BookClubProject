@@ -126,4 +126,12 @@ public Books addToBooksTable(Books book, int idAuthorForeignKey){
         jdbcTemplate.update("call set_known_good_state();");
     }
 
+    @Override
+    public Books findById(int bookId) {
+        final String sql = "select * from books b "
+                + "inner join authors au on b.idAuthor = au.idAuthor "
+                + "where b.idBooks = ?;";
+        return jdbcTemplate.query(sql, new BookMapper(), bookId)
+                .stream().findFirst().orElse(null);
+    }
 }
