@@ -13,12 +13,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AppUserBooksRepositoryJdbcTemplateRepository implements AppUserBooksRepository {
+public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
 
-    public AppUserBooksRepositoryJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
+    public AppUserBooksJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
