@@ -39,17 +39,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/create_account").permitAll()
                 // Allow refresh token for authenticated users
                 .antMatchers("/refresh_token").authenticated()
-                //Getting all books for user and admin
+                //Getting all books for mybookslist for user and admin
                 .antMatchers(HttpMethod.GET,
                         "/books", "/books/*").hasAnyRole("USER", "ADMIN")
+                //Getting all books from the books table for admin view
                 .antMatchers(HttpMethod.GET, "/booksAdmin").hasAnyRole("ADMIN")
+
+                //This post request is for adding a book from mybookslist to the books table, even
+                //if the information is incorrect
                 .antMatchers(HttpMethod.POST,
-                        "/books").hasAnyRole("USER", "ADMIN")
-                //Purpose: Update completion status for a user
+                        "/booksAdmin").hasAnyRole("USER", "ADMIN")
+
+                //Adding an association between the user and the book that they added
+                .antMatchers(HttpMethod.POST, "/books").hasAnyRole("USER", "ADMIN")
+                //Purpose: Update completion status for a user book
                 .antMatchers(HttpMethod.PUT,
                         "/booksUser/*").hasAnyRole("USER")
                 //Purpose: Update incorrect information in the books table
                 .antMatchers(HttpMethod.PUT, "/booksAdmin/*").hasAnyRole("ADMIN")
+                //Deleting a book from MybooksList
                 .antMatchers(HttpMethod.DELETE,
                         "/books/*").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/**").denyAll()
