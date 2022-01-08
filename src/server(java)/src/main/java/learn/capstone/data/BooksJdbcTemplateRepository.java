@@ -4,6 +4,7 @@ import learn.capstone.data.mappers.AuthorsMapper;
 import learn.capstone.data.mappers.BookMapper;
 import learn.capstone.models.Authors;
 import learn.capstone.models.Books;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -103,13 +104,21 @@ public Books addToBooksTable(Books book, int idAuthorForeignKey){
 
     //Used for domain layer validation. Prevents user adding the same book from the same author. If this method returns
     //a list of size 0 (i.e. no books found), go ahead and add it to SQL database.
-    public List<Books> findAllBooksFromAuthorFirstAndLastName(String input1, String input2) {
-        final String sql = "Select b.book_title, b.genre, b.idBooks, b.approval_status, b.publication_year, b.idAuthor\n" +
+   public Books findBookFromAuthorFirstAndLastNameAndBookTitle(String input1, String input2, String input3) {
+        final String sql = "Select b.book_title, b.genre, b.idBooks, b.approval_status, b.publication_year, b.idAuthor, " +
+                "au.author_first_name, au.author_last_name " +
                 "from books b\n" +
                 "Inner join authors au \n" +
                 "on b.idAuthor = au.idAuthor\n" +
-                "where author_first_name = ? and author_last_name = ?;";
-        return jdbcTemplate.query(sql, new BookMapper(), input1, input2);
+                "where au.author_first_name = ? and au.author_last_name = ? and book_title = ?;";
+        try{
+        Books specificBook = jdbcTemplate.queryForObject(sql, new BookMapper(), input1, input2, input3);
+        return specificBook;
+
+        } catch (EmptyResultDataAccessException ex){
+            return null; //returning null means a duplicate book was not found
+        }
+
     }
 
     //For testing out http requests in the test table

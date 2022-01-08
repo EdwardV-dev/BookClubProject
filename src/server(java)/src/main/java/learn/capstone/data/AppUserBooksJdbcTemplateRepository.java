@@ -9,16 +9,17 @@ import java.util.List;
 
 
 import learn.capstone.models.AppUserBooks;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AppUserBooksRepositoryJdbcTemplateRepository implements AppUserBooksRepository {
+public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
 
-    public AppUserBooksRepositoryJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
+    public AppUserBooksJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -33,6 +34,14 @@ public class AppUserBooksRepositoryJdbcTemplateRepository implements AppUserBook
                 "where ab.app_user_id = ?;";
 
         return jdbcTemplate.query(sql, new BookMapper(), appUserId); //returns a list of books
+    }
+
+    public int findAppUserId (String username){
+        final String sql = "Select app_user_id " +
+                "from app_user " +
+                "where username = ?;";
+
+        return jdbcTemplate.queryForObject(sql, new Object[] { username }, Integer.class); //returns a list of books
     }
 
 
@@ -58,7 +67,7 @@ public class AppUserBooksRepositoryJdbcTemplateRepository implements AppUserBook
 
         }
 
-        //this method calls the add method below
+        //this method is called upon by the add method below
         public Books findSpecificBookBasedOnTitle(String title){
         final String sql = "Select b.idBooks " +
                 "from books b " +
@@ -78,7 +87,7 @@ public class AppUserBooksRepositoryJdbcTemplateRepository implements AppUserBook
                 //If the newly-entered book is a duplicate that already exists, the try block should work
                 //successfully
 
-            } catch (Exception ex) {
+            } catch (EmptyResultDataAccessException ex) {
                 return null;
             }
 
@@ -100,8 +109,10 @@ public class AppUserBooksRepositoryJdbcTemplateRepository implements AppUserBook
 
                     appUserBooks.getCompletionStatus(), //This is set by extracting html value from react prior to http request
 
-                    specificBookWithIdAttached.getIdBooks()) > 0; //Get the book id from the successful response.json
-        } catch (Exception ex) {
+                    specificBookWithIdAttached.getIdBooks()) > 0; //Id is grabbed from calling findSpecificBookBasedOnTitle
+        }
+        //This catch block is required if specificBookWithIdAttached is null
+        catch (EmptyResultDataAccessException ex) {
             return false;
         }
     }
