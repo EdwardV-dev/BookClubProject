@@ -44,11 +44,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/books", "/books/*").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST,
                         "/books").hasAnyRole("USER", "ADMIN")
+                //Purpose: Update completion status for a user
                 .antMatchers(HttpMethod.PUT,
                         "/booksUser/*").hasAnyRole("USER")
-                .antMatchers(HttpMethod.PUT, "/booksAdmin/*").hasAnyRole("USER", "ADMIN")
+                //Purpose: Update incorrect information in the books table
+                .antMatchers(HttpMethod.PUT, "/booksAdmin/*").hasAnyRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE,
-                        "/books/*").hasAnyRole("ADMIN")
+                        "/books/*").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/**").denyAll()
                 // if we get to this point, let's deny all requests
                 .and()
