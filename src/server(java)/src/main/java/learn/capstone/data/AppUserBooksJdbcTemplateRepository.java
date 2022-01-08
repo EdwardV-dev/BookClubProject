@@ -36,14 +36,21 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
         return jdbcTemplate.query(sql, new BookMapper(), appUserId); //returns a list of books
     }
 
-    public int findAppUserId (String username){
+    public int findAppUserId(String username) {
         final String sql = "Select app_user_id " +
                 "from app_user " +
                 "where username = ?;";
 
-        return jdbcTemplate.queryForObject(sql, new Object[] { username }, Integer.class); //returns a list of books
+        return jdbcTemplate.queryForObject(sql, new Object[]{username}, Integer.class); //returns a userId
     }
 
+//{ appUserId: [value is grabbed from backend requst--findappuseridFromUsername
+// completionStatus: //
+//    Book: {
+    //idBooks: [value from useParams]
+    //bookProperty2: [value from html input]
+//  }
+// }
 
         @Override
         public boolean update(AppUserBooks appUserBooks){
@@ -52,7 +59,7 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
                     + "where idBooks = ? and app_user_id = ?;";
 
             return jdbcTemplate.update(sql,
-                    appUserBooks.getCompletionStatus(),
+                    appUserBooks.getCompletionStatus(), //Grabbed from the html value
                     appUserBooks.getBook().getIdBooks(), //useParams is used to fetch the id of the book, which is
                                                          //then used to set the id of the book in the put request
                     appUserBooks.getAppUserId()) > 0;
