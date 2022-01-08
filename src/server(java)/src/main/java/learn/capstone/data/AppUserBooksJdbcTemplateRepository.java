@@ -44,7 +44,7 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
         return jdbcTemplate.queryForObject(sql, new Object[]{username}, Integer.class); //returns a userId
     }
 
-//{ appUserId: [value is grabbed from backend requst--findappuseridFromUsername
+//{ appUserId: [value is grabbed from backend request--findappuseridFromUsername
 // completionStatus: //
 //    Book: {
     //idBooks: [value from useParams]

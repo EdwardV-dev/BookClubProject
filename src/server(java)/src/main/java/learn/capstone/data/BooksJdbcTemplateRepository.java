@@ -25,7 +25,7 @@ public class BooksJdbcTemplateRepository implements BooksRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-//If domain layer does not allow an update to go through, show an error message (e.g. book already exists in the database)
+    //If domain layer does not allow an update to go through, show an error message (e.g. book already exists in the database)
 // to the admin.
     @Override
     public boolean updateAdmin(Books books) {
@@ -49,6 +49,13 @@ public class BooksJdbcTemplateRepository implements BooksRepository {
                 books.getAuthor().getAuthorLastName(),
                 books.getIdBooks()) > 0;
     }
+
+    // { ApprovalStatus: whatever
+    // book {
+//    BookId: 3
+//  }
+
+//}
 
     @Override
     public List<Books> findAllForAdmin() {
