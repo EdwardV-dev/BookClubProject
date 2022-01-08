@@ -22,6 +22,21 @@ class AppUserBooksServiceTest {
     AppUserBooksRepository repository;
 
     @Test
+    void shouldAddAssociation() {
+        Books book = makeBook();
+        AppUserBooks userBook = new AppUserBooks();
+
+        userBook.setAppUserId(1);
+        userBook.setBook(book);
+        userBook.setCompletionStatus("DoneReading");
+
+        when(repository.update(userBook)).thenReturn(true);
+        Result<AppUserBooks> actual = service.update(userBook);
+        assertEquals(ResultType.SUCCESS, actual.getType());
+    }
+
+
+    @Test
     void shouldUpdateCompletionStatus() {
         Books book = makeBook();
         AppUserBooks userBook = new AppUserBooks();

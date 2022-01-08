@@ -26,6 +26,21 @@ public class AppUserBooksService {
         return repository.findAllUserBooks(appUserId);
     }
 
+    public Result<AppUserBooks> add(AppUserBooks appUserBooks) {
+        Result<AppUserBooks> result = validate(appUserBooks);
+
+        if(!result.isSuccess()) {
+            return result;
+        }
+
+        //HTTP request might not include the book id; therefore, a bridge table association is not possible
+        if(!repository.add(appUserBooks)) {
+            result.addMessage(ResultType.NOT_FOUND, "Book ID " + appUserBooks.getBook().getIdBooks() + " not found.");
+        }
+
+        return result;
+    }
+
     public Result<AppUserBooks> update(AppUserBooks appUserBooks) {
 
         Result<AppUserBooks> result = validate(appUserBooks);
