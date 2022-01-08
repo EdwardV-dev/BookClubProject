@@ -2,12 +2,14 @@ package learn.capstone.domain;
 
 import learn.capstone.data.AppUserBooksRepository;
 import learn.capstone.models.AppUserBooks;
+import learn.capstone.models.Books;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -18,7 +20,12 @@ public class AppUserBooksService {
     public AppUserBooksService(AppUserBooksRepository repository) {
         this.repository = repository;
     }
-    
+
+    //Get request uses this method
+    public List<Books> findAllUserBooks(int appUserId){
+        return repository.findAllUserBooks(appUserId);
+    }
+
     public Result<AppUserBooks> update(AppUserBooks appUserBooks) {
 
         Result<AppUserBooks> result = validate(appUserBooks);
