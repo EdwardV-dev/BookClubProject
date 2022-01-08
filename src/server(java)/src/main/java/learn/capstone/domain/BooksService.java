@@ -35,8 +35,8 @@ public class BooksService {
     }
 
     //used for domain testing
-    public List<Books> findAllBooksFromAuthorFirstAndLastName(String input1, String input2){
-        return repository.findAllBooksFromAuthorFirstAndLastName(input1, input2);
+    public Books findBookFromAuthorFirstAndLastNameAndBookTitle(String input1, String input2, String input3){
+        return repository.findBookFromAuthorFirstAndLastNameAndBookTitle(input1, input2, input3);
     }
 
     public List<Books> findAllForAdmin(){
@@ -63,15 +63,24 @@ public class BooksService {
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        Set<ConstraintViolation<Books>> violations = validator.validate(books);
 
-        if(!violations.isEmpty()) {
-            for (ConstraintViolation<Books> violation : violations) {
-                result.addMessage(ResultType.INVALID, violation.getMessage());
+            Set<ConstraintViolation<Books>> violations = validator.validate(books);
+            //If there are domain errors that are not concerning duplicates....
+            if(!violations.isEmpty()) {
+                for (ConstraintViolation<Books> violation : violations) {
+                    result.addMessage(ResultType.INVALID, violation.getMessage());
+                    return result;
+                }
             }
-            return result;
-        }
 
-        return result;
+      if (findBookFromAuthorFirstAndLastNameAndBookTitle(books.getAuthor().getAuthorFirstName(),
+              books.getAuthor().getAuthorLastName(), books.getBookTitle()) != null) {
+          result.addMessage(ResultType.INVALID, "Duplicate books are not allowed");
+      }
+
+        return result; //contains a list of all error messages
+
+
+
     }
 }

@@ -63,6 +63,40 @@ class BooksJdbcTemplateRepositoryTest {
         assertTrue(actual.getAuthor().getAuthorFirstName().equalsIgnoreCase("Erica"));
     }
 
+    @Test
+    void shouldNotReturnNullWhenFindingExistingBook(){ //Reminder: the repo method searches by book title and author name
+        Books book = new Books();
+        book.setBookTitle("Fossils and more!");
+
+        Authors author = new Authors();
+        author.setAuthorFirstName("Henry");
+        author.setAuthorLastName("Smith");
+
+        book.setAuthor(author);
+
+        Books actual = repository.findBookFromAuthorFirstAndLastNameAndBookTitle(book.getAuthor().getAuthorFirstName()
+        , book.getAuthor().getAuthorLastName(), book.getBookTitle());
+
+        assertNotNull(actual);
+    }
+
+    @Test
+    void shouldReturnNullWhenFindingNonExistingBook(){ //Reminder: the repo method searches by book title and author name
+        Books book = new Books();
+        book.setBookTitle("Dinos and more!");
+
+        Authors author = new Authors();
+        author.setAuthorFirstName("Jack");
+        author.setAuthorLastName("Smith");
+
+        book.setAuthor(author);
+
+        Books actual = repository.findBookFromAuthorFirstAndLastNameAndBookTitle(book.getAuthor().getAuthorFirstName()
+                , book.getAuthor().getAuthorLastName(), book.getBookTitle());
+
+        assertNull(actual);
+    }
+
     private Books makeBook() {
         Books book = new Books();
         book.setYearPublished(2002);

@@ -12,4 +12,6 @@ public interface AppUserBooksRepository {
     boolean delete(int userId, int bookId);
 
     boolean add(learn.capstone.models.AppUserBooks appUserBooks);
+
+    public int findAppUserId (String username);
 }
