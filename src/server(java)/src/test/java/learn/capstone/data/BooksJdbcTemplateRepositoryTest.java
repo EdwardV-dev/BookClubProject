@@ -30,7 +30,7 @@ class BooksJdbcTemplateRepositoryTest {
         Books book = makeBook();
         book.setIdBooks(1);
 
-        assertTrue(repository.update(book));
+        assertTrue(repository.updateAdmin(book));
         assertEquals("Erica", book.getAuthor().getAuthorFirstName());
     }
 

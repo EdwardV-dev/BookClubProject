@@ -24,9 +24,10 @@ public class BooksJdbcTemplateRepository implements BooksRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
+//If domain layer does not allow an update to go through, show an error message (e.g. book already exists in the database)
+// to the admin.
     @Override
-    public boolean update(Books books) {
+    public boolean updateAdmin(Books books) {
 
         final String sql = "update books, authors "
                 + "set books.approval_status = ?, "

@@ -10,7 +10,7 @@ public interface BooksRepository {
 
     Books addToAuthorTableFirstThenBooks(Books book);
 
-    boolean update(Books books);
+    boolean updateAdmin(Books books);
 
     public List<Books> findAllBooksFromAuthorFirstAndLastName(String input1, String input2);
 
