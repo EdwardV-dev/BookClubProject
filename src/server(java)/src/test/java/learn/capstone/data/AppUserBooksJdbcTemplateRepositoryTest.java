@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AppUserBooksJdbcTemplateRepositoryTest {
 
     @Autowired
-    AppUserBooksRepositoryJdbcTemplateRepository repository;
+    AppUserBooksJdbcTemplateRepository repository;
 
     @Autowired
     KnownGoodState knownGoodState;
@@ -67,5 +67,12 @@ class AppUserBooksJdbcTemplateRepositoryTest {
         userBook.setCompletionStatus("DoneReading");
 
         assertTrue(repository.add(userBook));
+    }
+
+    @Test
+    void shouldReturnUserIdFromUsername() {
+        int appUserIdActual = repository.findAppUserId("EdwardV");
+
+       assertEquals(appUserIdActual, 1);
     }
 }

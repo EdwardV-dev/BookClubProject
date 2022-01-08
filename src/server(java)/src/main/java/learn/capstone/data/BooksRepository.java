@@ -12,7 +12,7 @@ public interface BooksRepository {
 
     boolean updateAdmin(Books books);
 
-    public List<Books> findAllBooksFromAuthorFirstAndLastName(String input1, String input2);
+    Books findBookFromAuthorFirstAndLastNameAndBookTitle(String input1, String input2, String input3);
 
   Books addToBooksTable(Books book, int idAuthorForeignKey);
 

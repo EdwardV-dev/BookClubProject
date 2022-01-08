@@ -50,6 +50,28 @@ class BooksServiceTest {
         assertTrue(actual.getMessages().contains("Book author is required."));
     }
 
+    //same book, same author is not allowed
+//    @Test
+//    void shouldNotAddInvalidBookDuplication() {
+//        Authors author = new Authors();
+//        author.setAuthorFirstName("Henry");
+//        author.setAuthorLastName("Smith");
+//
+//        Books book = new Books();
+//        book.setIdBooks(2);
+//        book.setBookTitle("Test");
+//        book.setApprovalStatus(true);
+//        book.setYearPublished(1999);
+//        book.setGenre("fiction");
+//        book.setAuthor(author);
+//        return book;
+//
+//
+//        Result<Books> actual = service.add(book);
+//        assertEquals(ResultType.INVALID, actual.getType());
+//        assertTrue(actual.getMessages().contains("Book author is required."));
+//    }
+
 
     @Test
     void shouldNotUpdateInvalid() {
