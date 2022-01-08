@@ -63,6 +63,7 @@ public class BooksService {
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
+
             Set<ConstraintViolation<Books>> violations = validator.validate(books);
             //If there are domain errors that are not concerning duplicates....
             if(!violations.isEmpty()) {
@@ -78,5 +79,8 @@ public class BooksService {
       }
 
         return result; //contains a list of all error messages
+
+
+
     }
 }
