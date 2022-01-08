@@ -63,15 +63,14 @@ public class BooksService {
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-            Set<ConstraintViolation<Books>> violations = validator.validate(books);
-            if(!violations.isEmpty()) {
-                for (ConstraintViolation<Books> violation : violations) {
-                    result.addMessage(ResultType.INVALID, violation.getMessage());
-                }
-                return result;
+        Set<ConstraintViolation<Books>> violations = validator.validate(books);
+
+        if(!violations.isEmpty()) {
+            for (ConstraintViolation<Books> violation : violations) {
+                result.addMessage(ResultType.INVALID, violation.getMessage());
             }
-
-
+            return result;
+        }
 
         return result;
     }
