@@ -68,4 +68,11 @@ class AppUserBooksJdbcTemplateRepositoryTest {
 
         assertTrue(repository.add(userBook));
     }
+
+    @Test
+    void shouldReturnUserIdFromUsername() {
+        int appUserIdActual = repository.findAppUserId("EdwardV");
+
+       assertEquals(appUserIdActual, 1);
+    }
 }
