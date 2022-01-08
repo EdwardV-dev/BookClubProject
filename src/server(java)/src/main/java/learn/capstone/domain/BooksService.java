@@ -27,7 +27,7 @@ public class BooksService {
             return result;
         }
 
-        if (!repository.update(books)) {
+        if (!repository.updateAdmin(books)) {
             result.addMessage(ResultType.NOT_FOUND, "book id `" + books.getIdBooks() + "` not found");
         }
 
@@ -44,7 +44,7 @@ public class BooksService {
     }
 
     public Result<Books> add(Books book){
-        book.setIdBooks(0); //Ensures that annotation test will pass
+        book.setIdBooks(0); //Ensures that annotation test will pass. Book id is not used for insertion
 
         Result<Books> result = validate(book);
 

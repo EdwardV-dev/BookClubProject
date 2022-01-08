@@ -24,7 +24,7 @@ class BooksServiceTest {
     void shouldUpdate() {
         Books book = makeBook();
 
-        when(repository.update(book)).thenReturn(true);
+        when(repository.updateAdmin(book)).thenReturn(true);
         Result<Books> actual = service.updateAdmin(book);
         assertEquals(ResultType.SUCCESS, actual.getType());
     }
@@ -32,6 +32,7 @@ class BooksServiceTest {
     @Test
     void shouldAdd() {
         Books book = makeBook();
+
 
         when(repository.addToAuthorTableFirstThenBooks(book)).thenReturn(book);
         Result<Books> actual = service.add(book);
