@@ -76,4 +76,14 @@ class AppUserBooksJdbcTemplateRepositoryTest {
 
        assertEquals(appUserIdActual, 1);
     }
+
+    @Test
+    void findBookViaMostReadGenre(){
+Books actual1 = repository.findBookViaMostReadGenre(2);
+        System.out.println(actual1.getBookTitle());
+
+        Books actual2 = repository.findBookViaMostReadGenre(2);
+        System.out.println(actual2.getBookTitle());
+assertEquals("Fiction", actual2.getGenre());
+    }
 }

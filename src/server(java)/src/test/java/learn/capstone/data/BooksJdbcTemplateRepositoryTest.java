@@ -111,10 +111,7 @@ class BooksJdbcTemplateRepositoryTest {
         assertNull(book);
     }
 
-    @Test
-   void findBookViaMostReadGenre(int userId){
 
-    }
 
     private Books makeBook() {
         Books book = new Books();
