@@ -60,6 +60,7 @@ class AppUserBooksJdbcTemplateRepositoryTest {
     void shouldAddBookToUsersList() {
         Books book = new Books();
         book.setIdBooks(3);
+        book.setBookTitle("Fossils and more!");
 
         AppUserBooks userBook = new AppUserBooks();
         userBook.setBook(book);

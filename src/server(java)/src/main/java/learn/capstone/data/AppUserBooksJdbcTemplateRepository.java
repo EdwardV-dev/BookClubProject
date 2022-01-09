@@ -116,10 +116,11 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
 
                     appUserBooks.getCompletionStatus(), //This is set by extracting html value from react prior to http request
 
-                    specificBookWithIdAttached.getIdBooks()) > 0; //Id is grabbed from calling findSpecificBookBasedOnTitle
+                    specificBookWithIdAttached.getIdBooks()) > 0; //Id is grabbed from calling findSpecificBookBasedOnTitle.
+                                                                  //specificBook can return null if it's not found in the database
         }
         //This catch block is required if specificBookWithIdAttached is null
-        catch (EmptyResultDataAccessException ex) {
+        catch (EmptyResultDataAccessException | NullPointerException ex) {
             return false;
         }
     }
@@ -128,7 +129,7 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
     //Invalid year but existing book name: Book will be associated with the user's account
     //Invalid year and non-existent book name: Book will not be associated with user's account. They have to try again.
     //User enters a duplicate book. It gets rejected. However, the existing book is then associated with the user's account
-   //
+
 
 //     appuserId: 1
 //     completionStaus: "DoneReading"
