@@ -17,4 +17,6 @@ public interface BooksRepository {
   Books addToBooksTable(Books book, int idAuthorForeignKey);
 
     void setKnownGoodState();
+
+    Books findById(int bookId);
 }
