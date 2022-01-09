@@ -13,5 +13,7 @@ public interface AppUserBooksRepository {
 
     boolean add(learn.capstone.models.AppUserBooks appUserBooks);
 
-     int findAppUserId (String username);
+    int findAppUserId (String username);
+
+    Books findBookViaMostReadGenre(int userId);
 }

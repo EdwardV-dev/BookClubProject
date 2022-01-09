@@ -31,6 +31,10 @@ public class AppUserBooksService {
         return repository.findAppUserId(username); //returns a userId
     }
 
+    public Books findBookViaMostReadGenre(int appUserId){
+        return repository.findBookViaMostReadGenre(appUserId);
+    }
+
     public Result<AppUserBooks> add(AppUserBooks appUserBooks) {
         Result<AppUserBooks> result = validate(appUserBooks);
 
@@ -69,6 +73,8 @@ public class AppUserBooksService {
         }
         return result;
     }
+
+
 
 
     private Result<AppUserBooks> validate(AppUserBooks appUserBooks) {

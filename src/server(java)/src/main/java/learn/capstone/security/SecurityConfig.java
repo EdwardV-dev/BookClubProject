@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/authorBooks").hasAnyRole("USER", "ADMIN")
 
                 //This post request is for adding a book from mybookslist to the books table, even
-                //if the information is incorrect
+                //if the information is misspelled
                 .antMatchers(HttpMethod.POST,
                         "/booksAdmin").hasAnyRole("USER", "ADMIN")
 

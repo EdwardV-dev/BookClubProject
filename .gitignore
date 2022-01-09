@@ -1,3 +1,5 @@
 
 src/server(java)/src/main/resources/application.properties
 src/server(java)/src/test/resources/application.properties
+src/server(java)/target/classes/application.properties
+src/server(java)/target/test-classes/application.properties

@@ -34,15 +34,7 @@ public class BooksController {
         return ResponseEntity.ok(book);
     }
 
-    @PostMapping
-    public ResponseEntity<Object> add(@RequestBody Books book) {
-        Result<Books> result = service.add(book);
 
-        if(result.isSuccess()) {
-            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
-        }
-        return ErrorResponse.build(result);
-    }
 
     @PutMapping("/{bookId}")
     public ResponseEntity<Object> updateAdmin(@PathVariable int bookId, @RequestBody Books book) {
