@@ -1,11 +1,13 @@
 package learn.capstone.data;
 
+import learn.capstone.data.mappers.BookGenreMapper;
 import learn.capstone.data.mappers.BookIdMapper;
 import learn.capstone.data.mappers.BookMapper;
 
 import learn.capstone.models.Books;
 
 import java.util.List;
+import java.util.Random;
 
 
 import learn.capstone.models.AppUserBooks;
@@ -36,6 +38,7 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
         return jdbcTemplate.query(sql, new BookMapper(), appUserId); //returns a list of books
     }
 
+    @Override
     public int findAppUserId(String username) {
         final String sql = "Select app_user_id " +
                 "from app_user " +
@@ -81,7 +84,7 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
                 "where b.book_title = ?;";
 
             try {
-                Books bookWithIdAttached = jdbcTemplate.queryForObject(sql, new BookIdMapper(), title); //returns a list of books
+                Books bookWithIdAttached = jdbcTemplate.queryForObject(sql, new BookIdMapper(), title); //returns a book
                 return bookWithIdAttached;
 
                 //if no object is returned from sql query, the catch block is triggered
@@ -124,7 +127,56 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
             return false;
         }
     }
+
+
+
+    public Books findMostReadGenre(int userId){
+        final String sql = "Select genre, COUNT(genre) as genreCount From books b\n" +
+                "Inner join app_user_has_books ab on ab.idBooks = b.idbooks\n" +
+                "Inner join app_user au on au.app_user_id = ab.app_user_id \n" +
+                "Where au.app_user_id=? \n" +
+                "GROUP BY genre\n" +
+                "Order by genreCount desc\n" +
+                "limit 1;";
+
+        Books bookWithGenreAttached = jdbcTemplate.queryForObject(sql, new BookGenreMapper(), userId);
+
+        return bookWithGenreAttached;
     }
+
+    static int previousColumnPick = 0;
+
+    public Books findBookViaMostReadGenre(int userId) {
+        Books bookWithGenreAttached = findMostReadGenre(userId);
+
+        final String sqlCountRows = "Select Count(*) from books b where b.genre= ";
+        //Indicates how many table rows of books there are with a specific genre
+        int rowCount = jdbcTemplate.queryForObject(sqlCountRows, new Object[]{bookWithGenreAttached.getGenre()}, Integer.class);
+        Random random = new Random();
+
+        int randomColumnPick = random.nextInt(rowCount) + 1; //For example, SQL returns 2 rows.
+                                                            //LowerBound is 0+1 and upperbound exclusive is 2+1
+
+        if(randomColumnPick == previousColumnPick && rowCount > 1){
+            findBookViaMostReadGenre(userId); //get a new random column pick that wasn't used last time
+        }
+
+        final String sql = "Select * From\n" +
+                "(Select b.book_title, b.genre, b.idBooks, b.approval_status, b.publication_year, b.idAuthor, au.author_first_name, au.author_last_name,\n" +
+                "ROW_NUMBER() OVER(Order by idBooks) as row_numbering\n" +
+                "from books b\n" +
+                "Inner join authors au \n" +
+                "on b.idAuthor = au.idAuthor) as innerTable\n" +
+                "where genre= ? and  row_numbering = ?;";
+
+
+        previousColumnPick = randomColumnPick; //storing the columnPick in memory (will be retrieved for future method calls), i.e. columnPick is preserved after this method executes
+
+       return jdbcTemplate.queryForObject(sql, new BookMapper(), bookWithGenreAttached.getGenre(), randomColumnPick);
+    }
+    }
+
+
 
     //Invalid year but existing book name: Book will be associated with the user's account
     //Invalid year and non-existent book name: Book will not be associated with user's account. They have to try again.

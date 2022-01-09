@@ -26,6 +26,11 @@ public class AppUserBooksService {
         return repository.findAllUserBooks(appUserId);
     }
 
+    public int findAppUserId(String username) {
+
+        return repository.findAppUserId(username); //returns a userId
+    }
+
     public Result<AppUserBooks> add(AppUserBooks appUserBooks) {
         Result<AppUserBooks> result = validate(appUserBooks);
 
