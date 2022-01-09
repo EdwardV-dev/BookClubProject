@@ -82,11 +82,19 @@ public class BooksService {
                 }
             }
 
-      if (findBookFromAuthorFirstAndLastNameAndBookTitle(books.getAuthor().getAuthorFirstName(),
-              books.getAuthor().getAuthorLastName(), books.getBookTitle()) != null) {
-          result.addMessage(ResultType.INVALID, "Duplicate books are not allowed");
-      }
+        Books specificBook = findBookFromAuthorFirstAndLastNameAndBookTitle(books.getAuthor().getAuthorFirstName(),
+                books.getAuthor().getAuthorLastName(), books.getBookTitle());
 
+       //If findBookFromAuthorFirstAndLastNameAndBookTitle returns the book title that we originally wanted to update,
+       //do not add a duplicate books error message
+        try {
+            if (specificBook.getIdBooks() != books.getIdBooks() && specificBook != null) {
+                result.addMessage(ResultType.INVALID, "Duplicate books are not allowed");
+            }
+        } catch (NullPointerException ex){
+            return result; //null pointer means that the book doesn't already exist (e.g. adding a new book title) or that
+                           //we're updating properties of the same book title. These are not considered duplicates
+        }
         return result; //contains a list of all error messages
 
 
