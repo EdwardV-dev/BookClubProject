@@ -1,0 +1,103 @@
+@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJidWctc2FmYXJpIiwic3ViIjoiQW15UiIsImF1dGhvcml0aWVzIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY0MTY5MTM4Nn0.1JMGeyOcueuYZnGx9ir3B1-Y0VyDvV-jwf2HRRI0j1M
+
+//should fail for unathorized user
+GET http://localhost:8080/booksAdmin HTTP/1.1
+Content-Type: application/json
+
+###
+
+//get admin authorization
+POST http://localhost:8080/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "AmyR",
+  "password": "P@ssw0rd!"
+}
+
+###
+
+//use token for auth. Return all books in book table
+GET http://localhost:8080/booksAdmin HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+//use token for auth. Return a book with given id
+GET http://localhost:8080/booksAdmin/1 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+//add a book to book table
+POST http://localhost:8080/booksAdmin HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "approvalStatus": false,
+    "bookTitle": "The Lightning Thief",
+    "genre": "Fantasy",
+    "author": {
+      "authorFirstName": "Rick",
+      "authorLastName": "Riordin"
+    },
+    "yearPublished": 2005
+}
+
+###
+
+//FAIL for adding invalid book
+POST http://localhost:8080/booksAdmin HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    
+    "bookTitle": "dfds",
+    "author": {
+      "authorFirstName": "Rick",
+      "authorLastName": "Riordin"
+    },
+    "yearPublished": 2005
+}
+
+###
+
+//FAIL for duplicate book
+POST http://localhost:8080/booksAdmin HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "approvalStatus": false,
+    "bookTitle": "The Lightning Thief",
+    "genre": "Fantasy",
+    "author": {
+      "authorFirstName": "Rick",
+      "authorLastName": "Riordin"
+    },
+    "yearPublished": 2005
+}
+
+###
+
+//
+PUT http://localhost:8080/booksAdmin/4 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "idBooks": 4,
+    "approvalStatus": true,
+    "bookTitle": "The Lightning Thief",
+    "genre": "Fantasy",
+    "author": {
+        "idAuthor": 4,
+      "authorFirstName": "Rick",
+      "authorLastName": "Riordin"
+    },
+    "yearPublished": 2004
+}
