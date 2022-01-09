@@ -144,22 +144,22 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
         return bookWithGenreAttached;
     }
 
-    static int previousColumnPick = 0;
+     int previousColumnPick = 0;
 
     public Books findBookViaMostReadGenre(int userId) {
         Books bookWithGenreAttached = findMostReadGenre(userId);
 
-        final String sqlCountRows = "Select Count(*) from books b where b.genre= ";
+        final String sqlCountRows = "Select Count(*) from books b where b.genre = ? ";
         //Indicates how many table rows of books there are with a specific genre
         int rowCount = jdbcTemplate.queryForObject(sqlCountRows, new Object[]{bookWithGenreAttached.getGenre()}, Integer.class);
         Random random = new Random();
 
-        int randomColumnPick = random.nextInt(rowCount) + 1; //For example, SQL returns 2 rows.
-                                                            //LowerBound is 0+1 and upperbound exclusive is 2+1
+        int randomColumnPick;
 
-        if(randomColumnPick == previousColumnPick && rowCount > 1){
-            findBookViaMostReadGenre(userId); //get a new random column pick that wasn't used last time
-        }
+        do {
+            System.out.println("try again");
+            randomColumnPick = random.nextInt(rowCount) + 1;
+        } while (randomColumnPick == previousColumnPick && rowCount > 1);
 
         final String sql = "Select * From\n" +
                 "(Select b.book_title, b.genre, b.idBooks, b.approval_status, b.publication_year, b.idAuthor, au.author_first_name, au.author_last_name,\n" +
