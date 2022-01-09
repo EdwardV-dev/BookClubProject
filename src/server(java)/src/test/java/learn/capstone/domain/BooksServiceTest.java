@@ -86,6 +86,8 @@ class BooksServiceTest {
     Books makeBook() {
         Authors author = new Authors();
         author.setIdAuthor(1);
+        author.setAuthorFirstName("Haley");
+        author.setAuthorLastName("Trainer");
 
         Books book = new Books();
         book.setIdBooks(2);

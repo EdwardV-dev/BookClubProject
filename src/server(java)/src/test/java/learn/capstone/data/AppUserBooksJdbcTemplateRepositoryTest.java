@@ -60,6 +60,7 @@ class AppUserBooksJdbcTemplateRepositoryTest {
     void shouldAddBookToUsersList() {
         Books book = new Books();
         book.setIdBooks(3);
+        book.setBookTitle("Fossils and more!");
 
         AppUserBooks userBook = new AppUserBooks();
         userBook.setBook(book);
@@ -74,5 +75,15 @@ class AppUserBooksJdbcTemplateRepositoryTest {
         int appUserIdActual = repository.findAppUserId("EdwardV");
 
        assertEquals(appUserIdActual, 1);
+    }
+
+    @Test
+    void findBookViaMostReadGenre(){
+Books actual1 = repository.findBookViaMostReadGenre(2);
+        System.out.println(actual1.getBookTitle());
+
+        Books actual2 = repository.findBookViaMostReadGenre(2);
+        System.out.println(actual2.getBookTitle());
+assertEquals("Fiction", actual2.getGenre());
     }
 }
