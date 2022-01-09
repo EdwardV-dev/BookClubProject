@@ -7,5 +7,5 @@ import java.util.List;
 public interface AuthorsRepository {
     List<Books> findAllBooksFromAuthorFirstOrLastName(String input);
 
-
+    void setKnownGoodState();
 }
