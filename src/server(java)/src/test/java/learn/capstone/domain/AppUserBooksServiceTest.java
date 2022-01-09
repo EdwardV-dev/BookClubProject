@@ -30,9 +30,37 @@ class AppUserBooksServiceTest {
         userBook.setBook(book);
         userBook.setCompletionStatus("DoneReading");
 
-        when(repository.update(userBook)).thenReturn(true);
-        Result<AppUserBooks> actual = service.update(userBook);
+        when(repository.add(userBook)).thenReturn(true);
+        Result<AppUserBooks> actual = service.add(userBook);
         assertEquals(ResultType.SUCCESS, actual.getType());
+    }
+
+    @Test
+    void shouldNotAddAssociationIfCompletionStatusInvalid() {
+        Books book = makeBook();
+        AppUserBooks userBook = new AppUserBooks();
+
+        userBook.setAppUserId(1);
+        userBook.setBook(book);
+        userBook.setCompletionStatus("Invalid");
+
+
+        Result<AppUserBooks> actual = service.add(userBook);
+        assertEquals(ResultType.INVALID, actual.getType());
+    }
+
+    @Test
+    void shouldNotAddAssociationIfBookIsNull() {
+
+        AppUserBooks userBook = new AppUserBooks();
+
+        userBook.setAppUserId(1);
+//        userBook.setBook(book);
+        userBook.setCompletionStatus("Invalid");
+
+       
+        Result<AppUserBooks> actual = service.add(userBook);
+        assertEquals(ResultType.INVALID, actual.getType());
     }
 
 

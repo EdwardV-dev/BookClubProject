@@ -44,6 +44,10 @@ public class BooksService {
         return repository.findAllForAdmin();
     }
 
+    public void setKnowGoodState(){
+         repository.setKnownGoodState();
+    }
+
     public Result<Books> add(Books book){
         book.setIdBooks(0); //Ensures that annotation test will pass. Book id is not used for insertion in the repo layer sql
 
