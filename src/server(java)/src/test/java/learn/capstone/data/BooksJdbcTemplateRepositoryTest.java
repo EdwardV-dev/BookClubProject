@@ -97,6 +97,20 @@ class BooksJdbcTemplateRepositoryTest {
         assertNull(actual);
     }
 
+    @Test
+    void shouldFindById() {
+        Books book = repository.findById(1);
+        assertNotNull(book);
+        assertEquals("Winnie the Pooh", book.getBookTitle());
+
+    }
+
+    @Test
+    void shouldNotFindMissingBook() {
+        Books book = repository.findById(1000);
+        assertNull(book);
+    }
+
     private Books makeBook() {
         Books book = new Books();
         book.setYearPublished(2002);
