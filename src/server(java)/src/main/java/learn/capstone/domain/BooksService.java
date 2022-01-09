@@ -63,6 +63,10 @@ public class BooksService {
      return result;
     }
 
+    public Books findBookByIdForAdmin(int bookId) {
+        return repository.findById(bookId);
+    }
+
     private Result<Books> validate(Books books) {
         Result<Books> result = new Result();
 
