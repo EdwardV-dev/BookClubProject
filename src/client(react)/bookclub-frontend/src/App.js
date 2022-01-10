@@ -14,7 +14,7 @@ import AuthContext from "./context/AuthContext";
 import {useState, useEffect, useHistory} from "react";
 
 function App() {
-  const [userStatus, setUserStatus] = useState(null);
+  const [userStatus, setUserStatus] = useState();
 
     return (
       <Router>

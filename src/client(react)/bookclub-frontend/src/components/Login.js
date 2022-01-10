@@ -29,7 +29,7 @@ export default function Login({ userStatus }) {
         }),
       });
     
-      // This code executes if the request is successful
+      // This code executes if the login request is successful
       if (response.status === 200) {
         const { jwt_token } = await response.json();
         console.log(jwt_token)
@@ -39,7 +39,7 @@ export default function Login({ userStatus }) {
   
        // Update the user status in the context with the decoded token stuff.
        setUserStatus({ user: jwtDecode(jwt_token) });
-        history.push("/");
+        history.push("/books");
   
       } else if (response.status === 400) {
         const errors = await response.json();
