@@ -44,9 +44,9 @@ function NavBar({role}) {
                 My Books
             </button> ) : (<>&nbsp;</>) }
 
-            <button type="button" className="btn btn-success ml-2">
+            {userStatus?.user ? (<button type="button" className="btn btn-success ml-2">
                 Recommended
-            </button>
+            </button>) : (<>&nbsp;</>) }
 
            {role === "ROLE_ADMIN" && ( <button type="button" className="btn btn-success ml-2">
                 Admin
