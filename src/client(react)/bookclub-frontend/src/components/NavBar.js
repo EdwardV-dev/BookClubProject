@@ -5,6 +5,7 @@ import jwtDecode from "jwt-decode";
 
 function NavBar({role}) {
     const [userStatus, setUserStatus] = useContext(AuthContext); 
+    const history = useHistory();
 
       // "user" represents an object with multiple properties
       useEffect(() => {
@@ -22,7 +23,7 @@ function NavBar({role}) {
               onClick={() => {
                 setUserStatus(null);
                 localStorage.removeItem("token");
-          
+                history.push("/")
               }}
             >
               {/* `sub` is the property from the decoded token */}
@@ -30,22 +31,25 @@ function NavBar({role}) {
              </button>
            </li>
         ) : (
-          <li>
+          <>
             <Link to="/login">Login</Link>
-          </li>
+          </>
        )}
             <button type="bugit sttustton" className="btn btn-success ml-2">
                 Register
             </button>
-            <button type="button" className="btn btn-success ml-2">
+
+           {userStatus?.user ? (<button type="button" className="btn btn-success ml-2">
                 My Books
-            </button>
+            </button> ) : (<>&nbsp;</>) }
+
             <button type="button" className="btn btn-success ml-2">
                 Recommended
             </button>
-            <button type="button" className="btn btn-success ml-2">
+
+           {role === "ROLE_ADMIN" && ( <button type="button" className="btn btn-success ml-2">
                 Admin
-            </button>
+            </button> )}
         </nav>
     )
 }
