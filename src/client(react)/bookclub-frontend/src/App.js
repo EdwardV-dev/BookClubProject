@@ -11,12 +11,14 @@ import EditUserBooks from './components/EditUserBooks';
 import EditAdminBooks from './components/EditAdminBooks';
 import AddBook from './components/AddBook';
 
-class App extends React.Component {
-  render() {
+function App() {
+  
     return (
       <Router>
-
-        <NavBar />
+<AuthContext.Provider value={[userStatus, setUserStatus]}></AuthContext.Provider>
+        <NavBar 
+          role={userStatus?.user.authorities}
+        />
 
         <Switch>
           <Route path="/books">
@@ -60,6 +62,6 @@ class App extends React.Component {
     );
   }
 
-}
+
 
 export default App;
