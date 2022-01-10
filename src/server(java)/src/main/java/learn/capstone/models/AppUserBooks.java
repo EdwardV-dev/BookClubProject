@@ -4,14 +4,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 public class AppUserBooks {
-    @NotNull
+    @NotNull(message = "app user id cannot be null")
     private int appUserId;
 
     @NotNull
     @Pattern(regexp = "(Reading)|(WantToRead)|(DoneReading)", message = "Invalid completion status.")
     private String completionStatus;
 
-    @NotNull
+    @NotNull(message = "book cannot be null")
     private Books book;
 
 

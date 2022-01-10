@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJidWctc2FmYXJpIiwic3ViIjoiRWR3YXJkViIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjQxNzc1MjI4fQ.ZRKnWeNsRMQe6ORX57vZVUX4jR1RNeI2G55z_ry2k6I
+@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJidWctc2FmYXJpIiwic3ViIjoiRWR3YXJkViIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjQxNzk2NjQ2fQ.K_fX4dAN0R9n_ZDIqM_6J9Yg6VoG8eBZVBFCxrXfH40
 
 //should fail for unathorized user
 GET http://localhost:8080/booksAdmin HTTP/1.1
@@ -6,7 +6,7 @@ Content-Type: application/json
 
 ###
 
-//get admin authorization
+//get user authorization
 POST http://localhost:8080/authenticate HTTP/1.1
 Content-Type: application/json
 
@@ -76,4 +76,51 @@ Authorization: Bearer {{token}}
        }
  }
 
- #########
+########## //Should not add a duplicate association (SQL primary key combo protection). WORKING: Error 500 output
+
+POST http://localhost:8080/books
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+  { 
+    "appUserId": 1,
+     "completionStatus": "DoneReading",
+       "book" : {
+            "idBooks": 4,
+            "bookTitle": "Raiders"
+       }
+ }
+
+
+######### //Should not associate if book is null. WORKING
+
+POST http://localhost:8080/books
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+  { 
+    "appUserId": 1,
+    "completionStatus": "DoneReading"
+    
+ }
+
+######### //Should update association completion status. WORKING
+PUT http://localhost:8080/books
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+  { 
+    "appUserId": 1,
+     "completionStatus": "WantToRead",
+       "book" : {
+            "idBooks": 4,
+            "bookTitle": "Raiders"
+       }
+ }
+
+#########   
+
+GET http://localhost:8080/books/1 HTTP/1.1
+Authorization: Bearer {{token}}
