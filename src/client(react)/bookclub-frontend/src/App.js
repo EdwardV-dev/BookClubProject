@@ -10,14 +10,18 @@ import Recommend from './components/Recommend';
 import EditUserBooks from './components/EditUserBooks';
 import EditAdminBooks from './components/EditAdminBooks';
 import AddBook from './components/AddBook';
+import AuthContext from "./context/AuthContext";
+import {useState, useEffect, useHistory} from "react";
 
 function App() {
-  
+  const [userStatus, setUserStatus] = useState(null);
+
     return (
       <Router>
-<AuthContext.Provider value={[userStatus, setUserStatus]}></AuthContext.Provider>
+<AuthContext.Provider value={[userStatus, setUserStatus]}>
+
         <NavBar 
-          role={userStatus?.user.authorities}
+        role={userStatus?.user.authorities}
         />
 
         <Switch>
@@ -58,6 +62,7 @@ function App() {
           </Route>
 
         </Switch>
+        </AuthContext.Provider>
       </Router>
     );
   }
