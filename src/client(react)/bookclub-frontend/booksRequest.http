@@ -1,5 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJidWctc2FmYXJpIiwic3ViIjoiQW15UiIsImF1dGhvcml0aWVzIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY0MTc5NzExMX0.GcLD2CvDPAQCkJU97ZeYYxA594XEELBIOQ-xNsJa91g
-
+@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJidWctc2FmYXJpIiwic3ViIjoiQW15UiIsImF1dGhvcml0aWVzIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY0MTgwMzM2M30.zfBstcJQP807ug4wuKyNd4ZD8HSydAtv6AWy7xxOz5U
 //should fail for unathorized user
 GET http://localhost:8080/booksAdmin HTTP/1.1
 Content-Type: application/json
