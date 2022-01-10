@@ -54,14 +54,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //Adding an association between the user and the book that they added
                 .antMatchers(HttpMethod.POST, "/books").hasAnyRole("USER", "ADMIN")
+
                 //Purpose: Update completion status for a user book
                 .antMatchers(HttpMethod.PUT,
-                        "/books/*", "/books").hasAnyRole("USER")
+                        "/books/*", "/books").hasAnyRole("USER", "ADMIN")
+
                 //Purpose: Update incorrect information in the books table
                 .antMatchers(HttpMethod.PUT, "/booksAdmin/*").hasAnyRole("ADMIN")
                 //Deleting a book from MybooksList
                 .antMatchers(HttpMethod.DELETE,
-                        "/books/*").hasAnyRole("USER", "ADMIN")
+                        "/books/*/*").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/**").denyAll()
                 // if we get to this point, let's deny all requests
                 .and()

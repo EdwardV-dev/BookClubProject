@@ -40,7 +40,7 @@ public class AppUserBooksController {
 
     //JSON request should include appUserId from authContext, completionStatus from HTML field, and books object with
     //at least a book id field that's obtained from response.json of the first POST fetch to the books table
-    @PostMapping("/booksUser")
+    @PostMapping()
     public ResponseEntity<Object> add(@RequestBody AppUserBooks appUserBook) {
         Result<AppUserBooks> result = service.add(appUserBook);
 
@@ -77,10 +77,10 @@ public class AppUserBooksController {
 
 //}
 
-    @DeleteMapping()
-    public ResponseEntity<Object> deleteById(@RequestBody AppUserBooks appUserBooks) {
-        //First, check that the item you wish to delete is present. if not, a nof found error will be built
-        Result<AppUserBooks> result = service.deleteByBookId(appUserBooks.getAppUserId(), appUserBooks.getBook().getIdBooks());
+    @DeleteMapping("/{appUserId}/{idBooks}")
+    public ResponseEntity<Object> deleteById(@PathVariable int appUserId, @PathVariable int idBooks) {
+        //First, check that the item you wish to delete is present. if not, a not found error will be built
+        Result<AppUserBooks> result = service.deleteByBookId(appUserId, idBooks);
 
         if(result.isSuccess()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
