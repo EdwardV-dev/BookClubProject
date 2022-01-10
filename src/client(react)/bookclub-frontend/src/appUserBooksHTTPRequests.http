@@ -1,0 +1,79 @@
+@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJidWctc2FmYXJpIiwic3ViIjoiRWR3YXJkViIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjQxNzc1MjI4fQ.ZRKnWeNsRMQe6ORX57vZVUX4jR1RNeI2G55z_ry2k6I
+
+//should fail for unathorized user
+GET http://localhost:8080/booksAdmin HTTP/1.1
+Content-Type: application/json
+
+###
+
+//get admin authorization
+POST http://localhost:8080/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "EdwardV",
+  "password": "P@ssw0rd!"
+}
+
+### //Sucessfully retrieves all of the books from user 1 (EdwardV)
+GET http://localhost:8080/books/userId?userId=1
+Authorization: Bearer {{token}}
+
+##### //Successfully retrieves the user id from the username. 1 in this case
+
+GET http://localhost:8080/books/userName?userName=EdwardV
+Authorization: Bearer {{token}}
+
+##### //Successfully retrieves a recommended book for a specific user. Book titles alternate.
+
+GET http://localhost:8080/books/userIdRecommended?userIdRecommended=1
+Authorization: Bearer {{token}}
+
+
+###### //Should not post invalid completion status. WORKING
+
+POST http://localhost:8080/books
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+  { 
+    "appUserId": 1,
+     "completionStatus": "Gambling",
+       "book" : {
+            "idBooks": 4
+       }
+ }
+
+################## //Should not associate non-existent user with a book. WORKING
+
+POST http://localhost:8080/books
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+  { 
+    "appUserId": 1000,
+     "completionStatus": "DoneReading",
+       "book" : {
+            "idBooks": 4
+       }
+ }
+
+################## //Should associate existing user with a valid book. Title is required. WORKING
+
+POST http://localhost:8080/books
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+  { 
+    "appUserId": 1,
+     "completionStatus": "DoneReading",
+       "book" : {
+            "idBooks": 4,
+            "bookTitle": "Raiders"
+       }
+ }
+
+ #########
