@@ -77,7 +77,8 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
 
         }
 
-        //this method is called upon by the add method below
+        //this method is called upon by the add method below. This method is necessary because we don't immediately
+       //know if the book was added successfully to the books table
         public Books findSpecificBookBasedOnTitle(String title){
         final String sql = "Select b.idBooks " +
                 "from books b " +

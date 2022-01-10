@@ -1,3 +1,5 @@
+@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJidWctc2FmYXJpIiwic3ViIjoiRWR3YXJkViIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjQxNzcwNzU2fQ.mWieEAdbSX-bmSGOdFSKmgJCcMEMycw2Z7v51umWLpU
+
 POST http://localhost:8080/authenticate HTTP/1.1
 Content-Type: application/json
 
@@ -9,7 +11,7 @@ Content-Type: application/json
 
 GET http://localhost:8080/authorBooks HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJidWctc2FmYXJpIiwic3ViIjoiQW15UiIsImF1dGhvcml0aWVzIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY0MTY5NTI5M30.AlYfHCmmIVOVGgka5VEdMPrQ4k1js4LlGjVnFwqgL3Y
+Authorization: Bearer {{token}}
 
 {
 

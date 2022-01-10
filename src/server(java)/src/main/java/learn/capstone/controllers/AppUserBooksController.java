@@ -21,21 +21,21 @@ public class AppUserBooksController {
         this.service = service;
     }
 
-    @GetMapping
-    public List<Books> findAllUserBooks(@PathVariable int userId) {
+    @GetMapping("/userId")
+    public List<Books> findAllUserBooks(@RequestParam int userId) {
         return service.findAllUserBooks(userId);
     }
 
-    //username is set in the JSON request by utilizing the information from jwtdecode
-    @GetMapping("/findUserId")
-    public int findAppUserId(@RequestBody AppUser appUser) {
-        return service.findAppUserId(appUser.getUsername());
+    //username is set in the JSON request url by utilizing the information from jwtdecode
+    @GetMapping("/userName")
+    public int findAppUserId(@RequestParam String userName) {
+        return service.findAppUserId(userName);
     }
 
     //appUserId is supplied by authContext, which calls /books/findUserId upon starting the react application
-    @GetMapping("/{appUserId}")
-    public Books findBookViaMostReadGenre(@RequestBody AppUser appUser) {
-        return service.findBookViaMostReadGenre(appUser.getAppUserId());
+    @GetMapping("/userIdRecommended")
+    public Books findBookViaMostReadGenre(@RequestParam int userIdRecommended) {
+        return service.findBookViaMostReadGenre(userIdRecommended);
     }
 
     //JSON request should include appUserId from authContext, completionStatus from HTML field, and books object with
