@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/booksAdmin")
 public class BooksController {
 
     private final BooksService service;
@@ -19,12 +18,14 @@ public class BooksController {
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping("/booksAdmin")
     public List<Books> findAllForAdmin() {
         return service.findAllForAdmin();
     }
 
-    @GetMapping("/{bookId}")
+
+    //Anyone can use this route
+    @GetMapping("/books/{bookId}")
     public ResponseEntity<Books> findById(@PathVariable int bookId) {
         Books book = service.findBookByIdForAdmin(bookId);
 
@@ -34,9 +35,17 @@ public class BooksController {
         return ResponseEntity.ok(book);
     }
 
+    @PostMapping("/booksAdmin")
+    public ResponseEntity<Object> add(@RequestBody Books book) {
+        Result<Books> result = service.add(book);
 
+        if(result.isSuccess()) {
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+        }
+        return ErrorResponse.build(result);
+    }
 
-    @PutMapping("/{bookId}")
+    @PutMapping("/booksAdmin/{bookId}")
     public ResponseEntity<Object> updateAdmin(@PathVariable int bookId, @RequestBody Books book) {
         if (bookId != book.getIdBooks()) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);

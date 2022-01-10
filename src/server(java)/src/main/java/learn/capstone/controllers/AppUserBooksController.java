@@ -40,7 +40,7 @@ public class AppUserBooksController {
 
     //JSON request should include appUserId from authContext, completionStatus from HTML field, and books object with
     //at least a book id field that's obtained from response.json of the first POST fetch to the books table
-    @PostMapping
+    @PostMapping("/booksUser")
     public ResponseEntity<Object> add(@RequestBody AppUserBooks appUserBook) {
         Result<AppUserBooks> result = service.add(appUserBook);
 
@@ -50,14 +50,21 @@ public class AppUserBooksController {
         return ErrorResponse.build(result);
     }
 
-    @PutMapping()
-    public ResponseEntity<Object> update(@RequestBody AppUserBooks appUserBooks) {
-        //First, check that the item you wish to update is present. If not, a not found error will be built
+    @PutMapping("/{bookId}")
+    public ResponseEntity<Object> update(@RequestBody AppUserBooks appUserBooks, @PathVariable int bookId) {
+        //First, check that the item you wish to update in request body is the same as the one you sent in via url
+
+        if (bookId != appUserBooks.getBook().getIdBooks()) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+
         Result<AppUserBooks> result = service.update(appUserBooks);
 
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+
 
         return ErrorResponse.build(result);
 
