@@ -38,8 +38,8 @@ DROP TABLE IF EXISTS `userbooks`.`app_user` ;
 CREATE TABLE IF NOT EXISTS `userbooks`.`app_user` (
   `app_user_id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
-  `password_hash` VARCHAR(45) NOT NULL,
-  `disabled` TINYINT(1) NOT NULL,
+  `password_hash` VARCHAR(2048) NOT NULL,
+  `disabled` TINYINT(1) NOT NULL default(0),
   `idRole` INT NOT NULL,
   PRIMARY KEY (`app_user_id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,

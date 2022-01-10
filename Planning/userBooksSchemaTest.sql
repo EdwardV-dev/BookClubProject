@@ -38,9 +38,9 @@ DROP TABLE IF EXISTS `userbookstest`.`app_user` ;
 CREATE TABLE IF NOT EXISTS `userbookstest`.`app_user` (
   `app_user_id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
-  `password_hash` VARCHAR(45) NOT NULL,
-  `disabled` TINYINT(1) NOT NULL,
-  `idRole` INT NOT NULL,
+  `password_hash` VARCHAR(2048) NOT NULL,
+  `disabled` TINYINT(1) NOT NULL default(0),
+  `idRole` INT NOT NULL default 1,
   PRIMARY KEY (`app_user_id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
   INDEX `fk_app_user_app_role1_idx` (`idRole` ASC) VISIBLE,
@@ -72,7 +72,7 @@ DROP TABLE IF EXISTS `userbookstest`.`books` ;
 
 CREATE TABLE IF NOT EXISTS `userbookstest`.`books` (
   `idBooks` INT NOT NULL AUTO_INCREMENT,
-  `approval_status` TINYINT(1) NOT NULL,
+  `approval_status` TINYINT(1) NOT NULL default(0),
   `book_title` VARCHAR(45) NOT NULL,
   `genre` VARCHAR(45) NOT NULL,
   `publication_year` INT NULL,
@@ -90,6 +90,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `userbookstest`.`app_user_has_books`
 -- -----------------------------------------------------
+
 DROP TABLE IF EXISTS `userbookstest`.`app_user_has_books` ;
 
 CREATE TABLE IF NOT EXISTS `userbookstest`.`app_user_has_books` (
@@ -119,13 +120,17 @@ delimiter //
 create procedure set_known_good_state()
 begin
 
-SET FOREIGN_KEY_CHECKS = 0;
-
     -- 2. Throws out all records without executing deletes.
     -- Resets the auto_increment value.
+    SET FOREIGN_KEY_CHECKS=0;
+
+	truncate table app_user_has_books;
     truncate table books;
+    truncate table app_user;
+    truncate table app_role;
+    truncate table authors;
     
-SET FOREIGN_KEY_CHECKS = 1;
+    SET FOREIGN_KEY_CHECKS=1;
 
     -- 3. Add test data.
     
@@ -143,7 +148,26 @@ SET FOREIGN_KEY_CHECKS = 1;
         (false, "Harry Potter: The First Book", "Fiction", 1996, 2),
         (true, "Fossils and more!", "Nonfiction", 2003, 3);
         
-	
+	insert into app_role
+    (`role_name`)
+    values
+    ("USER"), -- id 1
+    ("ADMIN"); -- id 2
+    
+        
+	insert into app_user
+    (`username`, `password_hash`, `disabled`, `idRole`)
+    values
+    ("EdwardV", "$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa", false, 1),
+    ("AmyR", "$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa", false, 2);
+        
+
+insert into app_user_has_books (`app_user_id`, `idBooks`, `completion_status`) -- EdwardV is the appUser for testing
+values
+(1, 1, "Reading"),
+(1, 2, "WantToRead"),
+(1, 3, "DoneReading"),
+(2, 2, "Reading"); 
      
 end // -- ensures that 
 -- 4. Change the statement terminator back to the original.
@@ -152,9 +176,9 @@ delimiter ;
     insert into books
         (`approval_status`, `book_title`, `genre`, `publication_year`, `idAuthor`)
     values
-        (true, "Winnie the Pooh", "Fiction", 1932, 1),
-        (false, "Harry Potter: The First Book", "Fiction", 1996, 2),
-        (true, "Fossils and more!", "Nonfiction", 2003, 3);
+        (true, "Winnie the Pooh", "Fiction", 1932, 1), -- idbooks:1
+        (false, "Harry Potter: The First Book", "Fiction", 1996, 2), -- idbooks:2
+        (true, "Fossils and more!", "Nonfiction", 2003, 3); -- idbooks:3
         
 	insert into authors
         (`author_first_name`, `author_last_name`)
@@ -163,6 +187,25 @@ delimiter ;
         ("JK", "Rowling"),
         ("Henry", "Smith");
         
+    insert into app_user
+    (`username`, `password_hash`, `disabled`, `idRole`)
+    values
+    ("EdwardV", "$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa", false, 1),
+    ("AmyR", "$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa", false, 2);
+        
+	insert into app_role
+    (`role_name`)
+    values
+    ("USER"), -- id 1
+    ("ADMIN"); -- id 2
+    
+insert into app_user_has_books (`app_user_id`, `idBooks`, `completion_status`) -- EdwardV is the appUser for testing
+values
+(1, 1, "Reading"),
+(1, 2, "WantToRead"),
+(1, 3, "DoneReading"),
+(2, 2, "Reading"); 
+    
      -- testing here
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

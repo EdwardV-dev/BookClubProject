@@ -1,0 +1,151 @@
+@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJidWctc2FmYXJpIiwic3ViIjoiQW15UiIsImF1dGhvcml0aWVzIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY0MTgwMzM2M30.zfBstcJQP807ug4wuKyNd4ZD8HSydAtv6AWy7xxOz5U
+//should fail for unathorized user
+GET http://localhost:8080/booksAdmin HTTP/1.1
+Content-Type: application/json
+
+###
+
+//get admin authorization
+POST http://localhost:8080/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "AmyR",
+  "password": "P@ssw0rd!"
+}
+
+###
+
+//use token for auth. 
+//SUCCESS return all books in book table
+GET http://localhost:8080/booksAdmin HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+//use token for auth. 
+//SUCCESS return a book with given id
+GET http://localhost:8080/books/1 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+//FAIL to return nonexisting book
+GET http://localhost:8080/booksAdmin/1000 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+//SUCCESS ADD a book to book table
+POST http://localhost:8080/booksAdmin HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "approvalStatus": false,
+    "bookTitle": "The Lightning Thief",
+    "genre": "Fantasy",
+    "author": {
+      "authorFirstName": "Rick",
+      "authorLastName": "Riordin"
+    },
+    "yearPublished": 2005
+}
+
+###
+
+//FAIL ADD for invalid book
+POST http://localhost:8080/booksAdmin HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    
+    "bookTitle": "",
+    "author": {
+      "authorFirstName": "Rick",
+      "authorLastName": "Riordin"
+    },
+    "yearPublished": 2005
+}
+
+###
+
+//FAIL ADD for duplicate book
+POST http://localhost:8080/booksAdmin HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "approvalStatus": false,
+    "bookTitle": "The Lightning Thief",
+    "genre": "Fantasy",
+    "author": {
+      "authorFirstName": "Rick",
+      "authorLastName": "Riordin"
+    },
+    "yearPublished": 2005
+}
+
+###
+
+//SUCCESS UPDATE a book
+PUT http://localhost:8080/booksAdmin/4 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "idBooks": 4,
+    "approvalStatus": true,
+    "bookTitle": "Sea of Monsters",
+    "genre": "Fantasy",
+    "author": {
+        "idAuthor": 4,
+      "authorFirstName": "Rick",
+      "authorLastName": "Riordin"
+    },
+    "yearPublished": 2004
+}
+
+###
+
+//FAIL UPDATE current book to already existing book
+PUT http://localhost:8080/booksAdmin/4 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "idBooks": 4,
+    "approvalStatus": true,
+    "bookTitle": "Winnie the Pooh",
+    "genre": "Fantasy",
+    "author": {
+        "idAuthor": 4,
+      "authorFirstName": "Christopher",
+      "authorLastName": "Robin"
+    },
+    "yearPublished": 2004
+}
+
+###
+
+//FAIL UPDATE for invalid book
+PUT http://localhost:8080/booksAdmin/4 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "idBooks": 4,
+    "approvalStatus": true,
+    "bookTitle": "abc",
+    "genre": "Fantasy",
+    "author": {
+        "idAuthor": 4,
+      "authorFirstName": "Rick",
+      "authorLastName": "Riordin"
+    },
+    "yearPublished": 3000
+}

@@ -16,15 +16,17 @@ public class AuthorsJdbcTemplateRepository implements AuthorsRepository{
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    //The following method is for the author search bar in react
     @Override
     public List<Books> findAllBooksFromAuthorFirstOrLastName(String input) {
-        final String sql = "Select b.book_title, b.genre, b.idBooks, b.approval_status, b.publication_year, b.idAuthor\n" +
-                "from books b\n" +
+        final String sql = "Select b.book_title, b.genre, b.idBooks, b.approval_status, b.publication_year, b.idAuthor," +
+                " au.author_first_name, au.author_last_name from books b\n" +
                 "Inner join authors au \n" +
                 "on b.idAuthor = au.idAuthor\n" +
                 "where author_first_name = ? or author_last_name = ?;";
         return jdbcTemplate.query(sql, new BookMapper(), input, input);
     }
+
 
     public void setKnownGoodState(){
         jdbcTemplate.update("call set_known_good_state();");
