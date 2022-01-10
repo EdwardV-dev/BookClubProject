@@ -1,0 +1,162 @@
+@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJidWctc2FmYXJpIiwic3ViIjoiRWR3YXJkViIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjQxODAzMDE2fQ.UTUlC7VyB9kFIHPG3gtqXOja82CxyT3U_hJVPKaAm4A
+
+
+//get user authorization
+POST http://localhost:8080/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "EdwardV",
+  "password": "P@ssw0rd!"
+}
+
+### //Sucessfully retrieves all of the books from user 1 (EdwardV)
+GET http://localhost:8080/books/userId?userId=1
+Authorization: Bearer {{token}}
+
+##### //Successfully retrieves the user id from the username. 1 in this case
+
+GET http://localhost:8080/books/userName?userName=EdwardV
+Authorization: Bearer {{token}}
+
+##### //Successfully retrieves a recommended book for a specific user. Book titles alternate.
+
+GET http://localhost:8080/books/userIdRecommended?userIdRecommended=1
+Authorization: Bearer {{token}}
+
+
+###### //Should not post invalid completion status. WORKING
+
+POST http://localhost:8080/books
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+  {
+    "appUserId": 1,
+     "completionStatus": "Gambling",
+       "book" : {
+            "idBooks": 4
+       }
+ }
+
+################## //Should not associate non-existent user with a book. WORKING
+
+POST http://localhost:8080/books
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+  {
+    "appUserId": 1000,
+     "completionStatus": "DoneReading",
+       "book" : {
+            "idBooks": 4
+       }
+ }
+
+################## //Should associate existing user with a valid book. Title is required. WORKING
+
+POST http://localhost:8080/books
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+  {
+    "appUserId": 1,
+     "completionStatus": "DoneReading",
+       "book" : {
+            "idBooks": 4,
+            "bookTitle": "Raiders"
+       }
+ }
+
+########## //Should not add a duplicate association (SQL primary key combo protection). WORKING: Error 500 output
+
+POST http://localhost:8080/books
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+  {
+    "appUserId": 1,
+     "completionStatus": "DoneReading",
+       "book" : {
+            "idBooks": 4,
+            "bookTitle": "Raiders"
+       }
+ }
+
+
+######### //Should not associate if book is null. WORKING
+
+POST http://localhost:8080/books
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+  {
+    "appUserId": 1,
+    "completionStatus": "DoneReading"
+
+ }
+
+######### //Should update association completion status.
+PUT http://localhost:8080/books/4
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+  {
+    "appUserId": 1,
+     "completionStatus": "WantToRead",
+       "book" : {
+            "idBooks": 4,
+            "bookTitle": "Raiders"
+       }
+ }
+
+
+########### Should not update if completion status is missing. WORKING
+
+PUT http://localhost:8080/books/4
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+  {
+    "appUserId": 1,
+       "book" : {
+            "idBooks": 4,
+            "bookTitle": "Raiders"
+       }
+ }
+
+################ Should not update if app user id is blank. WORKING
+
+PUT http://localhost:8080/books/4
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+  {
+    "appUserId": "",
+     "completionStatus": "DoneReading",
+       "book" : {
+            "idBooks": 4
+       }
+ }
+
+############ //Deleting an existing relationship. WORKING
+DELETE http://localhost:8080/books/1/1
+Authorization: Bearer {{token}}
+
+
+############### //Deleting a non-existent relationship. WORKING
+DELETE http://localhost:8080/books/1000/1
+Authorization: Bearer {{token}}
+
+######### //Getting a book by id as a user. WORKING
+
+GET http://localhost:8080/books/1 HTTP/1.1
+Authorization: Bearer {{token}}
+
+###############
+

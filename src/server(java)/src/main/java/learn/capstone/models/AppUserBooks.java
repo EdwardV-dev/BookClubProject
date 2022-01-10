@@ -1,10 +1,13 @@
 package learn.capstone.models;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.PositiveOrZero;
 
 public class AppUserBooks {
     @NotNull(message = "app user id cannot be null")
+    @PositiveOrZero
     private int appUserId;
 
     @NotNull
