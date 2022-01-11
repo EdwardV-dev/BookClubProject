@@ -15,6 +15,7 @@ function NavBar({role}) {
         }
       }, [setUserStatus]);
 
+
     return (
         <nav>
             {userStatus?.user ? (
