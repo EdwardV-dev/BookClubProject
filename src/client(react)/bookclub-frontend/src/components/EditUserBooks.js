@@ -99,6 +99,10 @@ function EditUserBooks() {
         }
     }
 
+    const handleCancel = async (event) => {
+        history.push("/books");
+    }
+
     return (
         <>
         <h2>Update completion status for:</h2>
@@ -144,6 +148,9 @@ function EditUserBooks() {
                 <div>
                     <button type="submit" className="btn btn-success ml-2">
                         Update
+                    </button> &nbsp;
+                    <button type="button" className="btn btn-warning ml-2" onClick={handleCancel}>
+                        Cancel
                     </button>
                 </div>
             </form>
