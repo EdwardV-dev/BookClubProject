@@ -1,0 +1,27 @@
+POST http://localhost:8080/create_account HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "Mozart5",
+  "password": "P@ssw0rd!"
+}
+
+################
+
+POST http://localhost:8080/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "Mozart5",
+  "password": "P@ssw0rd!"
+}
+
+################
+
+POST http://localhost:8080/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "AmyR",
+  "password": "P@ssw0rd!"
+}

@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //Getting all books from the books table for admin view
                 .antMatchers(HttpMethod.GET, "/booksAdmin", "/booksAdmin/*").hasAnyRole("ADMIN")
 
-                .antMatchers(HttpMethod.GET, "/authorBooks").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/authorBooks", "/authorBooks/*").hasAnyRole("USER", "ADMIN")
 
                 //This post request is for adding a book from mybookslist to the books table, even
                 //if the information is misspelled
