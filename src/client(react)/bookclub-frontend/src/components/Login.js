@@ -55,11 +55,12 @@ export default function Login({ userStatus }) {
           // assume that it's a 200
           userId = await response.json();
           console.log("Current user id: " + userId);
+          console.log(jwt_token);
 
           // Update the user status in the context with the decoded token stuff.
           setUserStatus({ user: jwtDecode(jwt_token)});
           localStorage.setItem("userId", userId);
-          
+
           history.push("/books");
           
         } catch (error) {

@@ -26,7 +26,7 @@ class AuthorsJdbcTemplateRepositoryTest {
 
     @Test
     void findAllBooksFromAuthorFirstOrLastName() {
-        List<Books> books = repository.findAllBooksFromAuthorFirstOrLastName("Rowling");
+        List<Books> books = repository.findAllBooksFromAuthorFirstOrLastName("Rowling", 1);
         assertNotNull(books);
 
         //should find one book, the Harry Potter one
