@@ -12,6 +12,7 @@ function Admin() {
                         <th scope="col">Book Author</th>
                         <th scope="col">Genre</th>
                         <th scope="col">Year Published</th>
+                        <th scope="col">Approval Status</th>
                     </tr>
                 </thead>
                 <tbody>

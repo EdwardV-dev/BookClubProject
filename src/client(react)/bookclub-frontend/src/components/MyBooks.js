@@ -53,7 +53,7 @@ function MyBooks() {
 
     };
 
-    fetch(`http://localhost:8080/authorBooks/${authorName}`, init)
+    fetch(`http://localhost:8080/authorBooks/${authorName}/${localStorage.getItem("userId")}`, init)
       .then((response) => {
         if (response.status !== 200) {
           return Promise.reject("books fetch failed");

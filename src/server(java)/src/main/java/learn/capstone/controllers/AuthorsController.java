@@ -20,9 +20,9 @@ public class AuthorsController {
 
     //JSON request will activate the setter for the authorFirstName. However, user might be trying to search for
     //their last name instead.
-    @GetMapping("/{authorFirstName}")
-    public List<Books> findAll(@PathVariable String authorFirstName) {
-        return service.findAllBooksFromAuthorFirstOrLastName(authorFirstName);
+    @GetMapping("/{authorFirstName}/{appUserId}")
+    public List<Books> findAll(@PathVariable String authorFirstName, @PathVariable int appUserId) {
+        return service.findAllBooksFromAuthorFirstOrLastName(authorFirstName, appUserId);
     }
 
     @GetMapping("/setKnownGoodState")
