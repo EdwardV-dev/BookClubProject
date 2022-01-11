@@ -6,7 +6,7 @@ function EditUserBooks() {
     const [userStatus, setUserStatus] = useContext(AuthContext);
 
     const currentBook = {
-        appUserId: "",
+        appUserId: localStorage.getItem("userId"),
         completionStatus: "",
         book: {
             idBooks: "",
@@ -14,17 +14,18 @@ function EditUserBooks() {
         }
     }
 
+    
     const history = useHistory();
-    const [book, setBook] = useState(currentBook);
-    //const { id } = useParams();
+    const [userBook, setUserBook] = useState(currentBook);
+    const { id } = useParams();
     const [errors, setErrors] = useState([]);
-    const id = 1;
+    const [bookTitle, setBookTitle] = useState("")
 
     useEffect(
         () => {
             // Only do this if there is an `id`
             if (id) {
-              fetch(`http://localhost:8080/books/1`, {
+              fetch(`http://localhost:8080/books/${id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -37,29 +38,37 @@ function EditUserBooks() {
                 }
                 return response.json();
               })
-              .then(data => setBook(data))
+              //.then(data => setUserBook(data))
+              .then(function(data) {
+                  setUserBook(data);
+                  return data.bookTitle;
+              }).then(function(title) {
+                  setBookTitle(title);
+              })
               .catch(console.log);
             }
         }, 
         [id]
     );
 
+    console.log(userBook)
+
     const handleChange = (event) => {
-        setBook({ ...book, 
-            appUserId: userStatus?.userId,
+        setUserBook({ 
+            appUserId: localStorage.getItem("userId"),
             completionStatus: event.target.value,
             book: {
-                idBooks: 1,
-                bookTitle: "Winnie the Pooh"
+                idBooks: id
             }
         });
+        console.log({...userBook});
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         const updatedBook = {
-            ...book
+            ...userBook
         };
 
         try {
@@ -73,7 +82,7 @@ function EditUserBooks() {
             };
 
             const response = await fetch(
-                `http://localhost:8080/books/1`, 
+                `http://localhost:8080/books/${id}`, 
                 init);
                 if (response.status === 204) {
                     history.push("/books");
@@ -92,9 +101,15 @@ function EditUserBooks() {
 
     return (
         <>
+        <h2>Update completion status for:</h2>
         <div>
-            <label>{book.bookTitle}</label>
+            <h3>{bookTitle}</h3>
         </div>
+
+        {/* {errors.map((error, i) => (
+            <Error key={i} msg={error} />
+        ))} */}
+
         <div>
             <form onSubmit={handleSubmit} className="form-inline mx-2 my-4">
                 <div>
@@ -102,6 +117,7 @@ function EditUserBooks() {
                         type="radio" 
                         value="WantToRead" 
                         name="completionStatus"
+                        required
                         onChange={handleChange}
                     />
                     Want to Read
@@ -126,7 +142,9 @@ function EditUserBooks() {
                 </div>
 
                 <div>
-                    <button type="submit">Submit</button>
+                    <button type="submit" className="btn btn-success ml-2">
+                        Update
+                    </button>
                 </div>
             </form>
         </div>
