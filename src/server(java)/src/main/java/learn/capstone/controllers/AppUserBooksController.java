@@ -38,6 +38,11 @@ public class AppUserBooksController {
         return service.findBookViaMostReadGenre(userIdRecommended);
     }
 
+    @GetMapping("/completionStatusFinder")
+    public String findCompletionStatus(@RequestParam int userId, @RequestParam int bookId) {
+        return service.findCompletionStatus(userId, bookId);
+    }
+
     //JSON request should include appUserId from authContext, completionStatus from HTML field, and books object with
     //at least a book id field that's obtained from response.json of the first POST fetch to the books table
     @PostMapping()

@@ -15,8 +15,8 @@ public class AuthorsService {
         this.repository = repository;
     }
 
-    public List<Books> findAllBooksFromAuthorFirstOrLastName(String singleUserInput){
-        return repository.findAllBooksFromAuthorFirstOrLastName(singleUserInput);
+    public List<Books> findAllBooksFromAuthorFirstOrLastName(String nameInput, int userId){
+        return repository.findAllBooksFromAuthorFirstOrLastName(nameInput, userId);
     }
 
     public void setKnowGoodState(){
