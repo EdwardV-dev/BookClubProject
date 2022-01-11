@@ -32,9 +32,7 @@ export default function Login({ userStatus }) {
     // This code executes if the login request is successful
     if (response.status === 200) {
       const { jwt_token } = await response.json();
-      console.log(jwt_token);
-      console.log(jwtDecode(jwt_token));
-
+     
       localStorage.setItem("token", jwt_token);
 
       let userId = 0;
@@ -59,8 +57,9 @@ export default function Login({ userStatus }) {
           console.log("Current user id: " + userId);
 
           // Update the user status in the context with the decoded token stuff.
-          setUserStatus({ user: jwtDecode(jwt_token), userId: userId });
-
+          setUserStatus({ user: jwtDecode(jwt_token)});
+          localStorage.setItem("userId", userId);
+          
           history.push("/books");
           
         } catch (error) {
