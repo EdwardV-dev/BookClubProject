@@ -49,11 +49,11 @@ function App() {
             <Recommend />
           </Route>
 
-          <Route path="/booksUser">
+          <Route path="/booksUserEdit/:id">
             <EditUserBooks />
           </Route>
 
-          <Route path="/booksAdmin">
+          <Route path="/booksAdminEdit/:id">
             <EditAdminBooks />
           </Route>
 
