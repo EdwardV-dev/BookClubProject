@@ -16,4 +16,6 @@ public interface AppUserBooksRepository {
     int findAppUserId (String username);
 
     Books findBookViaMostReadGenre(int userId);
+
+    String findCompletionStatus(int appUserId, int bookId);
 }

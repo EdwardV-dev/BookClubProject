@@ -31,6 +31,10 @@ public class AppUserBooksService {
         return repository.findAppUserId(username); //returns a userId
     }
 
+    public String findCompletionStatus(int appUserId, int bookId){
+        return repository.findCompletionStatus(appUserId, bookId);
+    }
+
     public Books findBookViaMostReadGenre(int appUserId){
         return repository.findBookViaMostReadGenre(appUserId);
     }

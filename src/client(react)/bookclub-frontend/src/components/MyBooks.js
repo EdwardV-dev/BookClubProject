@@ -1,6 +1,7 @@
 import { Link, useHistory } from "react-router-dom";
 import React, { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthContext";
+import CompletionStatus from "./CompletionStatus";
 
 function MyBooks() {
   const history = useHistory();
@@ -32,12 +33,17 @@ function MyBooks() {
       })
       .then((json) => setBooks(json))
       .catch(console.log);
-  }, []);
+    }, []);
+
+    const handleInputChange = (event) => {
+    
+        setAuthorName(event.target.value); //Same property name that "...agent" contains is replaced by the new value. Id is not one of those values
+        console.log(authorName);
+    };
 
   const handleAuthorNameSubmit = async (event) => {
     event.preventDefault();
 
-   
     const init = {
         method: "GET",
         headers: {
@@ -58,12 +64,6 @@ function MyBooks() {
       .catch(console.log);
  
   };
-
-  const handleInputChange = (event) => {
-    
-    setAuthorName(event.target.value); //Same property name that "...agent" contains is replaced by the new value. Id is not one of those values
-    console.log(authorName);
-};
 
 
   return (
@@ -94,9 +94,11 @@ function MyBooks() {
             <th scope="col">Year Published</th>
             <th scope="col">Author First Name</th>
             <th scope="col">Author Last Name</th>
+            <th scope="col">Completion Status</th>
           </tr>
         </thead>
         <tbody>
+        {/*for every book in books, grab their id and set it as being the key*/}
           {books.map((book) => (
             <tr key={book.idBooks}>
               <td>{book.bookTitle}</td>
@@ -104,7 +106,7 @@ function MyBooks() {
               <td>{book.yearPublished}</td>
               <td>{book.author.authorFirstName}</td>
               <td>{book.author.authorLastName}</td>
-
+              <td><CompletionStatus idBooks={book.idBooks}/></td>
               <td>
                 <div className="float-right">
                   <Link to={`/booksUserEdit/${book.idBooks}`}>Edit</Link> &nbsp;

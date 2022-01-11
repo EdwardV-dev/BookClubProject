@@ -1,5 +1,6 @@
 package learn.capstone.data;
 
+import learn.capstone.data.mappers.AppUserBookWithCompletionStatusMapper;
 import learn.capstone.data.mappers.BookGenreMapper;
 import learn.capstone.data.mappers.BookIdMapper;
 import learn.capstone.data.mappers.BookMapper;
@@ -38,6 +39,14 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
                 "where ab.app_user_id = ?;";
 
         return jdbcTemplate.query(sql, new BookMapper(), appUserId); //returns a list of books
+    }
+
+    @Override
+    public String findCompletionStatus(int appUserId, int bookId) {
+        final String sql = "Select ab.completion_status from app_user_has_books ab " +
+                "where ab.app_user_id = ? and ab.idBooks = ?;";
+
+        return jdbcTemplate.queryForObject(sql, new AppUserBookWithCompletionStatusMapper(), appUserId, bookId); //returns String completion status
     }
 
     @Override
