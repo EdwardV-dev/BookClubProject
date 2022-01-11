@@ -2,7 +2,7 @@ import { Link, useHistory } from "react-router-dom";
 import React, { useState, useEffect, useContext } from "react";
 import ApprovalStatus from "./ApprovalStatus";
 import AuthContext from "../context/AuthContext";
-
+import YearPublished from "./YearPublished";
 function Admin() {
 
     const [books, setBooks] = useState([]);
@@ -49,7 +49,7 @@ function Admin() {
                 <tr key={book.idBooks}>
                   <td>{book.bookTitle}</td>
                   <td>{book.genre}</td>
-                  <td>{book.yearPublished}</td>
+                  <td><YearPublished year={book.yearPublished}/></td>
                   <td>{book.author.authorFirstName}</td>
                   <td>{book.author.authorLastName}</td>
                   <td><ApprovalStatus boolean={book.approvalStatus} /></td>

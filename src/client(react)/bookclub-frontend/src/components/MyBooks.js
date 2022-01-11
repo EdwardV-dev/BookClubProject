@@ -2,6 +2,7 @@ import { Link, useHistory } from "react-router-dom";
 import React, { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import CompletionStatus from "./CompletionStatus";
+import YearPublished from "./YearPublished";
 
 function MyBooks() {
   const history = useHistory();
@@ -102,7 +103,7 @@ function MyBooks() {
             <tr key={book.idBooks}>
               <td>{book.bookTitle}</td>
               <td>{book.genre}</td>
-              <td>{book.yearPublished}</td>
+              <td><YearPublished year={book.yearPublished}/></td>
               <td>{book.author.authorFirstName}</td>
               <td>{book.author.authorLastName}</td>
               <td><CompletionStatus idBooks={book.idBooks}/></td>
