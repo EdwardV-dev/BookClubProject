@@ -15,6 +15,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.constraints.Null;
+
 @Repository
 public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepository {
 
@@ -150,15 +152,23 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
     public Books findBookViaMostReadGenre(int userId) {
         Books bookWithGenreAttached = findMostReadGenre(userId);
 
-        final String sqlCountRows = "Select Count(*) from books b where b.genre = ? ";
-        //Indicates how many table rows of books there are with a specific genre
-        int rowCount = jdbcTemplate.queryForObject(sqlCountRows, new Object[]{bookWithGenreAttached.getGenre()}, Integer.class);
+        final String sqlCountRows = "Select Count(*) from books b where b.genre = ? and b.approval_status = true";
+        //Indicates how many table rows of books there are with a specific genre that's also approved
+
+        int rowCount;
+
+        try {
+             rowCount = jdbcTemplate.queryForObject(sqlCountRows, new Object[]{bookWithGenreAttached.getGenre()}, Integer.class);
+        } catch (NullPointerException ex) {
+            return null;
+        }
+
         Random random = new Random();
 
         int randomColumnPick;
 
         do {
-            System.out.println("try again");
+//            System.out.println("try again");
             randomColumnPick = random.nextInt(rowCount) + 1;
         } while (randomColumnPick == previousColumnPick && rowCount > 1);
 
