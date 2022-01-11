@@ -81,9 +81,8 @@ function MyBooks() {
       </form>
 
       <div>
-        <button type="button" className="btn btn-primary mx-2 my-4">
-          Add Book
-        </button>
+      <br></br>
+      <Link to={"/add"}>Add Book</Link>
       </div>
 
       <table className="table table-striped table-dark table-hover">

@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCb29rQ2x1YiIsInN1YiI6IkVkd2FyZFYiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTY0MTk0NzYyNX0.TxxABbdW1M6Rq2kZf_zxFfXJJgELtXKfb32Z7dGd2gM
+@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCb29rQ2x1YiIsInN1YiI6IkVkd2FyZFYiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTY0MTk1NDU3OH0.8oqNR9v-Ddv-5p1Sp8h3gHJcV6jutIXATOGqO2Fr0VE
 
 //get user authorization
 POST http://localhost:8080/authenticate HTTP/1.1
@@ -28,10 +28,6 @@ Authorization: Bearer {{token}}
 GET http://localhost:8080/books/completionStatusFinder?userId=1&bookId=1
 Authorization: Bearer {{token}}
 
-################
-
-GET http://localhost:8080/books/completionStatusFinder?userId=1&bookId=3
-Authorization: Bearer {{token}}
 
 
 ###### //Should not post invalid completion status. WORKING
