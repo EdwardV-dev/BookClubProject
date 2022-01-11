@@ -9,6 +9,7 @@ function MyBooks() {
 
   const [userStatus, setUserStatus] = useContext(AuthContext);
 
+  const [authorName, setAuthorName] = useState("");
 
 
   useEffect(() => {
@@ -36,8 +37,34 @@ function MyBooks() {
   const handleAuthorNameSubmit = async (event) => {
     event.preventDefault();
 
-    //history.push("/books");
+   
+    const init = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        },
+
+    };
+
+    fetch(`http://localhost:8080/authorBooks/${authorName}`, init)
+      .then((response) => {
+        if (response.status !== 200) {
+          return Promise.reject("books fetch failed");
+        }
+        return response.json();
+      })
+      .then((json) => setBooks(json))
+      .catch(console.log);
+ 
   };
+
+  const handleInputChange = (event) => {
+    
+    setAuthorName(event.target.value); //Same property name that "...agent" contains is replaced by the new value. Id is not one of those values
+    console.log(authorName);
+};
+
 
   return (
     <>
@@ -46,10 +73,13 @@ function MyBooks() {
           type="text"
           id="search"
           name="search"
+          value={authorName} //Initial value is blank via useState but changes onChange
+          onChange={handleInputChange}
           placeholder="Author Last/First Name"
         />
         <button type="submit">Search</button>
       </form>
+
       <div>
         <button type="button" className="btn btn-primary mx-2 my-4">
           Add Book

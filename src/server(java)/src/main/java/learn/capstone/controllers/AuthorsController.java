@@ -3,10 +3,7 @@ package learn.capstone.controllers;
 import learn.capstone.domain.AuthorsService;
 import learn.capstone.models.Authors;
 import learn.capstone.models.Books;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,9 +20,9 @@ public class AuthorsController {
 
     //JSON request will activate the setter for the authorFirstName. However, user might be trying to search for
     //their last name instead.
-    @GetMapping
-    public List<Books> findAll(@RequestBody Authors author) {
-        return service.findAllBooksFromAuthorFirstOrLastName(author.getAuthorFirstName());
+    @GetMapping("/{authorFirstName}")
+    public List<Books> findAll(@PathVariable String authorFirstName) {
+        return service.findAllBooksFromAuthorFirstOrLastName(authorFirstName);
     }
 
     @GetMapping("/setKnownGoodState")
