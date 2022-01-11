@@ -49,9 +49,9 @@ function NavBar({role}) {
                 Recommended
             </button>) : (<>&nbsp;</>) }
 
-           {role === "ROLE_ADMIN" && ( <button type="button" className="btn btn-success ml-2">
-                Admin
-            </button> )}
+           {role === "ROLE_ADMIN" && ( <Link to="/admin">
+               Admin
+           </Link> )}
         </nav>
     )
 }

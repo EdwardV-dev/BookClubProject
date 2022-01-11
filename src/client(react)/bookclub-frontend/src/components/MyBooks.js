@@ -78,7 +78,7 @@ function MyBooks() {
               <td>
                 <div className="float-right">
                   <Link to={`/booksUserEdit/${book.idBooks}`}>Edit</Link> &nbsp;
-                  <Link to={"/books"}>Delete placeholder (routes to booklist)</Link>
+                  <Link to={`/booksUserDelete/${book.idBooks}`}>Delete</Link>
                 </div>
               </td>
             </tr>
