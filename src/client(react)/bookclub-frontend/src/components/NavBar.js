@@ -24,6 +24,7 @@ function NavBar({role}) {
               onClick={() => {
                 setUserStatus(null);
                 localStorage.removeItem("token");
+                localStorage.removeItem("userId");
                 history.push("/")
               }}
             >
