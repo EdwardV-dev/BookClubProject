@@ -57,8 +57,21 @@ public class BooksJdbcTemplateRepository implements BooksRepository {
 
 //}
 
+    public void convertNullYearsTo6000ForFinds(){
+        final String sql1 = "SET SQL_SAFE_UPDATES=0;";
+        jdbcTemplate.execute(sql1);
+
+        final String sql2 = "update books set publication_year = 6000 where publication_year is null;" ;
+        jdbcTemplate.execute(sql2);
+
+        final String sql3 = "SET SQL_SAFE_UPDATES=1;";
+        jdbcTemplate.execute(sql3);
+    }
+
+    //This method needs to have nulls converted to 6,000
     @Override
     public List<Books> findAllForAdmin() {
+        convertNullYearsTo6000ForFinds();
         final String sql = "select * from books b Inner join authors au on b.idAuthor = au.idAuthor;";
         return jdbcTemplate.query(sql, new BookMapper()); //returns a list of books
     }
@@ -67,6 +80,7 @@ public class BooksJdbcTemplateRepository implements BooksRepository {
  public Books addToAuthorTableFirstThenBooks(Books book){
     final String sql = "insert into authors (author_first_name, author_last_name) "
             + " values (?,?);";
+
 
     KeyHolder keyHolder = new GeneratedKeyHolder();
     int rowsAffected = jdbcTemplate.update(connection -> {
@@ -112,6 +126,8 @@ public Books addToBooksTable(Books book, int idAuthorForeignKey){
     //Used for domain layer validation. Prevents user adding the same book from the same author. If this method returns
     //a list of size 0 (i.e. no books found), go ahead and add it to SQL database.
    public Books findBookFromAuthorFirstAndLastNameAndBookTitle(String input1, String input2, String input3) {
+        convertNullYearsTo6000ForFinds();
+
         final String sql = "Select b.book_title, b.genre, b.idBooks, b.approval_status, b.publication_year, b.idAuthor, " +
                 "au.author_first_name, au.author_last_name " +
                 "from books b\n" +
@@ -135,6 +151,7 @@ public Books addToBooksTable(Books book, int idAuthorForeignKey){
 
     @Override
     public Books findById(int bookId) {
+        convertNullYearsTo6000ForFinds();
         final String sql = "select * from books b "
                 + "inner join authors au on b.idAuthor = au.idAuthor "
                 + "where b.idBooks = ?;";

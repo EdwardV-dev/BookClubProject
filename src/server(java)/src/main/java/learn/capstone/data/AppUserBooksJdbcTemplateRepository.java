@@ -28,9 +28,10 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
+//year directly displayed on ui
     @Override
     public List<Books> findAllUserBooks(int appUserId) {
+        convertNullYearsTo6000ForBookFinds();
         final String sql = "Select b.book_title, b.genre, b.idBooks, b.approval_status, b.publication_year, b.idAuthor, ab.completion_status, " +
                 "au.author_first_name, au.author_last_name\n" +
                 "from books b\n" +
@@ -41,12 +42,24 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
         return jdbcTemplate.query(sql, new BookMapper(), appUserId); //returns a list of books
     }
 
+    //Not relevant to displaying the year
     @Override
     public String findCompletionStatus(int appUserId, int bookId) {
         final String sql = "Select ab.completion_status from app_user_has_books ab " +
                 "where ab.app_user_id = ? and ab.idBooks = ?;";
 
         return jdbcTemplate.queryForObject(sql, new AppUserBookWithCompletionStatusMapper(), appUserId, bookId); //returns String completion status
+    }
+
+    public void convertNullYearsTo6000ForBookFinds(){
+        final String sql1 = "SET SQL_SAFE_UPDATES=0;";
+        jdbcTemplate.execute(sql1);
+
+        final String sql2 = "update books set publication_year = 6000 where publication_year is null;" ;
+        jdbcTemplate.execute(sql2);
+
+        final String sql3 = "SET SQL_SAFE_UPDATES=1;";
+        jdbcTemplate.execute(sql3);
     }
 
     @Override
@@ -88,9 +101,14 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
 
         }
 
+
+
         //this method is called upon by the add method below. This method is necessary because we don't immediately
        //know if the book was added successfully to the books table
+
+    //Helper method (not directly displayed on ui)
         public Books findSpecificBookBasedOnTitle(String title){
+
         final String sql = "Select b.idBooks " +
                 "from books b " +
                 "where b.book_title = ?;";
@@ -141,8 +159,10 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
     }
 
 
-
+    //Year is directly displayed on ui
     public Books findMostReadGenre(int userId){
+        convertNullYearsTo6000ForBookFinds();
+
         final String sql = "Select genre, COUNT(genre) as genreCount From books b\n" +
                 "Inner join app_user_has_books ab on ab.idBooks = b.idbooks\n" +
                 "Inner join app_user au on au.app_user_id = ab.app_user_id \n" +
@@ -157,6 +177,7 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
     }
 
      int previousColumnPick = 0;
+
 
     public Books findBookViaMostReadGenre(int userId) {
         Books bookWithGenreAttached = findMostReadGenre(userId);
