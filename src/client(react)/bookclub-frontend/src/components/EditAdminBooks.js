@@ -114,7 +114,7 @@ function EditAdminBooks() {
 
     const determineIfYearNull = (yearPublished) => {
         if (yearPublished === 6000){
-            return "";
+            return null;
         } else {
             return yearPublished;
         }
