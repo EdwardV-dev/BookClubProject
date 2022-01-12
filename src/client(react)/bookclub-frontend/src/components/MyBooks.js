@@ -98,7 +98,7 @@ function MyBooks() {
           </tr>
         </thead>
         <tbody>
-        {/*for every book in books, grab their id and set it as being the key*/}
+        {/*Completion status is fetched in the completion status component*/}
           {books.map((book) => (
             <tr key={book.idBooks}>
               <td>{book.bookTitle}</td>
