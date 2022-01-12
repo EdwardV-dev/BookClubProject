@@ -61,7 +61,6 @@ function EditUserBooks() {
                 idBooks: id
             }
         });
-        console.log({...userBook});
     }
 
     const handleSubmit = async (event) => {
