@@ -4,19 +4,18 @@ import { Link, useHistory, useParams } from "react-router-dom";
 
 function EditAdminBooks() {
 
-    const currentAuthor = {
-        authorFirstName: "",
-        authorLastName: ""
-    }
     const currentBook = {
         approvalStatus: "",
         bookTitle: "",
         genre: "",
-        author: currentAuthor,
+        author: {
+            authorFirstName: "",
+            authorLastName: "",
+        },
         yearPublished: ""
     }
+
     const [book, setBook] = useState(currentBook);
-    const [author, setAuthor] = useState(currentAuthor);
     const history = useHistory();
     const { id } = useParams();
     const [errors, setErrors] = useState([]);
@@ -54,22 +53,31 @@ function EditAdminBooks() {
             [name]: value,
         });
     }
-    const handleAuthorChange = (event) => {
-        const { name, value } = event.target;
-        // setBook({...book,
-        //     author: setAuthor({...author,
-        //         [name]: value,
-        //     })
-        // });
-        setAuthor({...author, [name]: value});
+
+    const handleFirstNameChange = (event) => {
+        setBook({...book,
+            author: {...book.author,
+                authorFirstName: event.target.value
+            }
+        })
+    }
+
+    const handleLastNameChange = (event) => {
+        setBook({...book,
+            author: {...book.author,
+                authorLastName: event.target.value
+            }
+        })
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         const updatedBook = {
-            ...book
+            ...book,
         };
+
+        console.log(updatedBook);
 
         try {
             const init = {
@@ -109,56 +117,56 @@ function EditAdminBooks() {
              <div>
                 <label htmlFor="authorFirstName">Author First Name:</label>
                 <input 
-                type="text" 
-                id="authorFirstName" 
-                name="authorFirstName" 
-                value={author.authorFirstName}
-                required
-                onChange={handleAuthorChange}
+                    type="text" 
+                    id="authorFirstName" 
+                    name="authorFirstName" 
+                    defaultValue={book.author.authorFirstName}
+                    required
+                    onChange={handleFirstNameChange}
                 />
             </div>
             <div>
                 <label htmlFor="authorLastName">Author Last Name:</label>
-                <input 
-                type="text" 
-                id="authorLastName" 
-                name="authorLastName" 
-                value={author.authorLastName} 
-                required
-                onChange={handleAuthorChange}
+                <input
+                    type="text" 
+                    id="authorLastName" 
+                    name="authorLastName" 
+                    defaultValue={book.author.authorLastName} 
+                    required
+                    onChange={handleLastNameChange}
                 />
             </div>
             <div>
                 <label htmlFor="bookTitle">Book Title:</label>
                 <input 
-                type="text" 
-                id="bookTitle" 
-                name="bookTitle" 
-                value={book.bookTitle}
-                required
-                onChange={handleChange} 
+                    type="text" 
+                    id="bookTitle" 
+                    name="bookTitle" 
+                    value={book.bookTitle}
+                    required
+                    onChange={handleChange} 
                 />
             </div>
             <div>
                 <label htmlFor="genre">Genre:</label>
                 <input 
-                type="text" 
-                id="genre" 
-                name="genre" 
-                value={book.genre}
-                required
-                onChange={handleChange} 
+                    type="text" 
+                    id="genre" 
+                    name="genre" 
+                    value={book.genre}
+                    required
+                    onChange={handleChange} 
                 />
             </div>
             <div>
                 <label htmlFor="yearPublished">Year Published:</label>
                 <input 
-                type="number" 
-                id="yearPublished" 
-                name="yearPublished" 
-                max= "2022"
-                value={book.yearPublished}
-                onChange={handleChange} 
+                    type="number" 
+                    id="yearPublished" 
+                    name="yearPublished" 
+                    max= "2022"
+                    value={book.yearPublished}
+                    onChange={handleChange} 
                 />
             </div>
 
