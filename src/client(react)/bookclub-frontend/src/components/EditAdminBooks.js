@@ -41,7 +41,7 @@ function EditAdminBooks() {
                 .catch(console.log);
               }
           }, 
-          [id]
+           [id]
     );
 
     console.log(book);
@@ -112,8 +112,16 @@ function EditAdminBooks() {
         history.push("/admin");
     }
 
+    const determineIfYearNull = (yearPublished) => {
+        if (yearPublished === 6000){
+            return "";
+        } else {
+            return yearPublished;
+        }
+    }
+
     return (
-        book&& (
+        book && (
         <form onSubmit={handleSubmit} className="form-inline mx-2 my-4">
              <div>
                 <label htmlFor="authorFirstName">Author First Name:</label>
@@ -166,7 +174,7 @@ function EditAdminBooks() {
                     id="yearPublished" 
                     name="yearPublished" 
                     max= "2022"
-                    value={book.yearPublished}
+                    value= {determineIfYearNull(book.yearPublished)}
                     onChange={handleChange} 
                 />
             </div>
