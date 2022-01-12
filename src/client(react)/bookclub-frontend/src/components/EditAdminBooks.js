@@ -39,10 +39,10 @@ function EditAdminBooks() {
                 })
                 .then(data => setBook(data))
                 .catch(console.log);
-              }
-          }, 
-           [id]
-    );
+            }
+        }, 
+        [id]
+  );
 
     console.log(book);
 

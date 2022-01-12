@@ -96,6 +96,7 @@ function MyBooks() {
             <th scope="col">Author First Name</th>
             <th scope="col">Author Last Name</th>
             <th scope="col">Completion Status</th>
+            <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
