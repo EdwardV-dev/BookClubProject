@@ -150,8 +150,11 @@ async function activateSecondFetch(data1){
    
   
    if(flag){
+    setFlag(false);
      return (
+      
 <Error msg={initialFetchError} />
+
      )
    }
 
