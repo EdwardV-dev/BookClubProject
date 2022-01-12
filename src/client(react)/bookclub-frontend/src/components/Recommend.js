@@ -34,7 +34,7 @@ function Recommend() {
       })
       .then((json) => setBook(json))
       .catch(console.log);
-  }, []);
+  }, [errors]);
 
   //add to books table in sql and then association. TRIGGERED BY ONCLICK
   async function addBookToMyList() {
@@ -107,6 +107,7 @@ async function activateSecondFetch(data1){
     try{
         const response = await fetch("http://localhost:8080/books", init2);
     
+        //The book is either already associated with the user (201) or the user + book combinantion already exists
           if (response.status === 201 || response.status === 500) {
             const data2 = await response.json();
 
@@ -122,6 +123,7 @@ async function activateSecondFetch(data1){
               // otherwise display the errors from the second fetch
              
               setErrors(["Unable to add book. The entered book is most likely already associated with your account"]);
+              history.push("/recommend");
             }
         
         } else {
