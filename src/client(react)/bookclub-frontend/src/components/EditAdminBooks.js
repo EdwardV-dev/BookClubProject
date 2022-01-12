@@ -75,6 +75,7 @@ function EditAdminBooks() {
 
         const updatedBook = {
             ...book,
+            //approvalStatus: true;
         };
 
         console.log(updatedBook);
