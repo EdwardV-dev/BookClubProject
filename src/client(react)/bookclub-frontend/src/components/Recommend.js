@@ -109,9 +109,7 @@ async function activateSecondFetch(data1){
     
         //The book is either already associated with the user (201) or the user + book combinantion already exists
           if (response.status === 201 || response.status === 500) {
-            const data2 = await response.json();
-
-            
+                
             // determine if I have a book association or errors...
             if (response.status === 201) {
               // if I have a book, then redirect user to their book list. Clear any errors first.
