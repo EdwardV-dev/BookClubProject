@@ -37,21 +37,20 @@ function NavBar({role}) {
             <Link to="/login">Login</Link>
           </>
        )}
-            <button type="bugit sttustton" className="btn btn-success ml-2">
-                Register
-            </button>
 
-           {userStatus?.user ? (<button type="button" className="btn btn-success ml-2">
-                My Books
-            </button> ) : (<>&nbsp;</>) }
+          <Link to={"/register"}>Register</Link>
 
-            {userStatus?.user ? (<button type="button" className="btn btn-success ml-2">
-                Recommended
-            </button>) : (<>&nbsp;</>) }
+            &nbsp; &nbsp;
 
-           {role === "ROLE_ADMIN" && ( <button type="button" className="btn btn-success ml-2">
-                Admin
-            </button> )}
+           {userStatus?.user ? (<Link to={"/books"}>My Books</Link> ) : (<>&nbsp;</>) }
+
+            &nbsp; &nbsp;
+
+            {userStatus?.user ? ( <Link to="/recommend">Recommended</Link>) : (<>&nbsp;</>) }
+
+            &nbsp; &nbsp;
+
+           {role === "ROLE_ADMIN" && ( <Link to="/admin">Admin</Link> )}
         </nav>
     )
 }
