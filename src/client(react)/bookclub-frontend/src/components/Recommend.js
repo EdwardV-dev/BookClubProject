@@ -4,9 +4,13 @@ import AuthContext from "../context/AuthContext";
 import CompletionStatus from "./CompletionStatus";
 import YearPublished from "./YearPublished";
 import ErrorArray  from "./ErrorArray";
+import Error
+ from "./Error";
 function Recommend() {
   const [book, setBook] = useState(null);
   const [errors, setErrors] = useState([]);//Each error is received as an array
+  const [initialFetchError, setInitialFetchError] = useState("");
+  const [flag, setFlag] = useState(false);
  const history = useHistory();
 
   useEffect(() => {
@@ -27,14 +31,23 @@ function Recommend() {
       init
     )
       .then((response) => {
-        if (response.status !== 200) {
+        if (response.status !== 200 && response.status !== 500) {
           return Promise.reject("books fetch failed");
         }
+
+        if (response.status === 500) {
+          return Promise.reject(": recommended books fetch failed because you do not have any books in your list yet. Please add a book to my books first");
+          
+        }
+
+        setInitialFetchError(""); //Error message will no longer be displayed
         return response.json();
       })
       .then((json) => setBook(json))
-      .catch(console.log);
+      .catch((result) => setInitialFetchError(result)) //catches "books fetch failed"
+      .then(() => setFlag(true));
   }, [errors]);
+
 
   //add to books table in sql and then association. TRIGGERED BY ONCLICK
   async function addBookToMyList() {
@@ -136,12 +149,18 @@ async function activateSecondFetch(data1){
    }
    
   
+   if(flag){
+     return (
+<Error msg={initialFetchError} />
+     )
+   }
 
   //recommended book must be truthy for rendering to occur
   return (
-    book && (
+    (book) && (
         
       <>
+      
       <ErrorArray errors={errors} />
         <table className="table table-striped table-dark table-hover">
           <thead>
