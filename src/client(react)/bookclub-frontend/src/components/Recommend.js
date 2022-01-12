@@ -3,10 +3,11 @@ import React, { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import CompletionStatus from "./CompletionStatus";
 import YearPublished from "./YearPublished";
-
+import ErrorArray  from "./ErrorArray";
 function Recommend() {
   const [book, setBook] = useState(null);
-  const [error, setErrors] = useState([]);
+  const [errors, setErrors] = useState([]);//Each error is received as an array
+ const history = useHistory();
 
   useEffect(() => {
     console.log("starting useeffect in recommended");
@@ -35,7 +36,7 @@ function Recommend() {
       .catch(console.log);
   }, []);
 
-  //add to books table in sql and then association
+  //add to books table in sql and then association. TRIGGERED BY ONCLICK
   async function addBookToMyList() {
     const bookSend = {
         approvalStatus: book.approvalStatus,
@@ -45,8 +46,10 @@ function Recommend() {
           authorFirstName: book.author.authorFirstName,
           authorLastName: book.author.authorLastName,
         },
-        yearPublished: 2005,
+        yearPublished: book.yearPublished,
       };
+
+      const body1 = JSON.stringify(bookSend);
   
       const init1 = {
         method: "POST",
@@ -54,28 +57,22 @@ function Recommend() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        bookSend,
+       
+        body: body1,
       };
+
+      console.log(init1);
 
    try{
    
-    const response = await fetch("http://localhost:8080/api/todos", init1);
+    const response = await fetch("http://localhost:8080/booksAdmin", init1);
 
+ //   Only 2 outcomes: 201 (non-duplicate) or 400 (duplicate). Either way, associate the book with the user account
       if (response.status === 201 || response.status === 400) {
-        const data = await response.json();
+        const data1 = await response.json();
 
-        // determine if I have a book or errors...
-        if (data.idBooks) {
-          // if I have a book, then do a POST request to the bridge table make an association. Also, clear any pre-existing error
-          
-          activateSecondFetch();
-          
-      
-          
-        } else {
-          // otherwise display the errors from the first fetch
-          setErrors(data);
-        }
+
+        activateSecondFetch(data1);
     
     } else {
         throw new Error("Something went wrong on our end") 
@@ -84,14 +81,68 @@ function Recommend() {
    } catch (error){
        console.log(error);
    }
+
+async function activateSecondFetch(data1){
+
+    const bookAssociationSend = {
+     appUserId: localStorage.getItem("userId"),
+     completionStatus: "WantToRead", //Set this to default for request to go through 
+       book : {
+            idBooks: book.idBooks,
+            bookTitle: book.bookTitle //can't rely on first add fetch for the book title (could return duplicate error). Use info from recommendation fetch instead
+       }
+      };
+
+      const body2 = JSON.stringify(bookAssociationSend);
+
+      const init2 = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: body2,
+      };
+
+    try{
+        const response = await fetch("http://localhost:8080/books", init2);
+    
+          if (response.status === 201 || response.status === 500) {
+            const data2 = await response.json();
+
+            
+            // determine if I have a book association or errors...
+            if (response.status === 201) {
+              // if I have a book, then redirect user to their book list. Clear any errors first.
+              setErrors([]);
+             
+              history.push("/books");
+              
+            } else {
+              // otherwise display the errors from the second fetch
+             
+              setErrors(["Unable to add book. The entered book is most likely already associated with your account"]);
+            }
+        
+        } else {
+            throw new Error("Something went wrong on our end") 
+               
+           }
+       } catch (error){
+           console.log(error);
+       }
+
+}
    }
    
   
 
-  //book must be truthy for rendering to occur
+  //recommended book must be truthy for rendering to occur
   return (
     book && (
+        
       <>
+      <ErrorArray errors={errors} />
         <table className="table table-striped table-dark table-hover">
           <thead>
             <tr>

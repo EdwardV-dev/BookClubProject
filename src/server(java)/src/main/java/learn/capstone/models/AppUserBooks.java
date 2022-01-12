@@ -10,7 +10,7 @@ public class AppUserBooks {
     @PositiveOrZero
     private int appUserId;
 
-    @NotNull
+    @NotNull(message = "completion status cannot be null")
     @Pattern(regexp = "(Reading)|(WantToRead)|(DoneReading)", message = "Invalid completion status.")
     private String completionStatus;
 
