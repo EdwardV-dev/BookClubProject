@@ -21,7 +21,16 @@ public class BooksService {
     }
 
     public Result<Books> updateAdmin(Books books) {
-        Result<Books> result = validate(books);
+        Result<Books> result;
+
+        if (books.getYearPublished() == 6000){
+            books.setYearPublished(0);
+             result = validate(books);
+            books.setYearPublished(6000);
+        } else {
+            result = validate(books);
+        }
+
 
         if (!result.isSuccess()) {
             return result;
@@ -51,7 +60,15 @@ public class BooksService {
     public Result<Books> add(Books book){
         book.setIdBooks(0); //Ensures that annotation test will pass. Book id is not used for insertion in the repo layer sql
 
-        Result<Books> result = validate(book);
+        Result<Books> result;
+
+        if (book.getYearPublished() == 6000){
+            book.setYearPublished(0);
+            result = validate(book);
+            book.setYearPublished(6000);
+        } else {
+            result = validate(book);
+        }
 
         //describing an unsuccessful result
         if(!result.isSuccess()) {

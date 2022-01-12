@@ -73,9 +73,13 @@ function EditAdminBooks() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        if(book.yearPublished === null || book.yearPublished.toString().length === 0){
+            book.yearPublished = 6000;
+        }
+
         const updatedBook = {
             ...book,
-            //approvalStatus: true;
+            
         };
 
         console.log(updatedBook);
