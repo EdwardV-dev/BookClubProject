@@ -4,27 +4,28 @@ import { Link, useHistory, useParams } from "react-router-dom";
 
 function EditAdminBooks() {
 
+    const currentAuthor = {
+        authorFirstName: "",
+        authorLastName: ""
+    }
     const currentBook = {
         approvalStatus: "",
         bookTitle: "",
         genre: "",
-        author: {
-          authorFirstName: "",
-          authorLastName: ""
-        },
+        author: currentAuthor,
         yearPublished: ""
     }
     const [book, setBook] = useState(currentBook);
+    const [author, setAuthor] = useState(currentAuthor);
     const history = useHistory();
-    //const { id } = useParams();
+    const { id } = useParams();
     const [errors, setErrors] = useState([]);
-    const id = 2;
-
+     
     useEffect(
         () => {
             // Only do this if there is an `id`
             if (id) {
-                fetch(`http://localhost:8080/books/1`, {
+                fetch(`http://localhost:8080/books/${id}`, {
                   method: "GET",
                   headers: {
                       "Content-Type": "application/json",
@@ -44,9 +45,23 @@ function EditAdminBooks() {
           [id]
     );
 
+    console.log(book);
+
+
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setBook({...book, [name]: value});
+        setBook({...book,
+            [name]: value,
+        });
+    }
+    const handleAuthorChange = (event) => {
+        const { name, value } = event.target;
+        // setBook({...book,
+        //     author: setAuthor({...author,
+        //         [name]: value,
+        //     })
+        // });
+        setAuthor({...author, [name]: value});
     }
 
     const handleSubmit = async (event) => {
@@ -67,7 +82,7 @@ function EditAdminBooks() {
             };
 
             const response = await fetch(
-                `http://localhost:8080/booksAdmin/1`, 
+                `http://localhost:8080/booksAdmin/${id}`, 
                 init);
                 if (response.status === 204) {
                     history.push("/admin");
@@ -81,7 +96,12 @@ function EditAdminBooks() {
                 }
         } catch (error) {
             console.log(error);
-        }    }
+        }    
+    }
+
+    const handleCancel = async (event) => {
+        history.push("/admin");
+    }
 
     return (
         book&& (
@@ -91,9 +111,9 @@ function EditAdminBooks() {
                 type="text" 
                 id="authorFirstName" 
                 name="authorFirstName" 
-                value={book.author.authorFirstName}
+                value={author.authorFirstName}
                 required
-                onChange={handleChange}
+                onChange={handleAuthorChange}
                 />
             </div>
             <div>
@@ -101,9 +121,9 @@ function EditAdminBooks() {
                 type="text" 
                 id="authorLastName" 
                 name="authorLastName" 
-                value={book.author.authorLastName} 
+                value={author.authorLastName} 
                 required
-                onChange={handleChange}
+                onChange={handleAuthorChange}
                 />
             </div>
             <div>
@@ -131,6 +151,7 @@ function EditAdminBooks() {
                 type="text" 
                 id="yearPublished" 
                 name="yearPublished" 
+                max="2022"
                 value={book.yearPublished}
                 onChange={handleChange} 
                 />
@@ -139,7 +160,10 @@ function EditAdminBooks() {
             <div>
                 <button type="submit" className="btn btn-success ml-2">
                     Update
-                </button>            
+                </button>  &nbsp;
+                <button type="button" className="btn btn-warning ml-2" onClick={handleCancel}>
+                    Cancel
+                </button>        
             </div>
         </form>
         )

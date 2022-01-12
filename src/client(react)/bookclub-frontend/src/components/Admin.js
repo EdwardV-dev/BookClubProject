@@ -55,7 +55,7 @@ function Admin() {
                   <td><ApprovalStatus boolean={book.approvalStatus} /></td>
                   <td>
                     <div className="float-right">
-                      <Link to={`/booksUserEdit/${book.idBooks}`}>Edit</Link> &nbsp;
+                      <Link to={`/booksAdminEdit/${book.idBooks}`}>Edit</Link> &nbsp;
                       <Link to={"/books"}>Approve</Link>
                     </div>
                   </td>
