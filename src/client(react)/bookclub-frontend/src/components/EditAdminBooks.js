@@ -156,7 +156,7 @@ function EditAdminBooks() {
                 type="number" 
                 id="yearPublished" 
                 name="yearPublished" 
-                max="2022"
+                max= "2022"
                 value={book.yearPublished}
                 onChange={handleChange} 
                 />
