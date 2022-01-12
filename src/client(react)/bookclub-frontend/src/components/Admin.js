@@ -6,6 +6,8 @@ import YearPublished from "./YearPublished";
 function Admin() {
 
     const [books, setBooks] = useState([]);
+    const [flag, setFlag] = useState(false);
+    const history = useHistory();
 
     useEffect(() => {
     
@@ -27,7 +29,46 @@ function Admin() {
           })
           .then((json) => setBooks(json))
           .catch(console.log);
-        }, []);
+    }, [flag]);
+
+    const handleApprove = async (book) => {
+      setFlag(true);
+
+      const approvedBook = {
+          ...book,
+          approvalStatus: true
+      };
+
+      console.log(approvedBook);
+
+      try {
+          const init = {
+              method: "PUT",
+              headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${localStorage.getItem("token")}`
+              },
+              body: JSON.stringify(approvedBook)
+          };
+
+          const response = await fetch(
+              `http://localhost:8080/booksAdmin/${book.idBooks}`, 
+              init);
+              if (response.status === 204) {
+                  history.push("/admin");
+              } else if (response.status == 400) {
+                  const errors = await response.json();
+                  setErrors(errors);
+              } else if (response.status === 403) {
+                  setErrors(["Not logged in."]);
+              } else {
+                  setErrors(["Unknown error."]);
+              }
+      } catch (error) {
+          console.log(error);
+      }   
+      setFlag(false); 
+    }
 
     return (
         <>
@@ -41,6 +82,7 @@ function Admin() {
                 <th scope="col">Author First Name</th>
                 <th scope="col">Author Last Name</th>
                 <th scope="col">Approval Status</th>
+                <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -56,7 +98,13 @@ function Admin() {
                   <td>
                     <div className="float-right">
                       <Link to={`/booksAdminEdit/${book.idBooks}`}>Edit</Link> &nbsp;
-                      <Link to={"/books"}>Approve</Link>
+                      {book.approvalStatus ? (
+                        null
+                      ) : (
+                        <button type="button" className="btn btn-success ml-2" onClick={() => handleApprove(book)}>
+                          Approve
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>

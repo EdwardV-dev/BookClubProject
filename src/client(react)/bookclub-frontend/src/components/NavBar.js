@@ -35,6 +35,7 @@ function NavBar({role}) {
         ) : (
           <>
             <Link to="/login">Login</Link>
+            &nbsp; &nbsp;
           </>
        )}
 

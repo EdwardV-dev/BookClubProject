@@ -151,6 +151,7 @@ async function activateSecondFetch(data1){
               <th scope="col">Year Published</th>
               <th scope="col">Author First Name</th>
               <th scope="col">Author Last Name</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
