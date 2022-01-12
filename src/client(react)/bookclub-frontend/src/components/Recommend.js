@@ -6,6 +6,7 @@ import YearPublished from "./YearPublished";
 
 function Recommend() {
   const [book, setBook] = useState(null);
+  const [error, setErrors] = useState([]);
 
   useEffect(() => {
     console.log("starting useeffect in recommended");
@@ -35,26 +36,57 @@ function Recommend() {
   }, []);
 
   //add to books table in sql and then association
-  function addBookToMyList() {
+  async function addBookToMyList() {
     const bookSend = {
-      approvalStatus: book.approvalStatus,
-      bookTitle: book.bookTitle,
-      genre: book.genre,
-      author: {
-        authorFirstName: book.author.authorFirstName,
-        authorLastName: book.author.authorLastName,
-      },
-      yearPublished: 2005,
-    };
+        approvalStatus: book.approvalStatus,
+        bookTitle: book.bookTitle,
+        genre: book.genre,
+        author: {
+          authorFirstName: book.author.authorFirstName,
+          authorLastName: book.author.authorLastName,
+        },
+        yearPublished: 2005,
+      };
+  
+      const init1 = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        bookSend,
+      };
 
-    const init = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    };
-  }
+   try{
+   
+    const response = await fetch("http://localhost:8080/api/todos", init1);
+
+      if (response.status === 201 || response.status === 400) {
+        const data = await response.json();
+
+        // determine if I have a book or errors...
+        if (data.idBooks) {
+          // if I have a book, then do a POST request to the bridge table make an association. Also, clear any pre-existing error
+          
+          activateSecondFetch();
+          
+      
+          
+        } else {
+          // otherwise display the errors from the first fetch
+          setErrors(data);
+        }
+    
+    } else {
+        throw new Error("Something went wrong on our end") 
+           
+       }
+   } catch (error){
+       console.log(error);
+   }
+   }
+   
+  
 
   //book must be truthy for rendering to occur
   return (
