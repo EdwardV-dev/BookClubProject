@@ -7,6 +7,7 @@ import YearPublished from "./YearPublished";
 function MyBooks() {
   const history = useHistory();
 
+
   const [books, setBooks] = useState([]);
 
   const [userStatus, setUserStatus] = useContext(AuthContext);
@@ -34,7 +35,7 @@ function MyBooks() {
       })
       .then((json) => setBooks(json))
       .catch(console.log);
-    }, []);
+    }, [history]);
 
     const handleInputChange = (event) => {
     
@@ -63,10 +64,10 @@ function MyBooks() {
       })
       .then((json) => setBooks(json))
       .catch(console.log);
- 
+   
   };
 
-
+  
   return (
     <>
       <form onSubmit={handleAuthorNameSubmit}>

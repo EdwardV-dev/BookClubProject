@@ -24,7 +24,7 @@ public class AuthorsJdbcTemplateRepository implements AuthorsRepository{
                 "Inner join authors au \n" +
                 "on b.idAuthor = au.idAuthor\n" +
                 "Inner join app_user_has_books ab on ab.idBooks = b.idBooks\n" +
-                "where author_first_name = ? or author_last_name = ? and ab.app_user_id = ?;";
+                "where (author_first_name = ? or author_last_name = ?) and ab.app_user_id = ?;";
         return jdbcTemplate.query(sql, new BookMapper(), input, input, userId);
     }
 

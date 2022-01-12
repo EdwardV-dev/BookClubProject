@@ -96,7 +96,7 @@ DROP TABLE IF EXISTS `userbookstest`.`app_user_has_books` ;
 CREATE TABLE IF NOT EXISTS `userbookstest`.`app_user_has_books` (
   `app_user_id` INT NOT NULL,
   `idBooks` INT NOT NULL,
-  `completion_status` VARCHAR(45) NOT NULL,
+  `completion_status` VARCHAR(45) NOT NULL default "WantToRead",
   PRIMARY KEY (`app_user_id`, `idBooks`),
   INDEX `fk_app_user_has_books_books1_idx` (`idBooks` ASC) VISIBLE,
   INDEX `fk_app_user_has_books_app_user1_idx` (`app_user_id` ASC) VISIBLE,
@@ -145,7 +145,7 @@ begin
         (`approval_status`, `book_title`, `genre`, `publication_year`, `idAuthor`)
     values
         (true, "Winnie the Pooh", "Fiction", 1932, 1),
-        (false, "Harry Potter: The First Book", "Fiction", 1996, 2),
+        (true, "Harry Potter: The First Book", "Fiction", 1996, 2),
         (true, "Fossils and more!", "Nonfiction", 2003, 3);
         
 	insert into app_role
@@ -177,8 +177,9 @@ delimiter ;
         (`approval_status`, `book_title`, `genre`, `publication_year`, `idAuthor`)
     values
         (true, "Winnie the Pooh", "Fiction", 1932, 1), -- idbooks:1
-        (false, "Harry Potter: The First Book", "Fiction", 1996, 2), -- idbooks:2
-        (true, "Fossils and more!", "Nonfiction", 2003, 3); -- idbooks:3
+        (true, "Harry Potter: The First Book", "Fiction", null, 2), -- idbooks:2
+        (false, "Fossils and more!", "Nonfiction", 0, 3), -- idbooks:3
+        (false, "Raiders", "History", null, 3); -- idbooks:4
         
 	insert into authors
         (`author_first_name`, `author_last_name`)
@@ -205,6 +206,7 @@ values
 (1, 2, "WantToRead"),
 (1, 3, "DoneReading"),
 (2, 2, "Reading"); 
+
     
      -- testing here
 SET SQL_MODE=@OLD_SQL_MODE;

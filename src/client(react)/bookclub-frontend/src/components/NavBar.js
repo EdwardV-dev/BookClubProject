@@ -15,6 +15,7 @@ function NavBar({role}) {
         }
       }, [setUserStatus]);
 
+   
 
     return (
         <nav>
@@ -39,12 +40,12 @@ function NavBar({role}) {
        )}
 
        &nbsp; &nbsp;
-       
+
           <Link to={"/register"}>Register</Link>
 
             &nbsp; &nbsp;
 
-           {userStatus?.user ? (<Link to={"/books"}>My Books</Link> ) : (<>&nbsp;</>) }
+           {userStatus?.user ? (<Link to={"/books"} onClick={() => document.location.pathname === "/books" ? document.location.reload() : false}>My Books</Link> ) : (<>&nbsp;</>) }
 
             &nbsp; &nbsp;
 
