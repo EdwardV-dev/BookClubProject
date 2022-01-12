@@ -17,7 +17,7 @@ function Register() {
 
             <form onSubmit={handleSubmit}>
                 <div>
-                    <labe>Username</labe>
+                    <label>Username</label>
                     <input type="text" id="username" />
                 </div>
 
