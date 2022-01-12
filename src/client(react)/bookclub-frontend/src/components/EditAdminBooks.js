@@ -107,6 +107,7 @@ function EditAdminBooks() {
         book&& (
         <form onSubmit={handleSubmit} className="form-inline mx-2 my-4">
              <div>
+                <label htmlFor="authorFirstName">Author First Name:</label>
                 <input 
                 type="text" 
                 id="authorFirstName" 
@@ -117,6 +118,7 @@ function EditAdminBooks() {
                 />
             </div>
             <div>
+                <label htmlFor="authorLastName">Author Last Name:</label>
                 <input 
                 type="text" 
                 id="authorLastName" 
@@ -127,6 +129,7 @@ function EditAdminBooks() {
                 />
             </div>
             <div>
+                <label htmlFor="bookTitle">Book Title:</label>
                 <input 
                 type="text" 
                 id="bookTitle" 
@@ -137,6 +140,7 @@ function EditAdminBooks() {
                 />
             </div>
             <div>
+                <label htmlFor="genre">Genre:</label>
                 <input 
                 type="text" 
                 id="genre" 
@@ -147,8 +151,9 @@ function EditAdminBooks() {
                 />
             </div>
             <div>
+                <label htmlFor="yearPublished">Year Published:</label>
                 <input 
-                type="text" 
+                type="number" 
                 id="yearPublished" 
                 name="yearPublished" 
                 max="2022"
