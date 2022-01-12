@@ -39,6 +39,8 @@ function NavBar({role}) {
           </>
        )}
 
+       &nbsp; &nbsp;
+       
           <Link to={"/register"}>Register</Link>
 
             &nbsp; &nbsp;

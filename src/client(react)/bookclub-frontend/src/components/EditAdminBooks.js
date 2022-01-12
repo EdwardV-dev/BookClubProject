@@ -42,7 +42,7 @@ function EditAdminBooks() {
             }
         }, 
         [id]
-    );
+  );
 
     console.log(book);
 
@@ -73,8 +73,13 @@ function EditAdminBooks() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        if(book.yearPublished === null || book.yearPublished.toString().length === 0){
+            book.yearPublished = 6000;
+        }
+
         const updatedBook = {
             ...book,
+            
         };
 
         console.log(updatedBook);
@@ -111,8 +116,16 @@ function EditAdminBooks() {
         history.push("/admin");
     }
 
+    const determineIfYearNull = (yearPublished) => {
+        if (yearPublished === 6000){
+            return null;
+        } else {
+            return yearPublished;
+        }
+    }
+
     return (
-        book&& (
+        book && (
         <form onSubmit={handleSubmit} className="form-inline mx-2 my-4">
              <div>
                 <label htmlFor="authorFirstName">Author First Name:</label>
@@ -165,7 +178,7 @@ function EditAdminBooks() {
                     id="yearPublished" 
                     name="yearPublished" 
                     max= "2022"
-                    value={book.yearPublished}
+                    value= {determineIfYearNull(book.yearPublished)}
                     onChange={handleChange} 
                 />
             </div>
