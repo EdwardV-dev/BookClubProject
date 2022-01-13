@@ -14,7 +14,7 @@ function Recommend() {
  const history = useHistory();
 
   useEffect(() => {
-    console.log("starting useeffect in recommended");
+  
     const init = {
       method: "GET",
       headers: {
@@ -102,8 +102,13 @@ async function activateSecondFetch(data1){
      completionStatus: "WantToRead", //Set this to default for request to go through 
        book : {
             idBooks: book.idBooks,
-            bookTitle: book.bookTitle //can't rely on first add fetch for the book title (could return duplicate error). Use info from recommendation fetch instead
-       }
+            bookTitle: book.bookTitle, //can't rely on first add fetch for the book title (could return duplicate error). Use info from recommendation fetch instead
+            author : {
+              authorFirstName: book.author.authorFirstName,
+              authorLastName: book.author.authorLastName
+         }
+          }
+       
       };
 
       const body2 = JSON.stringify(bookAssociationSend);

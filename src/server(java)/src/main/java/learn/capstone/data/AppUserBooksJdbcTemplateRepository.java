@@ -9,10 +9,12 @@ import learn.capstone.models.Books;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 
 import learn.capstone.models.AppUserBooks;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -106,15 +108,16 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
         //this method is called upon by the add method below. This method is necessary because we don't immediately
        //know if the book was added successfully to the books table
 
-    //Helper method (not directly displayed on ui)
-        public Books findSpecificBookBasedOnTitle(String title){
+    //Helper method (not directly displayed on ui). Finds a unique book based on title, first name, and last name--combined.
+        public Books findSpecificBookBasedOnTitleFirstNameAndLastName(String title, String firstName, String lastName){
 
         final String sql = "Select b.idBooks " +
                 "from books b " +
-                "where b.book_title = ?;";
+                "Inner join authors au on au.idAuthor = b.idAuthor " +
+                "where b.book_title = ? and au.author_first_name = ? and au.author_last_name = ?;";
 
             try {
-                Books bookWithIdAttached = jdbcTemplate.queryForObject(sql, new BookIdMapper(), title); //returns a book
+                Books bookWithIdAttached = jdbcTemplate.queryForObject(sql, new BookIdMapper(), title, firstName, lastName); //returns a book
                 return bookWithIdAttached;
 
                 //if no object is returned from sql query, the catch block is triggered
@@ -136,8 +139,13 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
 
     @Override
     public boolean add(AppUserBooks appUserBooks) {
+        Scanner console = new Scanner(System.in);
 
-        Books specificBookWithIdAttached = findSpecificBookBasedOnTitle(appUserBooks.getBook().getBookTitle());
+        System.out.println(appUserBooks.getBook().getAuthor());
+        System.out.println(appUserBooks.getBook().getAuthor().getAuthorFirstName());
+
+        Books specificBookWithIdAttached = findSpecificBookBasedOnTitleFirstNameAndLastName(appUserBooks.getBook().getBookTitle(),
+                appUserBooks.getBook().getAuthor().getAuthorFirstName(), appUserBooks.getBook().getAuthor().getAuthorLastName());
 
         final String sql = "insert into app_user_has_books (app_user_id, completion_status, idBooks) values "
                 + "(?,?,?);";
@@ -153,7 +161,7 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
                                                                   //specificBook can return null if it's not found in the database
         }
         //This catch block is required if specificBookWithIdAttached is null
-        catch (EmptyResultDataAccessException | NullPointerException ex) {
+        catch (EmptyResultDataAccessException | NullPointerException ex){
             return false;
         }
     }
