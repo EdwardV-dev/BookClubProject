@@ -3,6 +3,7 @@ import AuthContext from "../context/AuthContext";
 import { useContext, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 
+
 function NavBar({role}) {
     const [userStatus, setUserStatus] = useContext(AuthContext); 
     const history = useHistory();
@@ -22,6 +23,7 @@ function NavBar({role}) {
             {userStatus?.user ? (
            <li>
             <button
+              type="button" className="btn btn-primary"
               onClick={() => {
                 setUserStatus(null);
                 localStorage.removeItem("token");
@@ -35,14 +37,22 @@ function NavBar({role}) {
            </li>
         ) : (
           <>
-            <Link to="/login">Login</Link>
+            <Link to="/login">
+                <button type="button" className="btn btn-primary ml-2">
+                    Login
+                </button>
+            </Link>
             &nbsp; &nbsp;
           </>
        )}
 
        &nbsp; &nbsp;
 
-          <Link to={"/register"}>Register</Link>
+          <Link to={"/register"}>
+                <button type="button" className="btn btn-secondary ml-2">
+                    Register
+                </button>
+          </Link>
 
             &nbsp; &nbsp;
 

@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import { Link, useHistory, useParams } from "react-router-dom";
+import ErrorArray  from "./ErrorArray";
 
 function EditAdminBooks() {
 
@@ -126,6 +127,8 @@ function EditAdminBooks() {
 
     return (
         book && (
+        <>
+        <ErrorArray errors={errors} />
         <form onSubmit={handleSubmit} className="form-inline mx-2 my-4">
              <div>
                 <label htmlFor="authorFirstName">Author First Name:</label>
@@ -192,6 +195,7 @@ function EditAdminBooks() {
                 </button>        
             </div>
         </form>
+        </>
         )
     );
 }

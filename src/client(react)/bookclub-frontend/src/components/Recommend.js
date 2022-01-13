@@ -4,8 +4,8 @@ import AuthContext from "../context/AuthContext";
 import CompletionStatus from "./CompletionStatus";
 import YearPublished from "./YearPublished";
 import ErrorArray  from "./ErrorArray";
-import Error
- from "./Error";
+import Error from "./Error";
+
 function Recommend() {
   const [book, setBook] = useState(null);
   const [errors, setErrors] = useState([]);//Each error is received as an array
