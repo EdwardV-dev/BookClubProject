@@ -190,7 +190,7 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
     public Books findBookViaMostReadGenre(int userId) {
         Books bookWithGenreAttached = findMostReadGenre(userId);
 
-        final String sqlCountRows = "Select Count(*) from books b where b.genre = ? and b.approval_status = true";
+        final String sqlCountRows = "Select Count(*) from books b where b.genre = ? and b.approval_status = true;";
         //Indicates how many table rows of books there are with a specific genre that's also approved
 
         int rowCount;
