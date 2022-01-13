@@ -74,11 +74,7 @@ function AddBook() {
        let correctTitle = book.bookTitle.charAt(0).toUpperCase() + book.bookTitle.substring(1);
        let correctAuthorFirstName = book.author.authorFirstName.charAt(0).toUpperCase() + book.author.authorFirstName.substring(1);
        let correctAuthorLastName = book.author.authorLastName.charAt(0).toUpperCase() + book.author.authorLastName.substring(1);
-    //    let genrePunctuationRemoved = 
        let correctCaseGenre = book.genre.charAt(0).toUpperCase() + book.genre.substring(1);
-
-
-    //    book[property].charAt(0).toUpperCase + book[property].substring(1);
 
  getCorrections();
        
@@ -113,15 +109,16 @@ function AddBook() {
     const response = await fetch("http://localhost:8080/booksAdmin", init1);
 
  //   Only 2 outcomes: 201 (non-duplicate) or 400 (duplicate). Either way, associate the book with the user account
-      if (response.status === 201 || response.status === 400) {
+      if (response.status === 201) {
         const data1 = await response.json();
-
-
+        setErrors([]);
         activateSecondFetch(data1);
     
-    } else {
+    } else if (response.status === 400){
+       const errors = await response.json();
+       setErrors(errors); 
+       } else {
         throw new Error("Something went wrong on our end") 
-           
        }
    } catch (error){
        console.log(error);

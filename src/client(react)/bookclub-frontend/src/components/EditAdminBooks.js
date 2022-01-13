@@ -91,6 +91,25 @@ function EditAdminBooks() {
             book.yearPublished = 6000;
         }
 
+        const getCorrections = () => {for(const property in book) {
+            if (typeof book[property] === "string"){
+                book[property].trimStart();
+                book[property].trimEnd();
+                book[property].toLowerCase();
+                book[property].replace(/\s{2,}/g, " " ) //replace 2 or more spaces with one space
+                
+            }
+         }
+        }
+ 
+        let correctTitle = book.bookTitle.charAt(0).toUpperCase() + book.bookTitle.substring(1);
+        let correctAuthorFirstName = book.author.authorFirstName.charAt(0).toUpperCase() + book.author.authorFirstName.substring(1);
+        let correctAuthorLastName = book.author.authorLastName.charAt(0).toUpperCase() + book.author.authorLastName.substring(1);
+        let correctCaseGenre = book.genre.replace((/[^a-z0-9]/gmi, ""))
+         correctCaseGenre = book.genre.charAt(0).toUpperCase() + book.genre.substring(1);
+        
+  getCorrections();
+
         const updatedBook = {
             ...book,
             
@@ -112,8 +131,9 @@ function EditAdminBooks() {
                 `http://localhost:8080/booksAdmin/${id}`, 
                 init);
                 if (response.status === 204) {
+                    setErrors([]);
                     history.push("/admin");
-                } else if (response.status == 400) {
+                } else if (response.status === 400) {
                     const errors = await response.json();
                     setErrors(errors);
                 } else if (response.status === 403) {
