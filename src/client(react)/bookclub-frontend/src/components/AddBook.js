@@ -64,11 +64,19 @@ function AddBook() {
            if (typeof book[property] === "string"){
                book[property].trimStart();
                book[property].trimEnd();
+               book[property].toLowerCase();
                book[property].replace(/\s{2,}/g, " " ) //replace 2 or more spaces with one space
                
            }
         }
        }
+
+       let correctTitle = book.bookTitle.charAt(0).toUpperCase() + book.bookTitle.substring(1);
+       let correctAuthorFirstName = book.author.authorFirstName.charAt(0).toUpperCase() + book.author.authorFirstName.substring(1);
+       let correctAuthorLastName = book.author.authorLastName.charAt(0).toUpperCase() + book.author.authorLastName.substring(1);
+    //    let genrePunctuationRemoved = 
+       let correctCaseGenre = book.genre.charAt(0).toUpperCase() + book.genre.substring(1);
+
 
     //    book[property].charAt(0).toUpperCase + book[property].substring(1);
 
@@ -77,7 +85,12 @@ function AddBook() {
        
 
         const updatedBook = {
-            ...book,
+
+            ...book, bookTitle: correctTitle, genre: correctCaseGenre,
+            author: {...book.author,
+                authorFirstName: correctAuthorFirstName,
+                authorLastName: correctAuthorLastName
+            }
             
         };
 
