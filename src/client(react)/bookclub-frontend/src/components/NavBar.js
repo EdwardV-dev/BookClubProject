@@ -56,15 +56,24 @@ function NavBar({role}) {
 
             &nbsp; &nbsp;
 
-           {userStatus?.user ? (<Link to={"/books"} onClick={() => document.location.pathname === "/books" ? document.location.reload() : false}>My Books</Link> ) : (<>&nbsp;</>) }
+           {userStatus?.user ? (<Link to={"/books"} onClick={() => document.location.pathname === "/books" ? document.location.reload() : false}>
+               <button type="button" className="btn btn-secondary ml-2">
+                    My Books
+                </button></Link> ) : (<>&nbsp;</>) }
 
             &nbsp; &nbsp;
 
-            {userStatus?.user ? ( <Link to="/recommend">Recommended</Link>) : (<>&nbsp;</>) }
+            {userStatus?.user ? ( <Link to="/recommend">
+                <button type="button" className="btn btn-secondary ml-2">
+                    Recommended
+                </button></Link>) : (<>&nbsp;</>) }
 
             &nbsp; &nbsp;
 
-           {role === "ROLE_ADMIN" && ( <Link to="/admin">Admin</Link> )}
+           {role === "ROLE_ADMIN" && ( <Link to="/admin">
+                <button type="button" className="btn btn-secondary ml-2">
+                    Admin
+                </button></Link> )}
         </nav>
     )
 }
