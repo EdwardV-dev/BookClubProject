@@ -12,6 +12,7 @@ import EditAdminBooks from './components/EditAdminBooks';
 import AddBook from './components/AddBook';
 import AuthContext from "./context/AuthContext";
 import {useState, useEffect, useHistory} from "react";
+import DeleteUserBook from './components/DeleteUserBook';
 
 function App() {
   const [userStatus, setUserStatus] = useState();
@@ -49,12 +50,16 @@ function App() {
             <Recommend />
           </Route>
 
-          <Route path="/booksUser">
+          <Route path="/booksUserEdit/:id">
             <EditUserBooks />
           </Route>
 
-          <Route path="/booksAdmin">
+          <Route path="/booksAdminEdit/:id">
             <EditAdminBooks />
+          </Route>
+
+          <Route path="/booksUserDelete/:id">
+            <DeleteUserBook />
           </Route>
 
           <Route exact path="/">

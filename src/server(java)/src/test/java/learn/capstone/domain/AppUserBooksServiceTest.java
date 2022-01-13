@@ -93,6 +93,19 @@ class AppUserBooksServiceTest {
     }
 
     @Test
+    void shuoldNotUpdateNullCompletionStatus() {
+        Books book = makeBook();
+        AppUserBooks userBook = new AppUserBooks();
+
+        userBook.setAppUserId(1);
+        userBook.setBook(book);
+        //userBook.setCompletionStatus(null);
+
+        Result<AppUserBooks> actual = service.update(userBook);
+        assertEquals(ResultType.INVALID, actual.getType());
+    }
+
+    @Test
     void shouldDelete() {
         Books book = makeBook();
         AppUserBooks userBook = new AppUserBooks();

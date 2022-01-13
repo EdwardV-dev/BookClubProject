@@ -1,5 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJidWctc2FmYXJpIiwic3ViIjoiRWR3YXJkViIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjQxNzcwNzU2fQ.mWieEAdbSX-bmSGOdFSKmgJCcMEMycw2Z7v51umWLpU
-
+@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCb29rQ2x1YiIsInN1YiI6IkFteVIiLCJhdXRob3JpdGllcyI6IlJPTEVfQURNSU4iLCJleHAiOjE2NDE5MzQ0MTZ9.qqtpd5ChmZKYHv6Qrd4KrreLV5J1-FuUBsVLYwZoNpM
 POST http://localhost:8080/authenticate HTTP/1.1
 Content-Type: application/json
 
@@ -7,14 +6,22 @@ Content-Type: application/json
   "username": "AmyR",
   "password": "P@ssw0rd!"
 }
-###############################
+############################### //Succeeds in finding books under Henry. WORKING
 
 GET http://localhost:8080/authorBooks HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-
   "authorFirstName" : "Henry"
+}
 
+################################# //Returns an empty array for non-existing author. WORKING
+
+GET http://localhost:8080/authorBooks HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "authorFirstName" : "Horry"
 }

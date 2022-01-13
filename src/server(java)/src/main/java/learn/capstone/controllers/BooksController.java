@@ -21,6 +21,7 @@ public class BooksController {
     @GetMapping("/booksAdmin")
     public List<Books> findAllForAdmin() {
         return service.findAllForAdmin();
+
     }
 
 
@@ -35,6 +36,7 @@ public class BooksController {
         return ResponseEntity.ok(book);
     }
 
+    
     @PostMapping("/booksAdmin")
     public ResponseEntity<Object> add(@RequestBody Books book) {
         Result<Books> result = service.add(book);

@@ -1,5 +1,6 @@
 package learn.capstone.data;
 
+import learn.capstone.data.mappers.AppUserBookWithCompletionStatusMapper;
 import learn.capstone.data.mappers.BookGenreMapper;
 import learn.capstone.data.mappers.BookIdMapper;
 import learn.capstone.data.mappers.BookMapper;
@@ -8,12 +9,16 @@ import learn.capstone.models.Books;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 
 import learn.capstone.models.AppUserBooks;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import javax.validation.constraints.Null;
 
 @Repository
 public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepository {
@@ -25,9 +30,10 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
+//year directly displayed on ui
     @Override
     public List<Books> findAllUserBooks(int appUserId) {
+        convertNullYearsTo6000ForBookFinds();
         final String sql = "Select b.book_title, b.genre, b.idBooks, b.approval_status, b.publication_year, b.idAuthor, ab.completion_status, " +
                 "au.author_first_name, au.author_last_name\n" +
                 "from books b\n" +
@@ -36,6 +42,26 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
                 "where ab.app_user_id = ?;";
 
         return jdbcTemplate.query(sql, new BookMapper(), appUserId); //returns a list of books
+    }
+
+    //Not relevant to displaying the year
+    @Override
+    public String findCompletionStatus(int appUserId, int bookId) {
+        final String sql = "Select ab.completion_status from app_user_has_books ab " +
+                "where ab.app_user_id = ? and ab.idBooks = ?;";
+
+        return jdbcTemplate.queryForObject(sql, new AppUserBookWithCompletionStatusMapper(), appUserId, bookId); //returns String completion status
+    }
+
+    public void convertNullYearsTo6000ForBookFinds(){
+        final String sql1 = "SET SQL_SAFE_UPDATES=0;";
+        jdbcTemplate.execute(sql1);
+
+        final String sql2 = "update books set publication_year = 6000 where publication_year is null;" ;
+        jdbcTemplate.execute(sql2);
+
+        final String sql3 = "SET SQL_SAFE_UPDATES=1;";
+        jdbcTemplate.execute(sql3);
     }
 
     @Override
@@ -77,15 +103,21 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
 
         }
 
+
+
         //this method is called upon by the add method below. This method is necessary because we don't immediately
        //know if the book was added successfully to the books table
-        public Books findSpecificBookBasedOnTitle(String title){
+
+    //Helper method (not directly displayed on ui). Finds a unique book based on title, first name, and last name--combined.
+        public Books findSpecificBookBasedOnTitleFirstNameAndLastName(String title, String firstName, String lastName){
+
         final String sql = "Select b.idBooks " +
                 "from books b " +
-                "where b.book_title = ?;";
+                "Inner join authors au on au.idAuthor = b.idAuthor " +
+                "where b.book_title = ? and au.author_first_name = ? and au.author_last_name = ?;";
 
             try {
-                Books bookWithIdAttached = jdbcTemplate.queryForObject(sql, new BookIdMapper(), title); //returns a book
+                Books bookWithIdAttached = jdbcTemplate.queryForObject(sql, new BookIdMapper(), title, firstName, lastName); //returns a book
                 return bookWithIdAttached;
 
                 //if no object is returned from sql query, the catch block is triggered
@@ -107,8 +139,13 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
 
     @Override
     public boolean add(AppUserBooks appUserBooks) {
+        Scanner console = new Scanner(System.in);
 
-        Books specificBookWithIdAttached = findSpecificBookBasedOnTitle(appUserBooks.getBook().getBookTitle());
+        System.out.println(appUserBooks.getBook().getAuthor());
+        System.out.println(appUserBooks.getBook().getAuthor().getAuthorFirstName());
+
+        Books specificBookWithIdAttached = findSpecificBookBasedOnTitleFirstNameAndLastName(appUserBooks.getBook().getBookTitle(),
+                appUserBooks.getBook().getAuthor().getAuthorFirstName(), appUserBooks.getBook().getAuthor().getAuthorLastName());
 
         final String sql = "insert into app_user_has_books (app_user_id, completion_status, idBooks) values "
                 + "(?,?,?);";
@@ -124,14 +161,16 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
                                                                   //specificBook can return null if it's not found in the database
         }
         //This catch block is required if specificBookWithIdAttached is null
-        catch (EmptyResultDataAccessException | NullPointerException ex) {
+        catch (EmptyResultDataAccessException | NullPointerException ex){
             return false;
         }
     }
 
 
-
+    //Year is directly displayed on ui
     public Books findMostReadGenre(int userId){
+        convertNullYearsTo6000ForBookFinds();
+
         final String sql = "Select genre, COUNT(genre) as genreCount From books b\n" +
                 "Inner join app_user_has_books ab on ab.idBooks = b.idbooks\n" +
                 "Inner join app_user au on au.app_user_id = ab.app_user_id \n" +
@@ -147,18 +186,27 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
 
      int previousColumnPick = 0;
 
+
     public Books findBookViaMostReadGenre(int userId) {
         Books bookWithGenreAttached = findMostReadGenre(userId);
 
-        final String sqlCountRows = "Select Count(*) from books b where b.genre = ? ";
-        //Indicates how many table rows of books there are with a specific genre
-        int rowCount = jdbcTemplate.queryForObject(sqlCountRows, new Object[]{bookWithGenreAttached.getGenre()}, Integer.class);
+        final String sqlCountRows = "Select Count(*) from books b where b.genre = ? and b.approval_status = true";
+        //Indicates how many table rows of books there are with a specific genre that's also approved
+
+        int rowCount;
+
+        try {
+             rowCount = jdbcTemplate.queryForObject(sqlCountRows, new Object[]{bookWithGenreAttached.getGenre()}, Integer.class);
+        } catch (NullPointerException ex) {
+            return null;
+        }
+
         Random random = new Random();
 
         int randomColumnPick;
 
         do {
-            System.out.println("try again");
+//            System.out.println("try again");
             randomColumnPick = random.nextInt(rowCount) + 1;
         } while (randomColumnPick == previousColumnPick && rowCount > 1);
 

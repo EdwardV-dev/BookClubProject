@@ -1,37 +1,222 @@
-import { Link, useHistory } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import AuthContext from "../context/AuthContext";
+import { Link, useHistory, useParams } from "react-router-dom";
+import ErrorArray  from "./ErrorArray";
 
 function EditAdminBooks() {
 
+    const currentBook = {
+        approvalStatus: "",
+        bookTitle: "",
+        genre: "",
+        author: {
+            authorFirstName: "",
+            authorLastName: "",
+        },
+        yearPublished: ""
+    }
+
+    const [book, setBook] = useState(currentBook);
     const history = useHistory();
+    const { id } = useParams();
+    const [errors, setErrors] = useState([]);
+     
+    useEffect(
+        () => {
+            // Only do this if there is an `id`
+            if (id) {
+                fetch(`http://localhost:8080/books/${id}`, {
+                  method: "GET",
+                  headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${localStorage.getItem("token")}`
+                  }
+                })
+                .then(response => {
+                  if (response.status !== 200) {
+                    return Promise.reject("book fetch failed")
+                  }
+                  return response.json();
+                })
+                .then(data => setBook(data))
+                .catch(console.log);
+            }
+        }, 
+        [id]
+  );
+
+    console.log(book);
+
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setBook({...book,
+            [name]: value,
+        });
+    }
+
+    const handleFirstNameChange = (event) => {
+        setBook({...book,
+            author: {...book.author,
+                authorFirstName: event.target.value
+            }
+        })
+    }
+
+    const handleLastNameChange = (event) => {
+        setBook({...book,
+            author: {...book.author,
+                authorLastName: event.target.value
+            }
+        })
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        if(book.yearPublished === null || book.yearPublished.toString().length === 0){
+            book.yearPublished = 6000;
+        }
+
+        const getCorrections = () => {for(const property in book) {
+            if (typeof book[property] === "string"){
+                book[property].trimStart();
+                book[property].trimEnd();
+                book[property].toLowerCase();
+                book[property].replace(/\s{2,}/g, " " ) //replace 2 or more spaces with one space
+                
+            }
+         }
+        }
+ 
+        let correctTitle = book.bookTitle.charAt(0).toUpperCase() + book.bookTitle.substring(1);
+        let correctAuthorFirstName = book.author.authorFirstName.charAt(0).toUpperCase() + book.author.authorFirstName.substring(1);
+        let correctAuthorLastName = book.author.authorLastName.charAt(0).toUpperCase() + book.author.authorLastName.substring(1);
+        let correctCaseGenre = book.genre.replace((/[^a-z0-9]/gmi, ""))
+         correctCaseGenre = book.genre.charAt(0).toUpperCase() + book.genre.substring(1);
+        
+  getCorrections();
+
+        const updatedBook = {
+            ...book,
+            
+        };
+
+        console.log(updatedBook);
+
+        try {
+            const init = {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify(updatedBook)
+            };
+
+            const response = await fetch(
+                `http://localhost:8080/booksAdmin/${id}`, 
+                init);
+                if (response.status === 204) {
+                    setErrors([]);
+                    history.push("/admin");
+                } else if (response.status === 400) {
+                    const errors = await response.json();
+                    setErrors(errors);
+                } else if (response.status === 403) {
+                    setErrors(["Not logged in."]);
+                } else {
+                    setErrors(["Unknown error."]);
+                }
+        } catch (error) {
+            console.log(error);
+        }    
+    }
+
+    const handleCancel = async (event) => {
         history.push("/admin");
     }
 
+    const determineIfYearNull = (yearPublished) => {
+        if (yearPublished === 6000){
+            return null;
+        } else {
+            return yearPublished;
+        }
+    }
+
     return (
-        <form onSubmit={handleSubmit}>
+        book && (
+        <>
+        <ErrorArray errors={errors} />
+        <form onSubmit={handleSubmit} className="form-inline mx-2 my-4">
              <div>
-            <input type="text" id="authorFirstName" name="authorFirstName" value="Author First Name" />
+                <label htmlFor="authorFirstName">Author First Name:</label>
+                <input 
+                    type="text" 
+                    id="authorFirstName" 
+                    name="authorFirstName" 
+                    defaultValue={book.author.authorFirstName}
+                    required
+                    onChange={handleFirstNameChange}
+                />
             </div>
             <div>
-                <input type="text" id="authorLastName" name="authorLastName" value="Author Last Name" />
+                <label htmlFor="authorLastName">Author Last Name:</label>
+                <input
+                    type="text" 
+                    id="authorLastName" 
+                    name="authorLastName" 
+                    defaultValue={book.author.authorLastName} 
+                    required
+                    onChange={handleLastNameChange}
+                />
             </div>
             <div>
-                <input type="text" id="title" name="title" value="Current Title" />
+                <label htmlFor="bookTitle">Book Title:</label>
+                <input 
+                    type="text" 
+                    id="bookTitle" 
+                    name="bookTitle" 
+                    value={book.bookTitle}
+                    required
+                    onChange={handleChange} 
+                />
             </div>
             <div>
-                <input type="text" id="genre" name="genre" value="Current Genre" />
+                <label htmlFor="genre">Genre:</label>
+                <input 
+                    type="text" 
+                    id="genre" 
+                    name="genre" 
+                    value={book.genre}
+                    required
+                    onChange={handleChange} 
+                />
             </div>
             <div>
-                <input type="text" id="year" name="year" value="Year published" />
+                <label htmlFor="yearPublished">Year Published:</label>
+                <input 
+                    type="number" 
+                    id="yearPublished" 
+                    name="yearPublished" 
+                    max= "2022"
+                    value= {determineIfYearNull(book.yearPublished)}
+                    onChange={handleChange} 
+                />
             </div>
 
             <div>
-                <button type="submit">Submit</button>
+                <button type="submit" className="btn btn-success ml-2">
+                    Update
+                </button>  &nbsp;
+                <button type="button" className="btn btn-warning ml-2" onClick={handleCancel}>
+                    Cancel
+                </button>        
             </div>
         </form>
+        </>
+        )
     );
 }
 

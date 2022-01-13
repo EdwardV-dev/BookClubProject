@@ -3,6 +3,7 @@ import AuthContext from "../context/AuthContext";
 import { useContext, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 
+
 function NavBar({role}) {
     const [userStatus, setUserStatus] = useContext(AuthContext); 
     const history = useHistory();
@@ -15,14 +16,18 @@ function NavBar({role}) {
         }
       }, [setUserStatus]);
 
+   
+
     return (
         <nav>
             {userStatus?.user ? (
            <li>
             <button
+              type="button" className="btn btn-primary"
               onClick={() => {
                 setUserStatus(null);
                 localStorage.removeItem("token");
+                localStorage.removeItem("userId");
                 history.push("/")
               }}
             >
@@ -32,24 +37,34 @@ function NavBar({role}) {
            </li>
         ) : (
           <>
-            <Link to="/login">Login</Link>
+            <Link to="/login">
+                <button type="button" className="btn btn-primary ml-2">
+                    Login
+                </button>
+            </Link>
+            &nbsp; &nbsp;
           </>
        )}
-            <button type="bugit sttustton" className="btn btn-success ml-2">
-                Register
-            </button>
 
-           {userStatus?.user ? (<button type="button" className="btn btn-success ml-2">
-                My Books
-            </button> ) : (<>&nbsp;</>) }
+       &nbsp; &nbsp;
 
-            <button type="button" className="btn btn-success ml-2">
-                Recommended
-            </button>
+          <Link to={"/register"}>
+                <button type="button" className="btn btn-secondary ml-2">
+                    Register
+                </button>
+          </Link>
 
-           {role === "ROLE_ADMIN" && ( <button type="button" className="btn btn-success ml-2">
-                Admin
-            </button> )}
+            &nbsp; &nbsp;
+
+           {userStatus?.user ? (<Link to={"/books"} onClick={() => document.location.pathname === "/books" ? document.location.reload() : false}>My Books</Link> ) : (<>&nbsp;</>) }
+
+            &nbsp; &nbsp;
+
+            {userStatus?.user ? ( <Link to="/recommend">Recommended</Link>) : (<>&nbsp;</>) }
+
+            &nbsp; &nbsp;
+
+           {role === "ROLE_ADMIN" && ( <Link to="/admin">Admin</Link> )}
         </nav>
     )
 }

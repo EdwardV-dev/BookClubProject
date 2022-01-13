@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJidWctc2FmYXJpIiwic3ViIjoiQW15UiIsImF1dGhvcml0aWVzIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY0MTc5NzExMX0.GcLD2CvDPAQCkJU97ZeYYxA594XEELBIOQ-xNsJa91g
+@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCb29rQ2x1YiIsInN1YiI6IkFteVIiLCJhdXRob3JpdGllcyI6IlJPTEVfQURNSU4iLCJleHAiOjE2NDE5NTM5NTB9.P6SJWkviQcyb_mPLKBOV5xj72h-FZBmUGdMaP-sQauY
 
 //should fail for unathorized user
 GET http://localhost:8080/booksAdmin HTTP/1.1
@@ -53,7 +53,7 @@ Authorization: Bearer {{token}}
       "authorFirstName": "Rick",
       "authorLastName": "Riordin"
     },
-    "yearPublished": 2005
+    "yearPublished": null
 }
 
 ###
