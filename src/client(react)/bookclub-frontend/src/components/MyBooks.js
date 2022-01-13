@@ -84,7 +84,10 @@ function MyBooks() {
 
       <div>
       <br></br>
-      <Link to={"/add"}>Add Book</Link>
+      <Link to={"/add"}>
+        <button type="button" className="btn btn-secondary ml-2">
+          Add Book
+        </button></Link>
       </div>
 
       <table className="table table-striped table-dark table-hover">
