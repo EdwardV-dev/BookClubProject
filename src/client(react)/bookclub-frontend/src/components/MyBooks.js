@@ -88,7 +88,7 @@ function MyBooks() {
       <br></br>
       <Link to={"/add"}>
         <button type="button" className="btn btn-warning ml-2">
-         Add Book
+         Add a book
         </button>
       </Link>
       <br></br><br></br>

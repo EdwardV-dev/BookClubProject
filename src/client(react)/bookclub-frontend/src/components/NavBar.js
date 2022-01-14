@@ -23,7 +23,7 @@ function NavBar({role}) {
             {userStatus?.user ? (
            <li>
             <button
-              type="button" className="btn btn-primary"
+              type="button" className="btn btn-info ml-2"
               onClick={() => {
                 setUserStatus(null);
                 localStorage.removeItem("token");
@@ -38,7 +38,7 @@ function NavBar({role}) {
         ) : (
           <>
             <Link to="/login">
-                <button type="button" className="btn btn-primary ml-2">
+                <button type="button" className="btn btn-info text-light ml-2">
                     Login
                 </button>
             </Link>

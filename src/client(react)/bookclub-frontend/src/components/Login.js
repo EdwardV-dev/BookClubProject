@@ -118,15 +118,15 @@ export default function Login({ userStatus }) {
     <div class="col col-lg-2">
     </div>
   </div>
-
+<br></br>
         <div class="row justify-content-md-center">
     <div class="col col-lg-2">
-    
     </div>
+
     <div class="col-md-auto">
     <button type="submit" class="btn btn-info text-light">Login</button>
-
     </div>
+
     <div class="col col-lg-2">
       
     </div>
