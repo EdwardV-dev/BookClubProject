@@ -40,29 +40,60 @@ function Register() {
 
     return (
         <>
-        <div>
-            <h2>Register</h2>
+        <h2 className="text-light"style={{display: 'flex', justifyContent: 'center'}}>Register</h2>
 
-            {errors.map((error, i) => (
+      {errors.map((error, i) => (
         <Error key={i} msg={error} />
       ))}
 
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor = "username">Username</label>
-                    <input type="text" id="username" onChange={(event) => setUsername(event.target.value)}/>
-                </div>
-
-                <div>
-                    <label>Password</label>
-                    <input type="text" id="password" onChange={(event) => setPassword(event.target.value)}/>
-                </div>
-
-                <div>
-                    <button type="submit">Register</button>
-                </div>
-            </form>
+      <form onSubmit={handleSubmit} className="form-inline mx-2 my-4 text-light">
+        <div class="container">
+        <div class="row justify-content-md-center">
+        <div class="col col-lg-2">
         </div>
+        <div class="col-md-auto">
+        <label htmlFor = "username">Username:</label>
+          <input
+            class="form-control"
+            type="text"
+            id="username"
+            onChange={(event) => setUsername(event.target.value)}
+          />
+    </div>
+    <div class="col col-lg-2">
+    </div>
+        </div>
+        
+        <div class="row justify-content-md-center">
+    <div class="col col-lg-2">
+    </div>
+    <div class="col-md-auto">
+      <label>Password:</label>
+          <input
+            class="form-control"
+            type="text"
+            id="password"
+            onChange={(event) => setPassword(event.target.value)}
+          />
+    </div>
+    <div class="col col-lg-2">
+    </div>
+  </div>
+<br></br>
+        <div class="row justify-content-md-center">
+    <div class="col col-lg-2">
+    
+    </div>
+    <div class="col-md-auto">
+    <button type="submit" class="btn btn-info text-light">Register</button>
+
+    </div>
+    <div class="col col-lg-2">
+      
+    </div>
+  </div>
+        </div>
+      </form>
         </>
     );
 }

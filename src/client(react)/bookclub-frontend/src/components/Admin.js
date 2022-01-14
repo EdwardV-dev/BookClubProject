@@ -97,7 +97,11 @@ function Admin() {
                   <td><ApprovalStatus boolean={book.approvalStatus} /></td>
                   <td>
                     <div className="float-right">
-                      <Link to={`/booksAdminEdit/${book.idBooks}`}>Edit</Link> &nbsp;
+                      <Link to={`/booksAdminEdit/${book.idBooks}`}>
+                        <button type="button" className="btn btn-info ml-2">
+                          Edit
+                        </button>
+                      </Link> &nbsp;
                       {book.approvalStatus ? (
                         null
                       ) : (

@@ -1,7 +1,20 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, React } from "react";
 import AuthContext from "../context/AuthContext";
 import { Link, useHistory, useParams } from "react-router-dom";
 import ErrorArray  from "./ErrorArray";
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Form, Button } from 'react-bootstrap/Form';
+import FormCheck from 'react-bootstrap/FormCheck';
+import FormControl from 'react-bootstrap/FormControl';
+import FormFloating from 'react-bootstrap/FormFloating';
+import FormGroup from 'react-bootstrap/FormGroup';
+import FormLabel from 'react-bootstrap/FormLabel';
+import FormRange from 'react-bootstrap/FormRange';
+import FormSelect from 'react-bootstrap/FormSelect';
+import FormText from 'react-bootstrap/FormText';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col'
 
 function EditAdminBooks() {
 
@@ -148,9 +161,17 @@ function EditAdminBooks() {
     return (
         book && (
         <>
+
         <ErrorArray errors={errors} />
-        <form onSubmit={handleSubmit} className="form-inline mx-2 my-4">
-             <div>
+
+        <form onSubmit={handleSubmit} className="form-inline mx-2 my-4 text-light" >
+             <div class="container">
+                 <div class="row justify-content-md-center">
+
+                     <div class="col col-lg-2"></div>
+
+                     <div class="col-md-auto">
+                     <div className="form-group mx-4 my-4" sm={10}>
                 <label htmlFor="authorFirstName">Author First Name:</label>
                 <input 
                     type="text" 
@@ -158,10 +179,11 @@ function EditAdminBooks() {
                     name="authorFirstName" 
                     defaultValue={book.author.authorFirstName}
                     required
+                    className="form-control"
                     onChange={handleFirstNameChange}
                 />
             </div>
-            <div>
+            <div className="form-inline mx-4 my-4">
                 <label htmlFor="authorLastName">Author Last Name:</label>
                 <input
                     type="text" 
@@ -169,21 +191,24 @@ function EditAdminBooks() {
                     name="authorLastName" 
                     defaultValue={book.author.authorLastName} 
                     required
+                    className="form-control"
                     onChange={handleLastNameChange}
                 />
             </div>
-            <div>
+            <div className="form-inline mx-4 my-4">
                 <label htmlFor="bookTitle">Book Title:</label>
                 <input 
+                    className="form-inline mx-"
                     type="text" 
                     id="bookTitle" 
                     name="bookTitle" 
                     value={book.bookTitle}
                     required
+                    className="form-control"
                     onChange={handleChange} 
                 />
             </div>
-            <div>
+            <div className="form-inline mx-4 my-4">
                 <label htmlFor="genre">Genre:</label>
                 <input 
                     type="text" 
@@ -191,16 +216,18 @@ function EditAdminBooks() {
                     name="genre" 
                     value={book.genre}
                     required
+                    className="form-control"
                     onChange={handleChange} 
                 />
             </div>
-            <div>
+            <div className="form-inline mx-4 my-4">
                 <label htmlFor="yearPublished">Year Published:</label>
                 <input 
                     type="number" 
                     id="yearPublished" 
                     name="yearPublished" 
                     max= "2022"
+                    className="form-control"
                     value= {determineIfYearNull(book.yearPublished)}
                     onChange={handleChange} 
                 />
@@ -214,6 +241,14 @@ function EditAdminBooks() {
                     Cancel
                 </button>        
             </div>
+                     </div>
+
+                     <div class="col col-lg-2"></div>
+
+                 </div>
+             </div>
+             
+             
         </form>
         </>
         )
