@@ -139,14 +139,52 @@ begin
     values
         ("Christopher", "Robin"),
         ("JK", "Rowling"),
-        ("Henry", "Smith");
+        ("Henry", "Smith"),
+		("JK", "Rowling"),
+		("JK", "Rowling"),
+		("JK", "Rowling"),
+		("JK", "Rowling"),
+	    ("JK", "Rowling"), -- idAuthor: 8
+		("Howard", "Taft"),
+        ("Daisy", "Williams"), -- 10
+        ("Henry", "Wilson"),
+        ("Henry", "Wilson"),
+        ("Henry", "Wilson"),
+        ("Henry", "Wilson"),
+        ("Henry", "Wilson"), -- 15
+        ("Gary", "Williams"),
+        ("Gary", "Williams"),
+        ("Gary", "Williams"),
+        ("Gary", "Williams"),
+        ("Gary", "Williams"); -- 20
+        
+        
         
     insert into books
         (`approval_status`, `book_title`, `genre`, `publication_year`, `idAuthor`)
     values
         (true, "Winnie the Pooh", "Fiction", 1932, 1),
         (true, "Harry Potter: The First Book", "Fiction", 1996, 2),
-        (true, "Fossils and more!", "Nonfiction", 2003, 3);
+        (true, "Fossils and more!", "Nonfiction", 2003, 3),
+        (true, "Harry Potter: The second", "Fiction", 1999, 4),
+        (true, "Fantastical Beasts and more!", "Fiction", 2004, 5), 
+        (true, "Enter the garden", "Fiction", 1999, 6),
+        (true, "Mystified Castles", "Fiction", 1999, 7),
+        (true, "Playing with magic", "Fiction", 1999, 8),
+        (true, "My day at the park", "Fiction", 1999, 9),
+        (true, "Looking through the portal", "Fiction", 2008, 10),
+        (true, "How to trap the hatter", "Fiction", 2008, 11),
+        (true, "Stringing along a wizard", "Fiction", 2003, 12),
+        (true, "Finding Mary Jane", "Fiction", 2000, 13),
+        (true, "Searching for SpiderMan", "Fiction", 1985, 14),
+        (true, "Calling all superheroes!", "Fiction", 2009, 15),
+        (true, "Seeing the Leprechauns", "Fiction", 1976, 16),
+        (true, "Going to town with the beast", "Fiction", 1988, 17),
+        (true, "Going where no man has gone: the mirror dimension", "Fiction", 2001, 18),
+        (true, "Thor's rescue", "Fiction", 2001, 19),
+        (true, "Maze runner", "Fiction", 1973, 20);
+        
+        
         
 	insert into app_role
     (`role_name`)
@@ -167,6 +205,13 @@ values
 (1, 1, "Reading"),
 (1, 2, "WantToRead"),
 (1, 3, "DoneReading"),
+(1, 4, "DoneReading"),
+(1, 5, "WantToRead"),
+(1, 6, "WantToRead"),
+(1, 7, "WantToRead"),
+(1, 8, "WantToRead"),
+(1, 9, "Reading"),
+(1, 10, "Reading"),
 (2, 2, "Reading"); 
      
 end // -- ensures that 
