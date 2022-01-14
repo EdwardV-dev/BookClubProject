@@ -79,7 +79,7 @@ function Register() {
     <div class="col col-lg-2">
     </div>
   </div>
-
+<br></br>
         <div class="row justify-content-md-center">
     <div class="col col-lg-2">
     

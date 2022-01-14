@@ -23,7 +23,7 @@ function App() {
       <Router>
         <AuthContext.Provider value={[userStatus, setUserStatus]}>
           <br></br>
-          <h1 className="text-light"style={{display: 'flex', justifyContent: 'center'}}>The Bookfast Club </h1>
+          <h1 className="text-light"style={{display: 'flex', justifyContent: 'center'}}>The BookClub </h1>
     
         <br></br>
         <NavBar 
