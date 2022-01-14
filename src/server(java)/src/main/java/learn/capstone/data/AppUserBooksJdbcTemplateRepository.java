@@ -210,16 +210,20 @@ public class AppUserBooksJdbcTemplateRepository implements AppUserBooksRepositor
             randomColumnPick = random.nextInt(rowCount) + 1;
         } while (randomColumnPick == previousColumnPick && rowCount > 1);
 
-        final String sql = "Select * From\n" +
-                "(Select b.book_title, b.genre, b.idBooks, b.approval_status, b.publication_year, b.idAuthor, au.author_first_name, au.author_last_name,\n" +
-                "ROW_NUMBER() OVER(Order by idBooks) as row_numbering\n" +
-                "from books b\n" +
-                "Inner join authors au \n" +
-                "on b.idAuthor = au.idAuthor) as innerTable\n" +
-                "where genre= ? and  row_numbering = ?;";
+        jdbcTemplate.execute("SET @row_number = 0;");
+
+         final String sql = "Select * From \n" +
+                "  (Select b.book_title, b.genre, b.idBooks, b.approval_status, b.publication_year, b.idAuthor, au.author_first_name, au.author_last_name,\n" +
+                "  (@row_number:=@row_number + 1) as row_num\n" +
+                "   from books b\n" +
+                "   Inner join authors au \n" +
+                "   on b.idAuthor = au.idAuthor) as innerTable\n" +
+                "   where genre = ? and row_num = ?;";
 
 
         previousColumnPick = randomColumnPick; //storing the columnPick in memory (will be retrieved for future method calls), i.e. columnPick is preserved after this method executes
+
+//        jdbcTemplate.execute("SET @row_number = 0;");
 
        return jdbcTemplate.queryForObject(sql, new BookMapper(), bookWithGenreAttached.getGenre(), randomColumnPick);
     }
