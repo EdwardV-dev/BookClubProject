@@ -63,7 +63,7 @@ function NavBar({role}) {
 
             &nbsp; &nbsp;
 
-            {userStatus?.user ? ( <Link to="/recommend">
+            {userStatus?.user ? ( <Link to="/recommend" onClick={() => document.location.pathname === "/recommend" ? document.location.reload() : false}>
                 <button type="button" className="btn btn-secondary ml-2">
                     Recommended
                 </button></Link>) : (<>&nbsp;</>) }

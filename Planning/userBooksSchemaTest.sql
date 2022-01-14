@@ -73,7 +73,7 @@ DROP TABLE IF EXISTS `userbookstest`.`books` ;
 CREATE TABLE IF NOT EXISTS `userbookstest`.`books` (
   `idBooks` INT NOT NULL AUTO_INCREMENT,
   `approval_status` TINYINT(1) NOT NULL default(0),
-  `book_title` VARCHAR(45) NOT NULL,
+  `book_title` VARCHAR(2048) NOT NULL,
   `genre` VARCHAR(45) NOT NULL,
   `publication_year` INT NULL,
   `idAuthor` INT NOT NULL,
@@ -140,6 +140,7 @@ begin
         ("Christopher", "Robin"),
         ("JK", "Rowling"),
         ("Henry", "Smith");
+	
         
     insert into books
         (`approval_status`, `book_title`, `genre`, `publication_year`, `idAuthor`)
@@ -147,7 +148,7 @@ begin
         (true, "Winnie the Pooh", "Fiction", 1932, 1),
         (true, "Harry Potter: The First Book", "Fiction", 1996, 2),
         (true, "Fossils and more!", "Nonfiction", 2003, 3);
-        
+       
 	insert into app_role
     (`role_name`)
     values
@@ -179,14 +180,67 @@ delimiter ;
         (true, "Winnie the Pooh", "Fiction", 1932, 1), -- idbooks:1
         (true, "Harry Potter: The First Book", "Fiction", null, 2), -- idbooks:2
         (false, "Fossils and more!", "Nonfiction", 0, 3), -- idbooks:3
-        (false, "Raiders", "History", null, 3); -- idbooks:4
+        (true, "Harry Potter: The second book", "Fiction", 1999, 4),
+        (true, "Fantastical Beasts and more!", "Fiction", 2004, 5), 
+        (true, "Enter the garden", "Fiction", 1999, 6),
+        (true, "Mystified Castles", "Fiction", 1999, 7),
+        (true, "Playing with magic", "Fiction", 1999, 8),
+        (true, "My day at the park", "Fiction", 1999, 9),
+        (true, "Looking through the portal", "Fiction", 2008, 10),
+        (true, "How to trap the hatter", "Fiction", 2008, 11),
+        (true, "Stringing along a wizard", "Fiction", 2003, 12),
+        (true, "Finding Mary Jane", "Fiction", 2000, 13),
+        (true, "Searching for SpiderMan", "Fiction", 1985, 14),
+        (true, "Calling all superheroes!", "Fiction", 2009, 15),
+        (true, "Seeing the Leprechauns", "Fiction", 1976, 16),
+        (true, "Going to town with the beast", "Fiction", 1988, 17),
+        (true, "Going where no man has gone: the mirror dimension", "Fiction", 2001, 18),
+        (true, "Thor's rescue", "Fiction", 2001, 19),
+        (true, "Amazing Spiderman", "Fiction", 1998, 20),
+        (true, "SandMan", "Fiction", 1976, 21),
+        (true, "Mystery at Goldilock mansion", "Fiction", 1973, 22),
+        (true, "Get me a wishing well", "Fiction", 1983, 23),
+        (true, "Running up a storm", "Fiction", 1963, 24),
+        (true, "Cereal adventures", "Fiction", 1963, 25),
+        (true, "The bending of the moon", "Fiction", 1923, 26),
+        (true, "Muffin man origins", "Fiction", 1923, 27),
+        (true, "Star wars: The last cantina", "Fiction", 1975, 28),
+        (true, "Yoda and his adventures", "Fiction", 1975, 29),
+        (true, "R2D2 and friends", "Fiction", 1976, 30);
         
 	insert into authors
         (`author_first_name`, `author_last_name`)
     values
         ( "Christopher", "Robin"),
         ("JK", "Rowling"),
-        ("Henry", "Smith");
+        ("Henry", "Smith"),
+		("JK", "Rowling"),
+		("JK", "Rowling"),
+		("JK", "Rowling"),
+		("JK", "Rowling"),
+	    ("JK", "Rowling"), -- idAuthor: 8
+		("Howard", "Taft"),
+        ("Daisy", "Williams"), -- 10
+        ("Henry", "Wilson"),
+        ("Henry", "Wilson"),
+        ("Henry", "Wilson"),
+        ("Henry", "Wilson"),
+        ("Henry", "Wilson"), -- 15
+        ("Gary", "Williams"),
+        ("Gary", "Williams"),
+        ("Gary", "Williams"),
+        ("Gary", "Williams"),
+        ("Gary", "Williams"), -- 20
+        ("Jessica", "Heather"), 
+        ("Jessica", "Heather"),
+        ("Jessica", "Heather"),
+        ("Martin", "Long"),
+		("Martin", "Long"), -- 25
+		("Martin", "Long"),
+		("Martin", "Long"),
+		("George", "Lucas"), -- 28
+        ("George", "Lucas"),
+        ("George", "Lucas"); -- 30
         
     insert into app_user
     (`username`, `password_hash`, `disabled`, `idRole`)
@@ -205,6 +259,33 @@ values
 (1, 1, "Reading"),
 (1, 2, "WantToRead"),
 (1, 3, "DoneReading"),
+(1, 4, "DoneReading"),
+(1, 5, "WantToRead"),
+(1, 6, "WantToRead"),
+(1, 7, "WantToRead"),
+(1, 8, "WantToRead"),
+(1, 9, "Reading"),
+(1, 10, "Reading"),
+(1, 11, "Reading"),
+(1, 12, "WantToRead"),
+(1, 13, "Reading"),
+(1, 14, "WantToRead"),
+(1, 15, "Reading"),
+(1, 16, "WantToRead"),
+(1, 17, "Reading"),
+(1, 18, "WantToRead"),
+(1, 19, "DoneReading"),
+(1, 20, "DoneReading"),
+(1, 21, "Reading"),
+(1, 22, "Reading"),
+(1, 23, "DoneReading"),
+(1, 24, "DoneReading"),
+(1, 25, "DoneReading"),
+(1, 26, "WantToRead"),
+(1, 27, "WantToRead"),
+(1, 28, "WantToRead"),
+(1, 29, "WantToRead"),
+(1, 30, "WantToRead"),
 (2, 2, "Reading"); 
 
     
