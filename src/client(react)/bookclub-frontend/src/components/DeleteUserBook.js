@@ -76,7 +76,7 @@ function DeleteUserBook() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="form-inline  mx-2 my-4">
+        <form onSubmit={handleSubmit} className="form-inline text-light mx-2 my-4">
             <h2>Delete this book from "My Books"?</h2>
             <table className="table table-striped table-dark table-hover">
             <thead>

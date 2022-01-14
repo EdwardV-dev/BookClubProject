@@ -103,20 +103,22 @@ function EditUserBooks() {
     }
 
     return (
-        <>
-        <h2>Update completion status for:</h2>
-        <div>
-            <h3>{bookTitle}</h3>
+        <form onSubmit={handleSubmit} className="form-inline mx-2 my-4 text-light ">
+        <div class="container">
+        <div class="row justify-content-md-center">
+        <div class="col col-lg-2">
         </div>
+        <div class="col-md-auto">
 
-        {/* {errors.map((error, i) => (
-            <Error key={i} msg={error} />
-        ))} */}
+            <h2 class="text-center" >Update completion status for:</h2>
+            <div>
+                <h3 class="text-center">{bookTitle}</h3>
+            </div>
 
-        <div>
-            <form onSubmit={handleSubmit} className="form-inline mx-2 my-4">
-                <div>
+            <div>
+                <div class="form-check">
                     <input 
+                        class="form-check-input"
                         type="radio" 
                         value="WantToRead" 
                         name="completionStatus"
@@ -125,8 +127,9 @@ function EditUserBooks() {
                     />
                     Want to Read
                 </div>
-                <div>
+                <div class="form-check">
                     <input 
+                        class="form-check-input"
                         type="radio" 
                         value="Reading"
                         name="completionStatus"
@@ -134,8 +137,9 @@ function EditUserBooks() {
                     /> 
                     Reading
                 </div>
-                <div>
+                <div class="form-check">
                     <input 
+                        class="form-check-input"
                         type="radio" 
                         value="DoneReading"
                         name="completionStatus"
@@ -152,9 +156,14 @@ function EditUserBooks() {
                         Cancel
                     </button>
                 </div>
-            </form>
+            </div>
+            
         </div>
-        </>
+        <div class="col col-lg-2">
+        </div>
+        </div>
+        </div>
+        </form>
     );
 }
 

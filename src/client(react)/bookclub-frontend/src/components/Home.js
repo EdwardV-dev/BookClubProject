@@ -7,7 +7,7 @@ function Home() {
 
     return (
         <>
-        <h2 class="text-light text-center">Welcome to The Book Club!</h2>
+        <h2 class="text-light text-center">Welcome!</h2>
         <div style={{display: 'flex', justifyContent: 'center'}}>
             <img src={logo} alt="Logo" />
         </div>
