@@ -176,7 +176,7 @@ function AddBook() {
   };
 
   const handleCancel = async (event) => {
-    history.push("/admin");
+    history.push("/books");
   };
 
   const determineIfYearNull = (yearPublished) => {
