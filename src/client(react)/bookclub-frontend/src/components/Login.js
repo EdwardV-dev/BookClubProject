@@ -81,31 +81,59 @@ export default function Login({ userStatus }) {
 
   return (
     <div>
-      <h2>Login</h2>
+      <h2 className="text-light"style={{display: 'flex', justifyContent: 'center'}}>Login</h2>
 
       {errors.map((error, i) => (
         <Error key={i} msg={error} />
       ))}
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username:</label>
+      <form onSubmit={handleSubmit} style={{display: 'flex', justifyContent: 'center'}} className="form-inline mx-2 my-4 text-light">
+        <div class="container">
+        <div class="row justify-content-md-center">
+        <div class="col col-lg-2">
+        </div>
+        <div class="col-md-auto">
+        <label>Username:</label>
           <input
+            class="form-control"
             type="text"
             onChange={(event) => setUsername(event.target.value)}
           />
+    </div>
+    <div class="col col-lg-2">
+    </div>
         </div>
-        <div>
-          <label>Password:</label>
+        
+        <div class="row justify-content-md-center">
+    <div class="col col-lg-2">
+    </div>
+    <div class="col-md-auto">
+      <label>Password:</label>
           <input
+            class="form-control"
             type="password"
             onChange={(event) => setPassword(event.target.value)}
           />
-        </div>
-        <div>
-          <button type="submit">Login</button>
+    </div>
+    <div class="col col-lg-2">
+    </div>
+  </div>
+
+        <div class="row justify-content-md-center">
+    <div class="col col-lg-2">
+    
+    </div>
+    <div class="col-md-auto">
+    <button type="submit" class="btn btn-info text-light">Login</button>
+
+    </div>
+    <div class="col col-lg-2">
+      
+    </div>
+  </div>
         </div>
       </form>
     </div>
   );
+  
 }

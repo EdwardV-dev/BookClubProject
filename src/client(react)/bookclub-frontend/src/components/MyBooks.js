@@ -70,24 +70,28 @@ function MyBooks() {
   
   return (
     <>
-      <form onSubmit={handleAuthorNameSubmit}>
+    <nav class="navbar navbar-light">
+      <form class="form-inline" onSubmit={handleAuthorNameSubmit}>
         <input
-          type="text"
+          type="search"
           id="search"
           name="search"
           value={authorName} //Initial value is blank via useState but changes onChange
           onChange={handleInputChange}
           placeholder="Author Last/First Name"
         />
-        <button type="submit">Search</button>
+        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
       </form>
+    </nav>
 
       <div>
       <br></br>
       <Link to={"/add"}>
-        <button type="button" className="btn btn-secondary ml-2">
-          Add Book
-        </button></Link>
+        <button type="button" className="btn btn-warning ml-2">
+         Add Book
+        </button>
+      </Link>
+      <br></br><br></br>
       </div>
 
       <table className="table table-striped table-dark table-hover">
@@ -114,8 +118,16 @@ function MyBooks() {
               <td><CompletionStatus idBooks={book.idBooks}/></td>
               <td>
                 <div className="float-right">
-                  <Link to={`/booksUserEdit/${book.idBooks}`}>Edit</Link> &nbsp;
-                  <Link to={`/booksUserDelete/${book.idBooks}`}>Delete</Link>
+                  <Link to={`/booksUserEdit/${book.idBooks}`}>
+                  <button type="button" className="btn btn-info ml-2">
+                    Edit
+                  </button>
+                  </Link> &nbsp;
+                  <Link to={`/booksUserDelete/${book.idBooks}`}>
+                  <button type="button" className="btn btn-danger ml-2">
+                    Delete
+                  </button>
+                  </Link>
                 </div>
               </td>
             </tr>
