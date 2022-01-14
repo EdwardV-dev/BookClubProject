@@ -13,17 +13,28 @@ import AddBook from './components/AddBook';
 import AuthContext from "./context/AuthContext";
 import {useState, useEffect, useHistory} from "react";
 import DeleteUserBook from './components/DeleteUserBook';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import logo from "./logo.png"
 
 function App() {
   const [userStatus, setUserStatus] = useState();
-
+  
     return (
       <Router>
-<AuthContext.Provider value={[userStatus, setUserStatus]}>
-
+        <AuthContext.Provider value={[userStatus, setUserStatus]}>
+          <br></br>
+          <h1 className="text-light"style={{display: 'flex', justifyContent: 'center'}}>The Bookfast Club </h1>
+    
+        <br></br>
         <NavBar 
         role={userStatus?.user.authorities}
         />
+        <br></br>
+
+        <div 
+        className="position-absolute top-0 end-0" >
+            <img src={logo} alt="Logo" width="100"/>
+        </div>
 
         <Switch>
           <Route path="/books">
@@ -69,6 +80,7 @@ function App() {
         </Switch>
         </AuthContext.Provider>
       </Router>
+      
     );
   }
 

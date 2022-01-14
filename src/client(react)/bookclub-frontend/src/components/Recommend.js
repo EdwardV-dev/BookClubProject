@@ -195,7 +195,7 @@ async function activateSecondFetch(data1){
 
               <td>
                 <div className="float-right">
-                  <button onClick={addBookToMyList}>Add Book</button> &nbsp;
+                  <button onClick={addBookToMyList} className="btn btn-warning">Add Book</button> &nbsp;
                 </div>
               </td>
             </tr>

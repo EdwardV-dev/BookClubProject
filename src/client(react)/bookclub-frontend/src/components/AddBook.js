@@ -176,7 +176,7 @@ function AddBook() {
   };
 
   const handleCancel = async (event) => {
-    history.push("/admin");
+    history.push("/books");
   };
 
   const determineIfYearNull = (yearPublished) => {
@@ -188,102 +188,129 @@ function AddBook() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="form-inline mx-2 my-4">
+      <>
+
+      
+    <form onSubmit={handleSubmit} className="form-inline mx-2 my-4 text-light">
+      
       <ErrorArray errors={errors} />
-      <div>
-        <label htmlFor="authorFirstName">Author First Name:</label>
-        <input
-          type="text"
-          id="authorFirstName"
-          name="authorFirstName"
-          required
-          onChange={handleFirstNameChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="authorLastName">Author Last Name:</label>
-        <input
-          type="text"
-          id="authorLastName"
-          name="authorLastName"
-          required
-          onChange={handleLastNameChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="bookTitle">Book Title:</label>
-        <input
-          type="text"
-          id="bookTitle"
-          name="bookTitle"
-          required
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="genre">Genre:</label>
-        <input
-          type="text"
-          id="genre"
-          name="genre"
-          required
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="yearPublished">Year Published:</label>
-        <input
-          type="number"
-          id="yearPublished"
-          name="yearPublished"
-          max="2022"
-          onChange={handleChange}
-        />
-      </div>
 
-      <div>
-        <input
-          type="radio"
-          value="WantToRead"
-          name="completionStatus"
-          required
-          onClick={handleButtonChange}
-        />
-        Want to Read
-      </div>
-      <div>
-        <input
-          type="radio"
-          value="Reading"
-          name="completionStatus"
-          onClick={handleButtonChange}
-        />
-        Reading
-      </div>
-      <div>
-        <input
-          type="radio"
-          value="DoneReading"
-          name="completionStatus"
-          onClick={handleButtonChange}
-        />
-        Done Reading
-      </div>
+      <div class="container">
+        <div class="row justify-content-md-center">
 
-      <div>
-        <button type="submit" className="btn btn-success ml-2">
-          Add
-        </button>{" "}
-        &nbsp;
-        <button
-          type="button"
-          className="btn btn-warning ml-2"
-          onClick={handleCancel}
-        >
-          Cancel
-        </button>
+            <div class="col col-lg-2"></div>
+
+            <div class="col-md-auto">
+                <div class="form-group">
+                    <label htmlFor="authorFirstName">Author First Name:</label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="authorFirstName"
+                    name="authorFirstName"
+                    required
+                    onChange={handleFirstNameChange}
+                    />
+                </div>
+                <div class="form-group">
+                    <label htmlFor="authorLastName">Author Last Name:</label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="authorLastName"
+                    name="authorLastName"
+                    required
+                    onChange={handleLastNameChange}
+                    />
+                </div>
+                <div class="form-group">
+                    <label htmlFor="bookTitle">Book Title:</label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="bookTitle"
+                    name="bookTitle"
+                    required
+                    onChange={handleChange}
+                    />
+                </div>
+                <div class="form-group">
+                    <label htmlFor="genre">Genre:</label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="genre"
+                    name="genre"
+                    required
+                    onChange={handleChange}
+                    />
+                </div>
+                <div class="form-group">
+                    <label htmlFor="yearPublished">Year Published:</label>
+                    <input
+                    type="number"
+                    class="form-control"
+                    id="yearPublished"
+                    name="yearPublished"
+                    max="2022"
+                    onChange={handleChange}
+                    />
+                </div>
+
+                <div class="form-check">
+                    <input
+                    class="form-check-input"
+                    type="radio"
+                    value="WantToRead"
+                    name="completionStatus"
+                    required
+                    onClick={handleButtonChange}
+                    />
+                    Want to Read
+                </div>
+                <div class="form-check">
+                    <input
+                    class="form-check-input"
+                    type="radio"
+                    value="Reading"
+                    name="completionStatus"
+                    onClick={handleButtonChange}
+                    />
+                    Reading
+                </div>
+                <div class="form-check">
+                    <input
+                    class="form-check-input"
+                    type="radio"
+                    value="DoneReading"
+                    name="completionStatus"
+                    onClick={handleButtonChange}
+                    />
+                    Done Reading
+                </div>
+
+                <div>
+                    <button type="submit" className="btn btn-success ml-2">
+                    Add
+                    </button>{" "}
+                    &nbsp;
+                    <button
+                    type="button"
+                    className="btn btn-warning ml-2"
+                    onClick={handleCancel}
+                    >
+                    Cancel
+                    </button>
+                </div>
+
+            </div> 
+
+            <div class="col col-lg-2"></div>
+
+        </div>
       </div>
     </form>
+    </>
   );
 }
 
