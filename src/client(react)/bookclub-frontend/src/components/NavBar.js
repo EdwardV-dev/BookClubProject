@@ -19,7 +19,7 @@ function NavBar({role}) {
    
 
     return (
-        <nav>
+        <nav className="nav nav-pills">
             {userStatus?.user ? (
            <li>
             <button

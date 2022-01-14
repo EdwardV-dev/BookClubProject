@@ -161,11 +161,11 @@ function EditAdminBooks() {
     return (
         book && (
         <>
-        
+
         <ErrorArray errors={errors} />
 
-        <form onSubmit={handleSubmit} className="form-inline mx-2 my-4">
-             <div>
+        <form onSubmit={handleSubmit} className="form-inline mx-2 my-4 text-light" >
+             <div className="form-group mx-4 my-4" sm={10}>
                 <label htmlFor="authorFirstName">Author First Name:</label>
                 <input 
                     type="text" 
@@ -173,10 +173,11 @@ function EditAdminBooks() {
                     name="authorFirstName" 
                     defaultValue={book.author.authorFirstName}
                     required
+                    className="form-control"
                     onChange={handleFirstNameChange}
                 />
             </div>
-            <div>
+            <div className="form-inline mx-4 my-4">
                 <label htmlFor="authorLastName">Author Last Name:</label>
                 <input
                     type="text" 
@@ -184,21 +185,24 @@ function EditAdminBooks() {
                     name="authorLastName" 
                     defaultValue={book.author.authorLastName} 
                     required
+                    className="form-control"
                     onChange={handleLastNameChange}
                 />
             </div>
-            <div>
+            <div className="form-inline mx-4 my-4">
                 <label htmlFor="bookTitle">Book Title:</label>
                 <input 
+                    className="form-inline mx-"
                     type="text" 
                     id="bookTitle" 
                     name="bookTitle" 
                     value={book.bookTitle}
                     required
+                    className="form-control"
                     onChange={handleChange} 
                 />
             </div>
-            <div>
+            <div className="form-inline mx-4 my-4">
                 <label htmlFor="genre">Genre:</label>
                 <input 
                     type="text" 
@@ -206,16 +210,18 @@ function EditAdminBooks() {
                     name="genre" 
                     value={book.genre}
                     required
+                    className="form-control"
                     onChange={handleChange} 
                 />
             </div>
-            <div>
+            <div className="form-inline mx-4 my-4">
                 <label htmlFor="yearPublished">Year Published:</label>
                 <input 
                     type="number" 
                     id="yearPublished" 
                     name="yearPublished" 
                     max= "2022"
+                    className="form-control"
                     value= {determineIfYearNull(book.yearPublished)}
                     onChange={handleChange} 
                 />
@@ -230,12 +236,7 @@ function EditAdminBooks() {
                 </button>        
             </div>
         </form>
-{/* 
-<Container>
-  <Row>
-    <Col>1 of 1</Col>
-  </Row>
-</Container> */}
+
 
         {/* <Form>
   <Form.Group className="mb-3" controlId="formBasicEmail">
